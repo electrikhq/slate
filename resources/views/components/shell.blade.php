@@ -20,13 +20,12 @@
 			<x-slate::brand
 				:brand="$brand"
 				icon="carbon-dashboard"
-
 			/>
 			@endif
 					
 			<div class="flex md:hidden">
 				<button type="button" @click="isOpen = !isOpen" class="">
-					<x-carbon-menu class="w-7 h-7 text-gray-900 hover:text-gray-700 focus:outline-none focus:text-gray-700" />
+					<x-carbon-menu class="w-7 h-7 focus:outline-none focus:text-gray-700 text-gray-900 dark:text-gray-100" />
 				</button>
 			</div>
 		</div>

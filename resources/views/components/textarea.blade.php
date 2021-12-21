@@ -2,10 +2,8 @@
     'label' => null,
     'id' => null,
     'name' => null,
-    'type' => 'text',
     'helpText' => null,
 	'color' => 'primary',
-	'addon' => null,
 	'placeholder' => null,
 ])
 
@@ -25,26 +23,15 @@
 	</label>
 @endif
 
-<div class="mt-1 flex rounded-md shadow-sm">
-@if($addon)
-	<span {{
-		$attributes->class([
-			'inline-flex items-center px-3 rounded-l-md border border-r-0 text-gray-500 bg-gray-50 border-gray-300',
-		])
-	}}
-	>
-	{{ $addon }}
-	</span>
-@endif          
+<div class="mt-1">     
 
-<input
+
+<textarea
 	@if ($id) id="{{ $id }}" @endif
 	@if ($name) name="{{ $name }}" @endif
-	@if ($type) type="{{ $type }}" @endif
 	@if ($placeholder) placeholder="{{ $placeholder }}" @endif
-	
 	{{ $attributes->class([
-		'flex-1 block w-full rounded-none rounded-r-md border-gray-300',
+		'shadow-sm mt-1 block w-full border border-gray-300 rounded-md',
 		'focus:ring-primary-500 focus:border-primary-500' => ($color == 'primary'),
 		'focus:ring-success-500 focus:border-success-500' => ($color == 'success'),
 		'focus:ring-warning-500 focus:border-warning-500' => ($color == 'warning'),
@@ -53,7 +40,7 @@
 		'focus:ring-info-500 focus:border-info-500' => ($color == 'info'),
 		'border-danger-600 ring-danger-600' => ($name && $errors->has($name)),
 	]) }}
-/>
+></textarea>
 </div>
 
 @if ($name && $errors->has($name))
