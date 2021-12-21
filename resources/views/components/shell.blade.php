@@ -12,7 +12,7 @@
 	<div class="flex flex-col md:flex-row ">
 
 		<aside
-			class="w-full md:w-64 md:min-h-screen bg-white dark:bg-gray-800 shadow-md"
+			class="w-full md:w-64 md:min-h-screen bg-white dark:bg-gray-800 shadow-md	"
 			x-data="{ isOpen: false }" 
 		>
 		<div class="flex items-center justify-between p-4 h-16 bg-white dark:bg-gray-900">
