@@ -7,7 +7,8 @@
 @php
 	$id ?? $id = $name
 @endphp
-
+<div class="inline-flex ">
+<x-dynamic-component component="carbon-awake" class="w-6 h-6 mr-1 text-gray-800 dark:text-gray-100"/>
 <span 
 	x-data="{ 
 		darkMode: false, 
@@ -56,6 +57,7 @@
 	:aria-checked="darkMode.toString()"
 	
 	>
+	
 	<span aria-hidden="true" 
 		{{ 
 			$attributes->class([
@@ -88,3 +90,5 @@
 	/>
 	@endif
 </span>
+<x-dynamic-component component="carbon-asleep" class="w-6 h-6 ml-1 text-gray-800 dark:text-gray-100"/>
+</div>

@@ -11,16 +11,9 @@
 
 	<div class="flex flex-col md:flex-row ">
 
-		<aside 
-
-			{{
-				$attributes->class([
-					'w-full md:w-64 md:min-h-screen bg-gray-200 dark:bg-gray-800',
-				])
-			}}
-		
-		
-		 x-data="{ isOpen: false }"
+		<aside
+			class="w-full md:w-64 md:min-h-screen bg-white dark:bg-gray-800 shadow-md"
+			x-data="{ isOpen: false }" 
 		>
 		<div class="flex items-center justify-between p-4 h-16 bg-white dark:bg-gray-900">
 			@if('brand')
@@ -43,13 +36,7 @@
 		</aside>
 
 		<div class="w-full md:flex-1">
-			<nav 
-				{{ 
-					$attributes->class([
-						'hidden md:flex justify-between items-center p-4 h-16 bg-white dark:bg-gray-900',
-					])
-				}}
-			>
+			<nav class="hidden md:flex justify-between items-center p-4 h-16 bg-white dark:bg-gray-900">
 
 				<x-slate::navigation>
 					<x-slot name="left">
@@ -60,7 +47,7 @@
 					</x-slot>
 				</x-slate::navigation>
 			</nav>
-			<main class="bg-gray-200">
+			<main>
 
 				{{ $slot }}
 
