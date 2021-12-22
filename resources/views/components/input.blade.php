@@ -44,7 +44,9 @@
 	@if ($placeholder) placeholder="{{ $placeholder }}" @endif
 	
 	{{ $attributes->class([
-		'flex-1 block w-full border-gray-300 rounded-md',
+		'flex-1 block w-full rounded-md',
+		'text-gray-900 dark:text-gray-300',
+		'border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white',
 		'rounded-none rounded-r-md' => ( $addon ),
 		'focus:ring-primary-500 focus:border-primary-500' => ($color == 'primary'),
 		'focus:ring-success-500 focus:border-success-500' => ($color == 'success'),
