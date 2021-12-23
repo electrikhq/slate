@@ -3,7 +3,7 @@
 	<div {{ 
 		$attributes->class([
 			"min-w-full min-h-full rounded col-span-1 px-5 py-4",
-			"shadow-md bg-white rounded-md" => !$left->attributes->get('transparent')
+			"shadow-md bg-white rounded-md dark:bg-gray-900" => !$left->attributes->get('transparent')
 		])
 	}}
 	>
@@ -14,7 +14,7 @@
 	<div {{ 
 		$attributes->class([
 			"min-w-full min-h-full rounded col-span-2 px-5 py-4",
-			"shadow-md bg-white rounded-md" => !$right->attributes->get('transparent')
+			"shadow-md bg-white rounded-md dark:bg-gray-900" => !$right->attributes->get('transparent')
 		])
 	}}
 	>

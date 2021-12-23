@@ -17,7 +17,7 @@
 	<label
 		@if ($id) for="{{ $id }}" @endif
 		{{ $attributes->class([
-			'block font-medium text-gray-700',
+			'block font-medium text-gray-700  dark:text-gray-300',
 			'text-danger-600' => ($name && $errors->has($name)),
 		]) }}"
 	>
@@ -29,7 +29,7 @@
 @if($addon)
 	<span {{
 		$attributes->class([
-			'inline-flex items-center px-3 rounded-l-md border border-r-0 text-gray-500 bg-gray-50 border-gray-300',
+			'inline-flex items-center px-3 rounded-l-md border border-r-0 text-gray-500 bg-gray-50 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400',
 		])
 	}}
 	>
@@ -64,5 +64,5 @@
 @endif
 
 @if ($helpText)
-	<p class="mt-2 text-gray-500">{{ $helpText }}</p>
+	<p class="mt-2 text-gray-500 dark:text-gray-400">{{ $helpText }}</p>
 @endif
