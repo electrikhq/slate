@@ -1,3 +1,5 @@
+![](https://opengraph.githubassets.com/master/neerajsohal/slate)
+
 # Slate
 
 Slate UI Kit is a set of anonymous blade components built using [tailwindcss](https://tailwindcss.com/) for your next [Laravel](https://laravel.com) project.
