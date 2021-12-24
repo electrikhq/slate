@@ -10,25 +10,14 @@
 @if($tag == 'h1')
 <h1 {{
 	$attributes->class([
-		'text-gray-900 dark:text-gray-100 text-3xl',
-		'font-thin' => $fontThin,
-		'font-regular' => $fontRegular,
-		'font-medium' => $fontMedium,
-		'font-bold' => $fontBold,
-		'font-black' => $fontBlack,
-
+		'prose dark:prose-invert prose-2xl'
 	])
 }}>{{ $slot }}</h1>
 @endif
 @if($tag == 'h2')
 <h2 {{
 	$attributes->class([
-		'text-gray-900 dark:text-gray-100 text-2xl',
-		'font-thin' => $fontThin,
-		'font-regular' => $fontRegular,
-		'font-medium' => $fontMedium,
-		'font-bold' => $fontBold,
-		'font-black' => $fontBlack,
+		'prose dark:prose-invert prose-xl'
 
 	])
 }}>{{ $slot }}</h2>
@@ -36,12 +25,7 @@
 @if($tag == 'h3')
 <h3 {{
 	$attributes->class([
-		'text-gray-900 dark:text-gray-100 text-xl',
-		'font-thin' => $fontThin,
-		'font-regular' => $fontRegular,
-		'font-medium' => $fontMedium,
-		'font-bold' => $fontBold,
-		'font-black' => $fontBlack,
+		'prose dark:prose-invert prose-lg'
 
 	])
 }}>{{ $slot }}</h3>
@@ -49,12 +33,7 @@
 @if($tag == 'h4')
 <h4 {{
 	$attributes->class([
-		'text-gray-900 dark:text-gray-100 text-lg',
-		'font-thin' => $fontThin,
-		'font-regular' => $fontRegular,
-		'font-medium' => $fontMedium,
-		'font-bold' => $fontBold,
-		'font-black' => $fontBlack,
+		'prose dark:prose-invert prose-base'
 
 	])
 }}>{{ $slot }}</h4>
@@ -62,12 +41,7 @@
 @if($tag == 'h5')
 <h5 {{
 	$attributes->class([
-		'text-gray-900 dark:text-gray-100 text-md',
-		'font-thin' => $fontThin,
-		'font-regular' => $fontRegular,
-		'font-medium' => $fontMedium,
-		'font-bold' => $fontBold,
-		'font-black' => $fontBlack,
+		'prose dark:prose-invert prose-sm'
 
 	])
 }}>{{ $slot }}</h5>
@@ -75,12 +49,7 @@
 @if($tag == 'h6')
 <h6 {{
 	$attributes->class([
-		'text-gray-900 dark:text-gray-100 text-sm',
-		'font-thin' => $fontThin,
-		'font-regular' => $fontRegular,
-		'font-medium' => $fontMedium,
-		'font-bold' => $fontBold,
-		'font-black' => $fontBlack,
+		'prose dark:prose-invert prose-sm'
 
 	])
 }}>{{ $slot }}</h6>
