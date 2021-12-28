@@ -5,7 +5,7 @@
 ])
 <div {{
 		$attributes->class([
-			'rounded-sm mb-0.5 first:mb-5 last:mb-0 inline-flex items-center h-10',
+			'mb-2 inline-flex items-center h-14',
 		])
 	}}
 >
