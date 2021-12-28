@@ -25,7 +25,7 @@
 
 	{{
 		$attributes->class([
-			"flex flex-col z-40 left-0 top-0 transform h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar shrink-0 bg-white transition-all duration-200 ease-in-out ",
+			"flex flex-col z-40 left-0 top-0 transform h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar shrink-0 bg-white transition-all ease-in-out w-72",
 		])
 	}}
 >
