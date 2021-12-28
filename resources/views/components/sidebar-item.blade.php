@@ -9,7 +9,7 @@
 
 <div {{
 		$attributes->class([
-			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center hover:bg-gray-200',
+			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center hover:bg-gray-200 mx-2 py-1 font-medium',
 		])
 	}}
 >
@@ -37,7 +37,7 @@
 	:icon="$icon"
 	:color="$iconColor"
 	:size="$iconSize"
-	class="shrink-0 mx-0.5"
+	class="shrink-0 mx-1.5"
 />
 @endif
 
