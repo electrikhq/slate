@@ -23,9 +23,6 @@
 			} else {
 				document.documentElement.classList.remove('dark')
 			}
-
-
-
 		} 
 	}"
 	x-init="
