@@ -1,7 +1,7 @@
 @props([
     'color' => 'primary',
     'icon' => null,
-    'type' => 'button',
+    'type' => 'span',
 	'rounded' => null,
 	'id' => null,
 	'href' => null,
@@ -14,6 +14,8 @@
 	{!! '<button' !!}
 @elseif($type == 'link')
 	{!! '<a' !!}
+@else	
+	{!! '<span' !!}
 @endif
 		{{ $attributes->class([
 			'inline-flex items-center justify-center transition focus:outline-none',
@@ -27,7 +29,7 @@
 			'rounded-lg' => (!$rounded),
 			'w-10 h-10 p-0' => ($size == 'md'),
 			'w-12 h-12 p-0' => ($size == 'lg'),
-			'w-8 h-8 p-0' => ($size == 'sm'),
+			'w-9 h-9 p-0' => ($size == 'sm'),
 			'w-7 h-7 p-0' => ($size == 'xs'),
 		]) }}
 		@if ($id) href="{{ $id }}" @endif
@@ -43,4 +45,6 @@
 	{!! '</button>' !!}
 @elseif($type == 'link')
 	{!! '</a>' !!}
+@else
+	{!! '</span>' !!}
 @endif
