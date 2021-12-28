@@ -17,7 +17,7 @@
     </head>
     <body 
 		{{ $attributes->class([
-			"bg-gray-200 min-h-screen font-sans antialiased sidebar-expanded",
+			"min-h-screen font-sans antialiased sidebar-expanded bg-gray-200 dark:bg-gray-700",
 			])
 		}}
 	>

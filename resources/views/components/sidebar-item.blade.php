@@ -9,7 +9,7 @@
 
 <div {{
 		$attributes->class([
-			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center hover:bg-gray-200 mx-2 py-1 font-medium',
+			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center hover:bg-gray-200 dark:hover:bg-gray-800 mx-2 py-1 font-medium dark:text-gray-100',
 		])
 	}}
 >
@@ -17,7 +17,7 @@
 @if($link)
 <a {{
 		$attributes->class([
-			'min-h-10 rounded-sm mb-0.5 last:mb-0 inline-flex items-center w-full min-h-full h-10',
+			'min-h-10 rounded-sm mb-0.5 last:mb-0 inline-flex items-center w-full min-h-full h-10 font-medium dark:text-gray-100',
 		])
 	}}
 	href="{{$link}}"
@@ -52,7 +52,7 @@
 	<span
 		{{
 			$attributes->class([
-				"inline-flex leading-0 p-0.5 pb-0 px-1 ml-1 mr-2 tracking-wide text-sm font-medium text-gray-500 bg-gray-300 rounded-md duration-200",
+				"inline-flex leading-0 p-0.5 pb-0 px-1 ml-1 mr-2 tracking-wide text-sm font-medium text-gray-500 dark:text-gray-100 bg-gray-300 dark:bg-gray-700 rounded-md duration-200",
 				"text-primary" => $labelColor == 'primary',
 				"text-secondary" => $labelColor == 'secondary',
 				"text-success" => $labelColor == 'success',

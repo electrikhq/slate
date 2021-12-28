@@ -25,7 +25,7 @@
 			'text-warning-600 hover:bg-warning-600/5 focus:bg-warning-600/10' => ($color === 'warning' && !$transparent),
 			'text-danger-600 hover:bg-danger-600/5 focus:bg-danger-600/10' => ($color === 'danger' && !$transparent),
 			'text-info-600 hover:bg-info-600/5 focus:bg-info-600/10' => ($color === 'info' && !$transparent),
-			'text-gray-600 hover:bg-gray-600/5 focus:bg-gray-600/10' => ($color === 'gray' && !$transparent),
+			'text-gray-600 hover:bg-gray-600/5 focus:bg-gray-600/10 dark:text-gray-400 dark:hover:bg-gray-900/5 focus:bg-gray-900/10' => ($color === 'gray' && !$transparent),
 			'rounded-full' => ($rounded),
 			'rounded-lg' => (!$rounded),
 			'w-10 h-10 p-0' => ($size == 'md'),
