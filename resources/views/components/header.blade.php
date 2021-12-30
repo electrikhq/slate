@@ -6,14 +6,14 @@
 <div 
 	{{ 
 		$attributes->class([
-			"lg:flex lg:items-center lg:justify-between py-6 px-8",
-			"bg-gray-100",
+			"lg:flex lg:items-center lg:justify-between py-6 px-8 rounded-sm",
+			"bg-white dark:bg-black text-gray-900 dark:text-gray-100 ",
 		])
 	}}
 >
 	<div class="flex-1 min-w-0">
 		@if($heading)
-		<h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+		<h2 class="text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
 			{{ $heading }}
 		</h2>
 		@endif
