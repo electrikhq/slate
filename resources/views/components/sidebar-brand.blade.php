@@ -1,11 +1,10 @@
 @props([
 	'logo',
 	'link' => null,
-	'brand',
 ])
 <div {{
 		$attributes->class([
-			'mb-2 inline-flex items-center h-14',
+			'inline-flex items-center h-14',
 		])
 	}}
 >
@@ -13,7 +12,7 @@
 @if($link)
 <a {{
 		$attributes->class([
-			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center w-full ',
+			'mb-0.5 last:mb-0 inline-flex ',
 		])
 	}}
 	href="{{$link}}"
@@ -21,12 +20,28 @@
 @else
 <div {{
 		$attributes->class([
-			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center w-full ',
+			'mb-0.5 last:mb-0 inline-flex ',
 		])
 	}}
 >
 @endif
-{{ $brand }}
+
+@if($expanded)
+<div class="inline-flex px-2 h-12 items-center"
+	:class="{ 'opacity-100': sidebarOpen === true, 'hidden opacity-0': sidebarOpen  === false}"
+>
+{{ $expanded }}
+</div>
+@endif
+
+@if($collapsed)
+<div class="inline-flex px-2 h-12 items-center"
+	:class="{ 'hidden opacity-0': sidebarOpen === true, 'opacity-100': sidebarOpen  === false}"
+>
+{{ $collapsed }}
+</div>
+@endif
+
 @if($link)
 </a>
 @else
