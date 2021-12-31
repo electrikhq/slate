@@ -1,9 +1,24 @@
-<div class="grid overflow-hidden grid-cols-3 grid-rows-1 gap-2 my-4">
+@props([
+	'left'=>null,
+	'right' => null,
+])
+
+<div {{ 
+		$attributes->class([
+			"grid overflow-hidden grid-rows-1  my-4",
+			"grid-cols-1" => ($attributes->get('cols') == 1),
+			"grid-cols-3" => ($attributes->get('cols') != 1),
+			"shadow-md bg-white rounded-md dark:bg-gray-900" => !$attributes->get('transparent')
+		])
+	}}
+>
+
+@if($attributes->get('cols') != 1)
 	@if($left)
 	<div {{ 
 		$attributes->class([
-			"min-w-full min-h-full rounded col-span-1 px-5 py-4",
-			"shadow-md bg-white rounded-md dark:bg-gray-900" => !$left->attributes->get('transparent')
+			"rounded col-span-1 mx-4 py-4",
+			"shadow-md bg-white rounded-md dark:bg-gray-900 px-4" => !$left->attributes->get('transparent')
 		])
 	}}
 	>
@@ -13,12 +28,25 @@
 	@if($right)
 	<div {{ 
 		$attributes->class([
-			"min-w-full min-h-full rounded col-span-2 px-5 py-4",
-			"shadow-md bg-white rounded-md dark:bg-gray-900" => !$right->attributes->get('transparent')
+			"rounded col-span-2 mx-4 py-4",
+			"shadow-md bg-white rounded-md dark:bg-gray-900 px-4" => !$right->attributes->get('transparent')
 		])
 	}}
 	>
 		{{ $right }}	
 	</div>
 	@endif
+
+@else 
+<div {{ 
+		$attributes->class([
+			"min-w-full min-h-full rounded col-span-1 px-5 py-4",
+		])
+	}}
+>
+	{{ $slot }}
+</div>
+@endif
+
+
 </div>

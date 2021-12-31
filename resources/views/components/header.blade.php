@@ -2,12 +2,18 @@
 	'heading' => null,
 	'meta' => null,
 	'actions' => null,
+	'transparent' => null,
+	'fullWidth' => null,
+	'shadow' => null,
 ])
 <div 
 	{{ 
 		$attributes->class([
-			"lg:flex lg:items-center lg:justify-between py-6 px-8 rounded-sm",
-			"bg-white dark:bg-black text-gray-900 dark:text-gray-100 ",
+			"flex items-center justify-between py-6 px-4 mx-auto",
+			"bg-white dark:bg-black text-gray-900 dark:text-gray-100 " => !$transparent,
+			"mx-4 rounded-md" => !$fullWidth,
+			"mx-0 w-full" => $fullWidth,
+			"shadow-sm" => $shadow,
 		])
 	}}
 >
