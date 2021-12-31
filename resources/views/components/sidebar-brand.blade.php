@@ -4,7 +4,7 @@
 ])
 <div {{
 		$attributes->class([
-			'inline-flex items-center h-14',
+			'inline-flex items-center py-1.5',
 		])
 	}}
 >
