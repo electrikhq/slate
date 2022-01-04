@@ -18,12 +18,17 @@
     <body 
 		{{ 
 			$attributes->class([
-				"font-sans antialiased bg-gray-200 dark:bg-gray-700",
+				"font-sans antialiased bg-gray-200 dark:bg-gray-800",
 				"flex flex-col h-screen",
 			])
 		}}
 	>
 		{{ $slot }}
+
+
+		@if($foot)
+			{{ $foot }}
+		@endif
 
     </body>
 </html>

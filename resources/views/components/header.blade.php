@@ -10,7 +10,7 @@
 	{{ 
 		$attributes->class([
 			"flex items-center justify-between py-6 px-4 mx-auto",
-			"bg-white dark:bg-black text-gray-900 dark:text-gray-100 " => !$transparent,
+			"bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 " => !$transparent,
 			"mx-4 rounded-md" => !$fullWidth,
 			"mx-0 w-full" => $fullWidth,
 			"shadow-sm" => $shadow,

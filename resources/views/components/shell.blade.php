@@ -13,8 +13,8 @@
 		<div {{ 
 				$attributes->class([
 					"flex items-center py-2.5 px-4",
-					"bg-white" => !$attributes->get('transparent'),
-					"shadow-sm" => !$attributes->get('shadow'),
+					"bg-white" => $attributes->get('transparent'),
+					"shadow-sm" => $attributes->get('shadow'),
 				])
 			}}
 		>
