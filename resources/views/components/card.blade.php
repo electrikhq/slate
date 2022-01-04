@@ -8,9 +8,10 @@
 @php
 	$actionsAlign = $actions->attributes->get('align')
 @endphp
-<div 
-{{ $attributes->class([
-	"shadow overflow-hidden sm:rounded-md bg-white dark:bg-gray-800",
+<div {{ 
+	$attributes->class([
+		"overflow-hidden rounded-md bg-white dark:bg-gray-800",
+		"shadow" => !$attributes->get('transparent'),
 	])
 }}
 >
@@ -27,8 +28,7 @@
   </div>
   @endif
   <div class="px-4 py-5 sm:px-6 border-t border-gray-200 dark:border-gray-700  ">
-	  {{ $content }}
-    
+	  	{{ $content }}
   </div>
 
   @if($actions)
