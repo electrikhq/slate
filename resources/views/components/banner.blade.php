@@ -3,11 +3,10 @@
 	'sticky' => null,
 	'floating' => null,
 	'bottom' => null,
-	'top' => 'null',
 	'icon' => null,
 	'heading' => null,
 	'actions' => null,
-	'close' => null,
+	'dismissable' => null,
 ])
 
 <div 
@@ -16,9 +15,9 @@
 >
 
 @if($sticky)
-<div class="fixed inset-x-0 bottom-0">
+<div class="fixed inset-x-0 {{ (!$bottom) ? 'top' : 'bottom'  }}-0 z-50">
 @elseif($floating)
-<div class="fixed bottom-0 inset-x-0 pb-2 sm:pb-5">
+<div class="fixed {{ (!$bottom) ? 'top' : 'bottom'  }}-0 inset-x-0 pb-2 sm:pb-5 z-50">
 @else
 <div {{ $attributes
 		->class([
@@ -33,37 +32,42 @@
 >
 @endif
 
-    <div class="max-w-screen-xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+    <div {{ $attributes
+		->class([
+			"mx-auto py-6 px-3 sm:px-6 lg:px-8",
+			"max-w-screen-".$attributes->get('size'),
+		])
+	}}>
 		@if($floating)
-		<div class="p-2 rounded-lg bg-indigo-600 shadow-lg sm:p-3">
+		<div 
+		{{ $attributes
+			->class([
+				"p-2 rounded-lg  shadow-lg sm:p-3",
+				'bg-primary-600' => ($color == "primary"),
+				'bg-secondary-600' => ($color == "secondary"),
+				'bg-success-600' => ($color == "success"),
+				'bg-warning-600' => ($color == "warning"),
+				'bg-danger-600' => ($color == "danger"),
+				'bg-info-600' => ($color == "info"),
+			])
+		}}>
 		@endif
 		
 		<div class="flex items-center justify-between flex-wrap">
 		
-		
 
             <div class="w-0 flex-1 flex items-center">
-                <span
-					{{ $attributes
-						->class([
-							'flex p-2 rounded-lg',
-							'bg-primary-800' => ($color == "primary"),
-							'bg-secondary-800' => ($color == "secondary"),
-							'bg-success-800' => ($color == "success"),
-							'bg-warning-800' => ($color == "warning"),
-							'bg-danger-800' => ($color == "danger"),
-							'bg-info-800' => ($color == "info"),
-						])
-					}}
-				>
-					<x-dynamic-component :component="$icon" class="h-6 w-6 text-white" />
-                </span>
-				@if($heading)
-                <p class="ml-3 font-medium text-white truncate">
-                    <span class="hidden md:inline">
-						{{ $heading }}
-                    </span>
-                </p>
+                
+				<div class="shrink-0">
+					<x-slate::icon :icon="$icon" color="white" size="sm" />
+				</div>
+
+				@if($text)
+               	 	<div class="ml-3 font-medium text-white truncate">
+
+						{{ $text}}
+
+					</div>
 				@endif
             </div>
 			@if($actions)
@@ -73,7 +77,7 @@
 				}}
             </div>
 			@endif
-			@if($close)
+			@if($dismissable)
             <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
                 <button type="button"
 					@click="show = false"
