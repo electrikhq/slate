@@ -2,9 +2,10 @@
 	'tag'=>'h1',
 	'fontThin' => null,
 	'fontRegular' => null,
-	'fontMedium' => null,
+	'fontMedium' => true,
 	'fontBold' => null,
 	'fontBlack' => null,
+	'uppercase' => null,
 ])
 
 @if($tag == 'h1')
@@ -16,6 +17,7 @@
 		'font-medium' => $fontMedium,
 		'font-bold' => $fontBold,
 		'font-black' => $fontBlack,
+		'uppercase' => $uppercase,
 	])
 }}>{{ $slot }}</h1>
 @endif
@@ -28,6 +30,7 @@
 		'font-medium' => $fontMedium,
 		'font-bold' => $fontBold,
 		'font-black' => $fontBlack,
+		'uppercase' => $uppercase,
 
 	])
 }}>{{ $slot }}</h2>
@@ -41,6 +44,7 @@
 		'font-medium' => $fontMedium,
 		'font-bold' => $fontBold,
 		'font-black' => $fontBlack,
+		'uppercase' => $uppercase,
 
 	])
 }}>{{ $slot }}</h3>
@@ -54,6 +58,7 @@
 		'font-medium' => $fontMedium,
 		'font-bold' => $fontBold,
 		'font-black' => $fontBlack,
+		'uppercase' => $uppercase,
 
 	])
 }}>{{ $slot }}</h4>
@@ -67,6 +72,7 @@
 		'font-medium' => $fontMedium,
 		'font-bold' => $fontBold,
 		'font-black' => $fontBlack,
+		'uppercase' => $uppercase,
 
 	])
 }}>{{ $slot }}</h5>
@@ -80,6 +86,7 @@
 		'font-medium' => $fontMedium,
 		'font-bold' => $fontBold,
 		'font-black' => $fontBlack,
+		'uppercase' => $uppercase,
 
 	])
 }}>{{ $slot }}</h6>

@@ -30,9 +30,9 @@
 			</div>
 		</div>
       
-		<div class="overflow-y-auto">
+
 			{{ $slot }}
-		</div>
+
 		
 	</div>
 

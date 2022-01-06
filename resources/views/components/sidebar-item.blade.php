@@ -10,6 +10,7 @@
 <div {{
 		$attributes->class([
 			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center hover:bg-gray-200 dark:hover:bg-gray-800 mx-2 py-1 font-medium dark:text-gray-100',
+			'bg-gray-200 dark:bg-gray-800' => $attributes->get('active')
 		])
 	}}
 >
@@ -41,7 +42,10 @@
 />
 @endif
 
-<span class="flex-1 ml-1 duration-200"
+<span {{ $attributes->class([
+		"flex-1 ml-1 duration-200",
+		])
+	}}
 	:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
 >
 	{{ $slot }}
