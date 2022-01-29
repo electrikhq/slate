@@ -1,6 +1,7 @@
 @props([
 	'title' => null,
 	'icon' => null,
+	'color' => null,
 	'iconColor' => null,
 	'iconSize' => 'sm',
 	'link' => null,
@@ -27,7 +28,23 @@
 		/>
 		@endif
 
-		<span class="flex-1 ml-1 duration-200"
+		<span 
+		{{ 
+			$attributes->class([
+				'flex-1 ml-1 duration-200',
+				'text-primary-600 hover:text-primary-900' => ($color == "primary"),
+				'text-secondary-600 hover:text-secondary-900' => ($color == "secondary"),
+				'text-success-600 hover:text-success-900' => ($color == "success"),
+				'text-danger-600 hover:text-danger-900' => ($color == "danger"),
+				'text-warning-600 hover:text-warning-900' => ($color == "warning"),
+				'text-info-600 hover:text-info-900' => ($color == "info"),
+				'bg-primary-200 dark:bg-primary-800' => ($attributes->get('active') && $color == 'primary'),
+				'bg-secondary-200 dark:bg-secondary-800' => ($attributes->get('active') && $color == 'secondary'),
+				'bg-success-200 dark:bg-success-800' => ($attributes->get('active') && $color == 'success'),
+				'bg-warning-200 dark:bg-warning-800' => ($attributes->get('active') && $color == 'warning'),
+				'bg-danger-200 dark:bg-danger-800' => ($attributes->get('active') && $color == 'danger'),
+				'bg-info-200 dark:bg-info-800' => ($attributes->get('active') && $color == 'info'),	
+		]) }}
 			:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
 		>
 			{{ $title }}

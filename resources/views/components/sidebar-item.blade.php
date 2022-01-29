@@ -1,6 +1,7 @@
 @props([
-	'icon' => null,
+	'color' => null,
 	'iconColor' => null,
+	'icon' => null,
 	'iconSize' => 'sm',
 	'link' => null,
 	'label' => null,
@@ -9,8 +10,22 @@
 
 <div {{
 		$attributes->class([
-			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center hover:bg-gray-200 dark:hover:bg-gray-800 mx-2 py-1 font-medium dark:text-gray-100',
-			'bg-gray-200 dark:bg-gray-800' => $attributes->get('active')
+			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center mx-2 py-1 font-medium',
+			'text-primary-600 hover:text-primary-900' => ($color == "primary"),
+			'text-secondary-600 hover:text-secondary-900' => ($color == "secondary"),
+			'text-success-600 hover:text-success-900' => ($color == "success"),
+			'text-danger-600 hover:text-danger-900' => ($color == "danger"),
+			'text-warning-600 hover:text-warning-900' => ($color == "warning"),
+			'text-info-600 hover:text-info-900' => ($color == "info"),
+			
+			'text-gray-800 dark:text-gray-200 bg-gray-200 dark:bg-gray-800' => ($attributes->get('active') && !$color),
+			
+			'bg-primary-200 dark:bg-primary-800' => ($attributes->get('active') && $color == 'primary'),
+			'bg-secondary-200 dark:bg-secondary-800' => ($attributes->get('active') && $color == 'secondary'),
+			'bg-success-200 dark:bg-success-800' => ($attributes->get('active') && $color == 'success'),
+			'bg-warning-200 dark:bg-warning-800' => ($attributes->get('active') && $color == 'warning'),
+			'bg-danger-200 dark:bg-danger-800' => ($attributes->get('active') && $color == 'danger'),
+			'bg-info-200 dark:bg-info-800' => ($attributes->get('active') && $color == 'info'),	
 		])
 	}}
 >
@@ -56,19 +71,15 @@
 	<span
 		{{
 			$attributes->class([
-				"inline-flex leading-0 p-0.5 pb-0 px-1 ml-1 mr-2 tracking-wide text-sm font-medium text-gray-500 dark:text-gray-100 bg-gray-300 dark:bg-gray-700 rounded-md duration-200",
-				"text-primary" => $labelColor == 'primary',
-				"text-secondary" => $labelColor == 'secondary',
-				"text-success" => $labelColor == 'success',
-				"text-warning" => $labelColor == 'warning',
-				"text-danger" => $labelColor == 'danger',
-				"text-info" => $labelColor == 'info',
+				"inline-flex leading-0 p-0.5 pb-0 px-1 ml-1 mr-2 tracking-wide text-sm font-medium duration-200",
 			])
 		}}
 		:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
 
 	>
-	{{ $label }}
+	<x-slate::badge :color="$labelColor">
+		{{ $label}}
+	</x-slate::badge>
 	</span>
 @endif
 

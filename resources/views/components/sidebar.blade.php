@@ -26,7 +26,7 @@
 	{{
 		$attributes->class([
 			"z-10 transform transition-all ease-in-out w-72",
-			"flex flex-col overflow-scroll"
+			"flex flex-col overflow-hidden overflow-y-scroll"
 		])
 	}}
 >
