@@ -4,12 +4,15 @@
     'type' => 'text',
 	'color' => 'primary',
 	'value' => null,
-	'size' => 'sm',
+	'size' => 'md',
 	'outlined' => null,
 	'fullWidth' => null,
 	'thick' => null,
 	'inverted' => null,
 	'link' => null,
+	'shadow' => null,
+	'icon' => null,
+    'iconPosition' => 'before',
 ])
 
 @php
@@ -24,11 +27,14 @@
 	type="{{ $type ??= 'button' }}" 
 @endif
 
+	@if ($id) id="{{ $id }}" @endif
 	{{ $attributes
 		->class([
-			"uppercase shadow-md justify-center py-2 px-4 border font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 tracking-widest",
-			"inline-flex" => (!$fullWidth),
+			"uppercase justify-center border font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 tracking-widest no-underline",
+			
+			"inline-flex items-center" => (!$fullWidth),
 			"inline-block w-full" => ($fullWidth),
+
 			'text-white border-primary-600 bg-primary-600 hover:bg-primary-700 focus:bg-primary-700' => ($color == "primary" && !$outlined && !$inverted),
 			'text-white border-secondary-600 bg-secondary-600 hover:bg-secondary-700 focus:bg-secondary-700' => ($color == "secondary" && !$outlined && !$inverted),
 			'text-white border-success-600 bg-success-600 hover:bg-success-700 focus:bg-success-700' => ($color == "success" && !$outlined && !$inverted),
@@ -51,28 +57,37 @@
 			'bg-transparent border border-warning-600 hover:border-warning-900 focus:border-warning-700 text-warning-700 hover:text-warning-900' => ($color == "warning" && $outlined && !$inverted),
 			'bg-transparent border border-info-600 hover:border-info-900 focus:border-info-700 text-info-700 hover:text-info-900' => ($color == "info" && $outlined && !$inverted),
 
-			'text-xs' => ($size == 'xs'),
-			'text-sm' => ($size == 'sm'),
-			'text-md' => ($size == 'md'),
-			'text-xl' => ($size == 'xl'),
-			'text-2xl' => ($size == '2xl'),
-			'text-3xl' => ($size == '3xl'),
-			'text-4xl' => ($size == '4xl'),
-			'text-5xl' => ($size == '5xl'),
-			'text-6xl' => ($size == '6xl'),
-			'text-7xl' => ($size == '7xl'),
+			'text-xs py-0.5 px-1.5' => ($size == 'xs'),
+			'text-xs py-1 px-2' => ($size == 'sm'),
+			'text-sm py-1.5 px-3' => ($size == 'md'),
+			'text-lg py-1.5 px-4' => ($size == 'lg'),
+			'text-lg py-2 px-6' => ($size == 'xl'),
+			'text-xl py-2.5 px-8' => ($size == '2xl'),
+			'text-2xl py-2.5 px-9' => ($size == '3xl'),
 			'border-2' => ($thick),
+			'shadow' => $shadow,
+
 			])
 	}}
-
-	@if ($id) href="{{ $id }}" @endif
 >	
+
+
+		@if ($icon && $iconPosition === 'before')
+            <x-slate::icon :icon="$icon" size="xs" :color="(!$outlined) ? 'white' : '$color'"  class="mr-1"/>
+        @endif
+
 
 	@if(!$value)
 		{{ $slot }}
 	@else 
 		{{ $value }}
 	@endif
+
+	@if ($icon && $iconPosition === 'after')
+		<x-slate::icon :icon="$icon" size="xs" :color="(!$outlined) ? 'white' : '$color'" class="ml-1" />
+	@endif
+
+
 	@if($link)
 </a>
 @else

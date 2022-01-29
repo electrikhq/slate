@@ -1,6 +1,7 @@
 @props([
 	'left'=>null,
 	'right' => null,
+	'rounded' => null,
 ])
 
 <div {{ 
@@ -8,7 +9,8 @@
 			"grid overflow-hidden grid-rows-1 my-4",
 			"grid-cols-1 sm:grid-cols-1" => ($attributes->get('cols') == 1),
 			"grid-cols-1 sm:grid-cols-3" => ($attributes->get('cols') != 1),
-			"shadow-md bg-white rounded-md dark:bg-gray-900 dark:text-white" => !$attributes->get('transparent')
+			"shadow-md bg-white rounded-md dark:bg-gray-900 dark:text-white" => !$attributes->get('transparent'),
+			'rounded-md' => $rounded
 		])
 	}}
 >
