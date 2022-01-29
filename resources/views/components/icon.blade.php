@@ -46,6 +46,8 @@
 			class="
 				m-1
 				underline-none
+				shrink-0
+				h-10 w-10
 			"
 		/>
 
