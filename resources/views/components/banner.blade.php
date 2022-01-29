@@ -1,89 +1,68 @@
 @props([
-	'color' => 'primary',
-	'sticky' => null,
-	'floating' => null,
-	'bottom' => null,
-	'icon' => null,
-	'heading' => null,
-	'actions' => null,
+	'color' => null,
 	'dismissable' => null,
+	'icon' => null,
+	'width' => 'md',
+	'fullWidth' => null,
+	'floating' => null,
+	'top' => true,
+	'bottom' => null,
+	'slim' => null,
+	'actions' => null,
+	'shadow' => null,
+	'rounded' => null,
 ])
 
-<div 
+<div
+
 	x-data="{ show: true }"
 	x-show='show'
->
-
-@if($sticky)
-<div class="fixed inset-x-0 {{ (!$bottom) ? 'top' : 'bottom'  }}-0 z-50">
-@elseif($floating)
-<div class="fixed {{ (!$bottom) ? 'top' : 'bottom'  }}-0 inset-x-0 pb-2 sm:pb-5 z-50">
-@else
-<div {{ $attributes
-		->class([
-			'bg-primary-600' => ($color == "primary"),
-			'bg-secondary-600' => ($color == "secondary"),
-			'bg-success-600' => ($color == "success"),
-			'bg-warning-600' => ($color == "warning"),
-			'bg-danger-600' => ($color == "danger"),
-			'bg-info-600' => ($color == "info"),
+	{{ 
+		$attributes->class([
+			'relative' => $floating,
+			'pointer-events-none',
 		])
 	}}
 >
-@endif
-
-    <div {{ $attributes
-		->class([
-			"mx-auto py-6 px-3 sm:px-6 lg:px-8",
-			"max-w-screen-".$attributes->get('size'),
-		])
-	}}>
-		@if($floating)
-		<div 
-		{{ $attributes
-			->class([
-				"p-2 rounded-lg  shadow-lg sm:p-3",
-				'bg-primary-600' => ($color == "primary"),
-				'bg-secondary-600' => ($color == "secondary"),
-				'bg-success-600' => ($color == "success"),
-				'bg-warning-600' => ($color == "warning"),
-				'bg-danger-600' => ($color == "danger"),
-				'bg-info-600' => ($color == "info"),
+	<div
+		{{ 
+			$attributes->class([
+				'bg-'.$color.'-600 text-white font-medium flex items-center px-2 py-1',
+				'max-w-'.$width.' mx-auto' => !$fullWidth || $floating,
+				'rounded-md shadow-md z-50 fixed left-1/2 transform -translate-x-1/2' => $floating,
+				'shadow-md' => $shadow,
+				'rounded-md ' => $rounded,
+				'top-6 ' => $floating && $top && !$bottom,
+				'bottom-6 ' => $floating && $bottom,
+				'py-6' => !$slim,
+				'pointer-events-none',
 			])
-		}}>
+		}}
+	>
+
+		@if($icon)
+			<div class="shrink-0 mr-1">
+				<x-slate::icon :icon="$icon" color="white" size="sm" />
+			</div>
 		@endif
-		
-		<div class="flex items-center justify-between flex-wrap">
-		
 
-            <div class="w-0 flex-1 flex items-center">
-                
-				<div class="shrink-0">
-					<x-slate::icon :icon="$icon" color="white" size="sm" />
-				</div>
+		<div class="flex-1 mx-1">
+			{{ $slot }}
+		</div>
 
-				@if($text)
-               	 	<div class="ml-3 font-medium text-white truncate">
-
-						{{ $text}}
-
-					</div>
-				@endif
-            </div>
-			@if($actions)
-            <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-				{{ 
-					$actions
-				}}
+		@if($actions)
+            <div class="mx-2 pointer-events-auto">
+				{{ $actions }}
             </div>
 			@endif
-			@if($dismissable)
-            <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
-                <button type="button"
+
+		@if($dismissable)
+			<div class="flex-shrink-0 pointer-events-auto">
+				<button type="button"
 					@click="show = false"
 					x-transition
 					{{ $attributes->class([
-						'-mr-1 flex p-2 rounded-md focus:outline-none sm:-mr-2 transition ease-in-out duration-150',
+						'flex rounded-md focus:outline-none transition ease-in-out duration-150',
 						'hover:bg-primary-500 focus:bg-primary-500' => ($color == "primary"),
 						'hover:bg-secondary-500 focus:bg-secondary-500' => ($color == "secondary"),
 						'hover:bg-warning-500 focus:bg-warning-500' => ($color == "warning"),
@@ -92,24 +71,14 @@
 						'hover:bg-info-500 focus:bg-info-500' => ($color == "info"),
 					]) }}
 				>
-                    <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-			@endif
-			
-        </div>
-		@if($floating)
+					<svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+							d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				</button>
 			</div>
 		@endif
 
-    </div>
 
-@if($sticky || $floating)
-</div>
-@else 
-</div>
-@endif
+	</div>
 </div>

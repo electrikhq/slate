@@ -18,7 +18,7 @@
 	}}
 	role="alert">
 	<div class="shrink-0">
-		<x-slate::icon :icon="$icon" :color="$color" size="xs" />
+		<x-slate::icon :icon="$icon" :color="$color" size="xs"></x-slate::icon>
 	</div>
 	<div class="ml-3 text-sm font-medium text-{{$color}}-700 pt-0.5">
 		{{ $slot }}

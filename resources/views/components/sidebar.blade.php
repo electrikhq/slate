@@ -25,7 +25,7 @@
 
 	{{
 		$attributes->class([
-			"z-40 transform bg-white dark:bg-gray-900 transition-all ease-in-out w-72",
+			"z-10 transform transition-all ease-in-out w-72",
 			"flex flex-col overflow-scroll"
 		])
 	}}

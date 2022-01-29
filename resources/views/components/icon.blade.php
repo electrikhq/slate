@@ -4,21 +4,22 @@
     'type' => 'span',
 	'rounded' => null,
 	'id' => null,
-	'href' => null,
+	'link' => null,
 	'target' => null,
 	'size' => 'md',
-	'transparent' => null
+	'transparent' => null,
+	'target' => null
 ])
 
 @if($type == 'button')
 	{!! '<button' !!}
-@elseif($type == 'link')
+@elseif($type == 'link' || isset($link))
 	{!! '<a' !!}
 @else	
 	{!! '<span' !!}
 @endif
 		{{ $attributes->class([
-			'inline-flex items-center justify-center transition focus:outline-none',
+			'inline-flex items-center justify-center transition focus:outline-none underline-none',
 			'text-primary-600 hover:bg-primary-600/5 focus:bg-primary-600/10' => ($color === 'primary' && !$transparent),
 			'text-gray-600 hover:bg-gray-600/5 focus:bg-gray-600/10' => ($color === 'secondary' && !$transparent),
 			'text-success-600 hover:bg-success-600/5 focus:bg-success-600/10' => ($color === 'success' && !$transparent),
@@ -32,21 +33,25 @@
 			'rounded-lg' => (!$rounded),
 			'w-10 h-10 p-0' => ($size == 'md'),
 			'w-12 h-12 p-0' => ($size == 'lg'),
+			'w-14 h-14 p-0' => ($size == 'xl'),
 			'w-9 h-9 p-0' => ($size == 'sm'),
 			'w-7 h-7 p-0' => ($size == 'xs'),
 		]) }}
-		@if ($id) href="{{ $id }}" @endif
+		@if ($id) {{ $id }} @endif
+		@if ($link) href="{{ $link }}" @endif
+		@if ($target) target="{{ $target }}" @endif
 	>
 		<x-dynamic-component 
 			:component="$icon" 
 			class="
 				m-1
+				underline-none
 			"
 		/>
 
 @if($type == 'button')
 	{!! '</button>' !!}
-@elseif($type == 'link')
+@elseif($type == 'link' || isset($link))
 	{!! '</a>' !!}
 @else
 	{!! '</span>' !!}

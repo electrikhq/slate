@@ -9,7 +9,7 @@
 ])
 
 <form {{ $attributes->class([
-        'space-y-6',
+        'space-y-6 pb-2',
         'max-w-xs' => ($width === 'xs' && !$fullWidth),
         'max-w-sm' => ($width === 'sm' && !$fullWidth),
         'max-w-md' => ($width === 'md' && !$fullWidth),
@@ -32,7 +32,7 @@
             </div>
         @endif
 
-        <div class="space-y-4">
+        <div class="space-y-6">
             {{ $slot }}
         </div>
 
@@ -41,4 +41,4 @@
                 {{ $actions }}
             </div>
         @endif
-    </form>
+</form>
