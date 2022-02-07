@@ -16,7 +16,12 @@
 <div
 
 	x-data="{ show: true }"
-	x-show='show'
+	x-init="
+	() => {
+		if(this.show == undefined) this.show = true;
+	}"
+	x-show="show"
+
 	{{ 
 		$attributes->class([
 			'relative' => $floating,
@@ -59,7 +64,7 @@
 		@if($dismissable)
 			<div class="flex-shrink-0 pointer-events-auto">
 				<button type="button"
-					@click="show = false"
+					x-on:click="show = false"
 					x-transition
 					{{ $attributes->class([
 						'flex rounded-md focus:outline-none transition ease-in-out duration-150',

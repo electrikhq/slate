@@ -10,8 +10,15 @@
 ])
 
 <div
-	x-data="{ expanded: {!! ($attributes->get('active')) ? 'true' : 'false' !!} }"
-	@click="expanded = ! expanded" 
+	x-data="{ 
+		expanded: {!! ($attributes->get('active')) ? 'true' : 'false' !!},
+	}"
+	x-init="
+		() => {
+			if(this.sidebarOpen == undefined) this.sidebarOpen = true;
+		}
+	"
+	x-on:click="expanded = ! expanded" 
 	{{
 		$attributes->class([
 			'rounded-sm mb-0.5 last:mb-0 block mx-2 py-1 font-medium dark:text-gray-100',
@@ -32,6 +39,10 @@
 		{{ 
 			$attributes->class([
 				'flex-1 ml-1 duration-200',
+				'font-thin' => $attributes->get('title-thin'),
+				'font-medium' => $attributes->get('title-medium'),
+				'font-regular' => $attributes->get('title-regular'),
+				'font-bold' => $attributes->get('title-bold'),
 				'text-primary-600 hover:text-primary-900' => ($color == "primary"),
 				'text-secondary-600 hover:text-secondary-900' => ($color == "secondary"),
 				'text-success-600 hover:text-success-900' => ($color == "success"),
@@ -45,7 +56,7 @@
 				'bg-danger-200 dark:bg-danger-800' => ($attributes->get('active') && $color == 'danger'),
 				'bg-info-200 dark:bg-info-800' => ($attributes->get('active') && $color == 'info'),	
 		]) }}
-			:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
+			:class="{ 'opacity-100': (sidebarOpen || null) === true, 'opacity-0': (sidebarOpen || null)  === false}"
 		>
 			{{ $title }}
 		</span>

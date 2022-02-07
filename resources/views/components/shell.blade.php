@@ -3,18 +3,25 @@
 	'sidebar' => null,
 ])
 
-<div class="flex flex-1 overflow-hidden">
+<div {{
+	$attributes->class([
+		"flex flex-1 overflow-hidden",
+	])
+}}>
 	
 	@if($sidebar)
 		{{ $sidebar }}
 	@endif
 
-	<div class="flex flex-1 flex-col">
+	<div {{
+	$attributes->class([
+		"flex flex-1 flex-col",
+	])
+}}">
 		
 		<div {{ 
 			$attributes->class([
 				"flex items-center",
-				"bg-white" => ($nav && $nav->attributes->get('bg-white')),
 				"shadow-sm" => $attributes->get('shadow'),
 				])
 			}}

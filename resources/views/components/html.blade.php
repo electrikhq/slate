@@ -1,5 +1,4 @@
 @props([
-	'head' => null,
 ])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -7,9 +6,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="csrf-token" content="{{ csrf_token() }}">
-		<title>{{ env('APP_NAME', '')}}</title>
+		
+		@if($attributes->get('title'))
+			<title>{{ $title }}</title>
+		@else
+			<title>{{ env('APP_NAME', '')}}</title>
+		@endif
 
-		@if($head)
+		@if(isset($head))
 			{{ $head }}
 		@endif
 
@@ -19,15 +23,14 @@
 			$attributes->class([
 				"font-sans antialiased",
 				"flex flex-col h-screen",
-				"bg-gray-200 dark:bg-gray-800" => !$attributes->get('bg-white'),
+				"bg-gray-200 dark:bg-gray-800",
 				"bg-white dark:bg-gray-800" => $attributes->get('bg-white'),
 			])
 		}}
 	>
 		{{ $slot }}
 
-
-		@if($foot)
+		@if(isset($foot))
 			{{ $foot }}
 		@endif
 
