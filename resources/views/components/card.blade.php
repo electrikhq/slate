@@ -12,10 +12,13 @@
 
 <div {{ 
 	$attributes->class([
-		"overflow-hidden rounded-md",
+		"overflow-hidden",
 		"bg-white dark:bg-gray-800" => !$attributes->get('transparent'),
-		"shadow" => !$attributes->get('transparent'),
-		"border border-gray-800" => $attributes->get('outlined'),
+		"shadow" => !$attributes->get('transparent') || $attributes->get('shadow'),
+		"border border-gray-400 dark:border-gray-900" => $attributes->get('outlined'),
+		"hover:shadow-md hover:border-primary-600" => $attributes->get('hover'),
+		"rounded" => $attributes->get('rounded'),
+
 	])
 }}>
 	@if($header)
