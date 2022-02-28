@@ -28,7 +28,7 @@
 
 @if($expanded)
 <div class="inline-flex px-2 h-12 items-center"
-	:class="{ 'opacity-100': sidebarOpen === true, 'hidden opacity-0': sidebarOpen  === false}"
+	x-bind:class="{ 'opacity-100': sidebarOpen === true, 'hidden opacity-0': sidebarOpen  === false}"
 >
 {{ $expanded }}
 </div>
@@ -36,7 +36,7 @@
 
 @if($collapsed)
 <div class="inline-flex px-2 h-12 items-center"
-	:class="{ 'hidden opacity-0': sidebarOpen === true, 'opacity-100': sidebarOpen  === false}"
+	x-bind:class="{ 'hidden opacity-0': sidebarOpen === true, 'opacity-100': sidebarOpen  === false}"
 >
 {{ $collapsed }}
 </div>

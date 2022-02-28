@@ -32,9 +32,13 @@
 				</div>
 			@endif
 			
-			@if($nav) 
-				<div class="inline-flex flex-1 justify-end items-center">
-					@if($nav)
+			@if(isset($nav)) 
+				<div {{
+					$attributes->class([
+						"inline-flex flex-1 justify-end items-center",
+					])
+				}}>
+					@if(isset($nav))
 						{{ $nav }}
 					@endif
 				</div>
