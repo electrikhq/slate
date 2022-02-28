@@ -37,7 +37,7 @@
 			'w-9 h-9 p-0' => ($size == 'sm'),
 			'w-7 h-7 p-0' => ($size == 'xs'),
 		]) }}
-		@if ($id) {{ $id }} @endif
+		@if ($id) id="{{ $id }}" @endif
 		@if ($link) href="{{ $link }}" @endif
 		@if ($target) target="{{ $target }}" @endif
 	>

@@ -56,7 +56,7 @@
 				'bg-danger-200 dark:bg-danger-800' => ($attributes->get('active') && $color == 'danger'),
 				'bg-info-200 dark:bg-info-800' => ($attributes->get('active') && $color == 'info'),	
 		]) }}
-			:class="{ 'opacity-100': (sidebarOpen || null) === true, 'opacity-0': (sidebarOpen || null)  === false}"
+			x-bind:class="{ 'opacity-100': (sidebarOpen || null) === true, 'opacity-0': (sidebarOpen || null)  === false}"
 		>
 			{{ $title }}
 		</span>
@@ -74,16 +74,16 @@
 						"text-info" => $labelColor == 'info',
 					])
 				}}
-				:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
+				x-bind:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
 
 			>
 			{{ $label }}
 			</span>
 		@endif
-		<span :class="{ 'hidden': expanded === false}">
+		<span x-bind:class="{ 'hidden': expanded === false}">
 			<x-slate::icon size="xs" icon="carbon-caret-down" transparent></x-slate::icon>
 		</span>
-		<span :class="{ 'hidden': expanded === true }">
+		<span x-bind:class="{ 'hidden': expanded === true }">
 			<x-slate::icon size="xs" icon="carbon-caret-right" transparent></x-slate::icon>
 		</span>
 	</div>

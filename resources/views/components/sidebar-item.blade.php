@@ -11,7 +11,9 @@
 @php
 	if(!$iconColor) $iconColor = $color;
 @endphp
-<div {{
+<div 
+
+{{
 		$attributes->class([
 			'rounded-sm mb-0.5 last:mb-0 inline-flex items-center py-1 font-medium',
 			'ml-2' => !$icon,
@@ -65,7 +67,7 @@
 		"flex-1 ml-1 duration-200",
 		])
 	}}
-	:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
+	x-bind:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
 >
 	{{ $slot }}
 </span>
@@ -78,7 +80,7 @@
 				"inline-flex leading-0 p-0.5 pb-0 px-1 ml-1 mr-0 tracking-wide text-sm font-medium duration-200",
 			])
 		}}
-		:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
+		x-bind:class="{ 'opacity-100': sidebarOpen === true, 'opacity-0': sidebarOpen  === false}"
 
 	>
 	<x-slate::badge :color="$labelColor">
