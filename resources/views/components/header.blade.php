@@ -29,7 +29,7 @@
 		</div>
 		@endif
 	</div>
-	<div class="mt-5 flex space-x-4">
+	<div class="flex space-x-4">
 		@if(isset($actions))
 			{{ $actions }}
 		@endif
