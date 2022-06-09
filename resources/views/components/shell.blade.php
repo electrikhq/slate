@@ -15,9 +15,9 @@
 
 	<div {{
 	$attributes->class([
-		"flex flex-1 flex-col",
+		"flex flex-1 flex-col overflow-x-auto",
 	])
-}}">
+}}>
 		
 		<div {{ 
 			$attributes->class([
