@@ -22,7 +22,7 @@
 	])
 }}>
 	@if($header)
-	<div class="px-4 py-5 sm:px-6">
+	<div class="px-4 py-5 sm:px-6 flex items-center justify-between">
 
 		{{ $header }}
 
