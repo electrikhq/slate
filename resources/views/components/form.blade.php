@@ -6,7 +6,12 @@
     'heading' => null,
     'width' => 'xl',
 	'fullWidth' => null,
+	'align' => 'left',
 ])
+
+@php
+	$actionsAlign = ($actions) ? $actions->attributes->get('align') : null;
+@endphp
 
 <form {{ $attributes->class([
         'space-y-6 pb-2',
@@ -37,7 +42,14 @@
         </div>
 
         @if ($actions)
-            <div class="space-x-4">
+            <div {{
+				$attributes->class([
+					"inline-flex space-x-4 w-full ",
+					"justify-end" => ($actionsAlign == 'right'),
+					"justify-center" => ($actionsAlign == 'center'),
+					" " => ($actionsAlign == 'left' || !$actionsAlign),
+				])
+			}}>
                 {{ $actions }}
             </div>
         @endif
