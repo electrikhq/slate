@@ -6,7 +6,7 @@
     'helpText' => null,
 	'color' => 'primary',
 	'addon' => null,
-	'addonPosition' => null,
+	'addonPosition' => 'after',
 	'placeholder' => null,
 	'autocomplete' => null,
 ])
