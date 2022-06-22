@@ -27,7 +27,9 @@
 		{{ $header }}
 
 		@if($meta)
-			{{ $meta }}
+			<div class="meta">
+				{{ $meta }}
+			</div>
 		@endif
 
 	</div>
@@ -35,7 +37,9 @@
 	@if($content)
 	<div {{ 
 			$attributes->class([
-				"px-4 py-5 sm:px-6",
+				"px-4 sm:px-6",
+				"pb-5" => ($header && $content),
+				"py-5" => (!$header && $content),
 				"border-t border-gray-200 dark:border-gray-700  " => !$attributes->get('outlined'),
 			])
 		}}>
