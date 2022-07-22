@@ -6,7 +6,7 @@
 ])
 
 <span {{ $attributes->class([
-	"font-medium mx-1 px-2.5 py-0.5 leading-0",
+	"font-medium mr-1 px-2.5 py-0.5 leading-0",
 
 	"text-primary-800 dark:text-primary-800" => ($color == "primary"),
 	"text-secondary-800 dark:text-secondary-800" => ($color == "secondary"),
