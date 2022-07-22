@@ -9,13 +9,17 @@
 	'addonPosition' => 'after',
 	'placeholder' => null,
 	'autocomplete' => null,
+	'size' => 'md',
 ])
 
 @php
     $id ??= $name;
 @endphp
 
-<div class="space-y-1">
+<div {{ $attributes->class([
+		"space-y-1",
+	])
+}}>
 	@if ($label)
 		<label
 			@if ($id) for="{{ $id }}" @endif
@@ -33,6 +37,11 @@
 		<span {{
 			$attributes->class([
 				'inline-flex items-center px-3 rounded-l-md border border-r-0 text-gray-500 bg-gray-50 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400',
+				"text-xs" => $size == "xs",
+				"text-md" => $size == "md",
+				"text-lg" => $size == "lg",
+				"text-xl" => $size == "xl",
+				"text-2xl" => $size == "2xl",
 			])
 		}}
 		>
@@ -61,6 +70,11 @@
 			'focus:ring-secondary-500 focus:border-secondary-500' => ($color == 'secondary'),
 			'focus:ring-info-500 focus:border-info-500' => ($color == 'info'),
 			'border-danger-600 ring-danger-600' => ($name && $errors->has($name)),
+			"text-xs" => $size == "xs",
+			"text-md" => $size == "md",
+			"text-lg" => $size == "lg",
+			"text-xl" => $size == "xl",
+			"text-2xl" => $size == "2xl",
 		]) }}
 	/>
 
@@ -68,6 +82,11 @@
 		<span {{
 			$attributes->class([
 				'inline-flex items-center px-3 rounded-r-md border border-l-0 text-gray-500 bg-gray-50 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400',
+				"text-xs" => $size == "xs",
+				"text-md" => $size == "md",
+				"text-lg" => $size == "lg",
+				"text-xl" => $size == "xl",
+				"text-2xl" => $size == "2xl",
 			])
 		}}
 		>

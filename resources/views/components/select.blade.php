@@ -7,6 +7,7 @@
 	'color' => 'primary',
 	'addon' => null,
 	'placeholder' => null,
+	'multiple' => null
 ])
 
 @php
@@ -43,6 +44,7 @@
 		@if ($name) name="{{ $name }}" @endif
 		@if ($type) type="{{ $type }}" @endif
 		@if ($placeholder) placeholder="{{ $placeholder }}" @endif
+		@if ($multiple) {{ 'multiple' }} @endif
 		
 		{{ $attributes->class([
 			'flex-1 block w-full rounded-md',

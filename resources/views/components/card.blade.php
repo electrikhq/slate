@@ -37,10 +37,8 @@
 	@if($content)
 	<div {{ 
 			$attributes->class([
-				"px-4 sm:px-6",
-				"pb-5" => ($header && $content),
-				"py-5" => (!$header && $content),
-				"border-t border-gray-200 dark:border-gray-700  " => !$attributes->get('outlined'),
+				"px-4 sm:px-6 py-6",
+				"border-t border-gray-200 dark:border-gray-700  " => !$attributes->get('outlined') && $header,
 			])
 		}}>
 		{{ $content }}
