@@ -33,7 +33,7 @@
 
 	{{ $attributes
 		->class([
-			"uppercase justify-center border font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 tracking-widest no-underline",
+			"uppercase justify-center border font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 tracking-widest no-underline p-0",
 			
 			"inline-flex items-center" => (!$fullWidth),
 			"inline-block w-full" => ($fullWidth),
@@ -81,13 +81,22 @@
 			'bg-info-100 text-info-400/70 hover:text-info-400/70 border-info-100 hover:border-info-100' => ($color == "info" && !$inverted && $outlined && $disabled),
 			
 
-			'text-xs py-0.5 px-1.5' => ($size == 'xs'),
-			'text-xs py-1 px-2' => ($size == 'sm'),
-			'text-sm py-1.5 px-3' => ($size == 'md'),
-			'text-lg py-1.5 px-4' => ($size == 'lg'),
-			'text-lg py-2 px-6' => ($size == 'xl'),
-			'text-xl py-2.5 px-8' => ($size == '2xl'),
-			'text-2xl py-2.5 px-9' => ($size == '3xl'),
+			'text-xs py-0.5 px-1.5' => ($size == 'xs' && !$icon),
+			'text-xs py-1 px-2' => ($size == 'sm' && !$icon),
+			'text-sm py-1.5 px-3' => ($size == 'md' && !$icon),
+			'text-lg py-1.5 px-4' => ($size == 'lg' && !$icon),
+			'text-lg py-2 px-6' => ($size == 'xl' && !$icon),
+			'text-xl py-2.5 px-8' => ($size == '2xl' && !$icon),
+			'text-2xl py-2.5 px-9' => ($size == '3xl' && !$icon),
+			
+			'text-xs py-0.25 px-0.75' => ($size == 'xs' && $icon),
+			'text-xs py-0.5 px-1' => ($size == 'sm' && $icon),
+			'text-sm py-1 px-3' => ($size == 'md' && $icon),
+			'text-lg py-0.75 px-2' => ($size == 'lg' && $icon),
+			'text-lg py-1 px-3' => ($size == 'xl' && $icon),
+			'text-xl py-1.25 px-4' => ($size == '2xl' && $icon),
+			'text-2xl py-1.25 px-4.5' => ($size == '3xl' && $icon),
+
 			'border-2' => ($thick),
 			'shadow' => $shadow,
 
@@ -97,7 +106,7 @@
 
 
 		@if ($icon && $iconPosition === 'before')
-            <x-slate::icon :icon="$icon" size="xs" :color="(!$outlined) ? 'white' : '$color'"  class="mr-1"/>
+            <x-slate::icon :icon="$icon" size="xs" :color="(!$outlined) ? 'white' : '$color'" class="mr-1"/>
         @endif
 
 
