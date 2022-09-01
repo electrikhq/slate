@@ -16,7 +16,7 @@
 			"mx-4 rounded-md" => !$attributes->get('full-width'),
 			"mx-0 w-full" => $attributes->get('full-width'),
 			"shadow-sm" => $attributes->get('shadow'),
-			"sticky top-0" => $attributes->get('sticky'),
+			"sticky top-0 z-50" => $attributes->get('sticky'),
 		])
 	}}
 >
