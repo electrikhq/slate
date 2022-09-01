@@ -26,8 +26,10 @@
 	@if($header)
 	<div {{ 
 			$attributes->class([
-				"px-4 py-5 sm:px-6 flex items-center justify-between" => ($header && !$content),
-				"px-4 pt-5 pb-0 sm:px-6 flex items-center justify-between" => ($header && $content),
+				"flex items-center justify-between",
+				"px-4 py-5 sm:px-6" => ($header || $content),
+				"px-4 p-5 pb-0 sm:px-6" => ($header && !$content),
+				"px-4 p-5 pb-0 sm:px-6" => ($header && $content && !($attributes->get('outlined-dark') || $attributes->get('outlined'))),
 			])
 		}}>
 
