@@ -2,7 +2,11 @@
 
 # Slate
 
-Slate UI Kit is a set of anonymous blade components built using [tailwindcss](https://tailwindcss.com/) for your next [Laravel](https://laravel.com) project.
+Slate UI Kit is a set of beautiful anonymous blade components built using [tailwindcss](https://tailwindcss.com/) for your next [Laravel](https://laravel.com) project.
+
+```
+This package is under active development. Use responsibly!
+```
 
 ![Slate UI Application Shell Screenshot](https://i.postimg.cc/DF8F9fFh/screenshot-rocks.png "Slate UI Application Shell Screenshot")
 

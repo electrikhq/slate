@@ -7,7 +7,7 @@
 
 <a {{ $attributes
 		->class([
-			'focus:underline focus:outline-none hover:underline hover:outline-none',
+			'focus:underline focus:outline-none hover:underline hover:outline-none cursor-pointer',
 			'text-primary-600 hover:text-primary-900' => ($color == "primary"),
 			'text-secondary-600 hover:text-secondary-900' => ($color == "secondary"),
 			'text-success-600 hover:text-success-900' => ($color == "success"),
@@ -17,7 +17,7 @@
 		])
 	}}
 
-	@if ($id) {{ $id }} @endif
+	@if ($id) id="{{ $id }}" @endif
 	@if ($href) href="{{ $href }}" @endif
 	@if ($target) target="{{ $target }}" @endif
 >
