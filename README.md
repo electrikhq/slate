@@ -1,4 +1,4 @@
-![](https://opengraph.githubassets.com/master/neerajsohal/slate)
+![](https://opengraph.githubassets.com/master/electrikhq/slate)
 
 # Slate
 
