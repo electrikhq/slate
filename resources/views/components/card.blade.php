@@ -14,11 +14,11 @@
 	$attributes->class([
 		"overflow-hidden",
 		"flex flex-col justify-between",
-		"bg-white dark:bg-gray-800" => !$attributes->get('transparent'),
+		"bg-white dark:bg-stone-800 text-gray-600 dark:text-gray-100",
 		"shadow" => !$attributes->get('transparent') || $attributes->get('shadow'),
-		"border border-gray-400 dark:border-gray-900" => $attributes->get('outlined-dark'),
-		"border border-gray-300 dark:border-gray-700" => $attributes->get('outlined'),
-		"hover:shadow-md hover:border-primary-600" => $attributes->get('hover'),
+		"border border-gray-400 dark:border-stone-900" => $attributes->get('outlined-dark'),
+		"border border-gray-300 dark:border-stone-700" => $attributes->get('outlined'),
+		"hover:shadow-md hover:border-stone-600 dark:hover:border-stone-600" => $attributes->get('hover'),
 		"rounded" => $attributes->get('rounded'),
 
 	])
@@ -47,8 +47,8 @@
 	<div {{ 
 			$attributes->class([
 				"px-4 sm:px-6 py-6",
-				"border-t border-gray-300 dark:border-gray-700  " => $attributes->get('outlined') && $header,
-				"border-t border-gray-400 dark:border-gray-900  " => $attributes->get('outlined-dark') && $header,
+				"border-t border-gray-300 dark:border-stone-700  " => $attributes->get('outlined') && $header,
+				"border-t border-gray-400 dark:border-stone-900  " => $attributes->get('outlined-dark') && $header,
 			])
 		}}>
 		{{ $content }}
@@ -62,7 +62,7 @@
 			"justify-end" => ($actionsAlign == 'right'),
 			"justify-center" => ($actionsAlign == 'center'),
 			" " => ($actionsAlign == 'left' || !$actionsAlign),
-			"border-t bg-gray-100 border-gray-200 dark:border-gray-700 dark:bg-gray-700" => !$attributes->get('transparent'),
+			"border-t bg-gray-100 border-gray-200 dark:border-stone-700 dark:bg-stone-700" => !$attributes->get('transparent'),
 		])
 	}}>
 		{{ $actions }}

@@ -15,7 +15,7 @@
 
 	<div {{
 	$attributes->class([
-		"flex flex-1 flex-col overflow-x-auto",
+		"flex flex-1 flex-col overflow-x-auto bg-white dark:bg-stone-900",
 	])
 }}>
 		
