@@ -14,7 +14,7 @@
 	$attributes->class([
 		"overflow-hidden",
 		"flex flex-col justify-between",
-		"bg-white dark:bg-stone-800 text-gray-600 dark:text-gray-100",
+		"bg-white dark:bg-stone-800 text-gray-600 dark:text-stone-400",
 		"shadow" => !$attributes->get('transparent') || $attributes->get('shadow'),
 		"border border-gray-400 dark:border-stone-900" => $attributes->get('outlined-dark'),
 		"border border-gray-300 dark:border-stone-700" => $attributes->get('outlined'),
