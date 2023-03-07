@@ -46,7 +46,7 @@
 	@if($content)
 	<div {{ 
 			$attributes->class([
-				"px-4 sm:px-6 py-6",
+				"px-4 sm:px-6 py-6 flex-1",
 				"border-t border-gray-300 dark:border-stone-700  " => $attributes->get('outlined') && $header,
 				"border-t border-gray-400 dark:border-stone-900  " => $attributes->get('outlined-dark') && $header,
 			])
