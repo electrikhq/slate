@@ -20,15 +20,14 @@
 @endif
 		{{ $attributes->class([
 			'inline-flex items-center justify-center transition focus:outline-none underline-none',
-			'text-primary-600 hover:bg-primary-600/5 focus:bg-primary-600/10' => ($color === 'primary' && !$transparent),
-			'text-gray-600 hover:bg-gray-600/5 focus:bg-gray-600/10' => ($color === 'secondary' && !$transparent),
-			'text-success-600 hover:bg-success-600/5 focus:bg-success-600/10' => ($color === 'success' && !$transparent),
-			'text-warning-600 hover:bg-warning-600/5 focus:bg-warning-600/10' => ($color === 'warning' && !$transparent),
-			'text-danger-600 hover:bg-danger-600/5 focus:bg-danger-600/10' => ($color === 'danger' && !$transparent),
-			'text-info-600 hover:bg-info-600/5 focus:bg-info-600/10' => ($color === 'info' && !$transparent),
-			'text-white hover:bg-white/5 focus:bg-white/10' => ($color === 'white' && !$transparent),
-			'text-black hover:bg-black/5 focus:bg-black/10' => ($color === 'black' && !$transparent),
-			'text-gray-600 hover:bg-gray-600/5 focus:bg-gray-600/10 dark:text-gray-400 dark:hover:bg-gray-900/5 focus:bg-gray-900/10' => ($color === 'gray' && !$transparent),
+			'text-primary-600 dark:text-primary-500 focus:bg-primary-600/10' => ($color === 'primary' && !$transparent),
+			'text-gray-600 dark:text-gray-500 focus:bg-gray-600/10' => ($color === 'secondary' && !$transparent),
+			'text-success-600 dark:text-success-500 focus:bg-success-600/10' => ($color === 'success' && !$transparent),
+			'text-warning-600 dark:text-warning-500 focus:bg-warning-600/10' => ($color === 'warning' && !$transparent),
+			'text-danger-600 dark:text-danger-500 focus:bg-danger-600/10' => ($color === 'danger' && !$transparent),
+			'text-info-600 dark:text-info-500 focus:bg-info-600/10' => ($color === 'info' && !$transparent),
+			'text-white dark:text-stone-900' => ($color === 'white' && !$transparent),
+			'text-black dark:text-stone-200' => ($color === 'black' && !$transparent) || ($color == null),
 			'rounded-full' => ($rounded),
 			'rounded-lg' => (!$rounded),
 			'w-10 h-10 p-0' => ($size == 'md'),
@@ -47,6 +46,7 @@
 				m-1
 				underline-none
 				shrink-0
+				dark:text-gray-300
 			"
 		/>
 
