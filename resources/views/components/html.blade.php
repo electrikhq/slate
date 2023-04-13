@@ -24,7 +24,7 @@
 				"font-sans antialiased",
 				"flex flex-col h-screen",
 				"bg-gray-200 dark:bg-gray-800",
-				"bg-white dark:bg-gray-800" => $attributes->get('bg-white'),
+				"bg-white dark:bg-stone-800" => $attributes->get('bg-white'),
 			])
 		}}
 	>

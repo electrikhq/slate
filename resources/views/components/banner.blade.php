@@ -32,7 +32,7 @@
 	<div
 		{{ 
 			$attributes->class([
-				'bg-'.$color.'-600 text-white font-medium flex items-center px-2 py-1',
+				'bg-'.$color.'-600 text-gray-50 dark:bg-'.$color.'-600 dark:text-gray-100 font-medium flex items-center px-2 py-1',
 				'max-w-'.$width.' mx-auto' => !$fullWidth || $floating,
 				'rounded-md shadow-md z-50 fixed left-1/2 transform -translate-x-1/2' => $floating,
 				'shadow-md' => $shadow,
