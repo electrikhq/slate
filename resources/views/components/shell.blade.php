@@ -6,6 +6,7 @@
 <div {{
 	$attributes->class([
 		"flex flex-1 overflow-hidden",
+		"dark:bg-gray-700"
 	])
 }}>
 	
@@ -15,7 +16,8 @@
 
 	<div {{
 	$attributes->class([
-		"flex flex-1 flex-col overflow-x-auto bg-white dark:bg-stone-900",
+		"flex flex-1 flex-col overflow-x-auto",
+		"dark:bg-gray-800",
 	])
 }}>
 		
