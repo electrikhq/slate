@@ -46,6 +46,7 @@
 				m-1
 				underline-none
 				shrink-0
+				dark:text-gray-300
 			"
 		/>
 
