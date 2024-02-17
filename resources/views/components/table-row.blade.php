@@ -1,3 +1,6 @@
-<tr>
+<tr {{ 
+		$attributes->class([])
+	}}
+>
 	{{ $slot }}
 </tr>
