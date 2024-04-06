@@ -1,57 +1,42 @@
 @props([
-	'nav' => null,
-	'sidebar' => null,
+    'color' => 'light',
 ])
 
-<div {{
-	$attributes->class([
-		"flex flex-1 overflow-hidden",
-		"dark:bg-gray-700"
-	])
-}}>
-	
-	@if($sidebar)
-		{{ $sidebar }}
-	@endif
+<div x-data="{ sidebarOpen: true }" @toggle-sidebar.window="sidebarOpen = !sidebarOpen" class="flex h-screen overflow-hidden">
+    <!-- Primary Sidebar -->
+    <div class="flex flex-col h-screen w-14 justify-between items-center py-4 bg-gray-200 dark:bg-gray-900"">
+        <div>
+            <x-slate::icon icon="carbon-dashboard" size="md" class="hover:text-gray-700 cursor-pointer" />
+            <!-- Additional primary sidebar icons -->
+        </div>
+        <div>
+            <!-- Icons or buttons at the bottom of the primary sidebar -->
+        </div>
+    </div>
 
-	<div {{
-	$attributes->class([
-		"flex flex-1 flex-col overflow-x-auto",
-		"dark:bg-gray-800",
-	])
-}}>
-		
-		<div {{ 
-			$attributes->class([
-				"flex items-center",
-				"shadow-sm" => $attributes->get('shadow'),
-				])
-			}}
-		>
-			@if($attributes->get('no-burger-menu') != true)
-				<div class="inline-flex justify-end " x-data="{}">
-					<x-slate::icon color="gray" icon="carbon-menu" data-target="slate-sidebar" @click="$dispatch('toggle-sidebar', $el.dataset.target)" class="" />
-				</div>
-			@endif
-			
-			@if(isset($nav)) 
-				<div {{
-					$attributes->class([
-						"inline-flex flex-1 justify-end items-center",
-					])
-				}}>
-					@if(isset($nav))
-						{{ $nav }}
-					@endif
-				</div>
-			@endif
+    <!-- Secondary Sidebar -->
+    <div :class="sidebarOpen ? 'w-64' : 'w-0'" class="bg-gray-100 dark:bg-gray-800 transition-width duration-300 overflow-hidden">
+        <div class="py-4 space-y-2">
+            {{ $sidebar ?? '' }}
+        </div>
+    </div>
 
-		</div>
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+        <!-- Top Navigation Bar -->
+        <div class="bg-white dark:bg-gray-800">
+            <div class="max-w-full w-full">
+                <div class="flex justify-between items-center ">
+                    <!-- Placeholder for content in the navbar -->
+                    {{ $navbar ?? '' }}
 
-		{{ $slot }}
+                </div>
+            </div>
+        </div>
 
-		
-	</div>
-
-
+        <!-- Page Content -->
+        <div class="flex-1 overflow-y-auto bg-white dark:bg-gray-900">
+            {{ $slot }}
+        </div>
+    </div>
 </div>
