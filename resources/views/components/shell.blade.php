@@ -15,7 +15,7 @@
     </div>
 
     <!-- Secondary Sidebar -->
-    <div :class="sidebarOpen ? 'w-64' : 'w-0'" class="bg-gray-100 dark:bg-gray-950 transition-width duration-300 overflow-hidden">
+    <div :class="sidebarOpen ? 'w-64' : 'w-0'" class="bg-gray-100 dark:bg-black dark:border-l-[1px] dark:border-gray-900/60 dark:border-r-[1px] transition-width duration-300 overflow-hidden">
         <div class="py-4 space-y-2">
             {{ $sidebar ?? '' }}
         </div>
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Page Content -->
-        <div class="flex-1 overflow-y-auto bg-white dark:bg-black dark:border-l-[1px] dark:border-gray-900/60">
+        <div class="flex-1 overflow-y-auto bg-white dark:bg-black">
             {{ $slot }}
         </div>
     </div>
