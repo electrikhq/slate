@@ -1,7 +1,8 @@
 @props([
     'type' => 'text',
     'label' => null,
-    'name',
+    'id' => null,
+    'name' => null,
     'value' => '',
     'placeholder' => '',
     'required' => false,
@@ -40,7 +41,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
 	@endif
     <div class="relative flex items-center">
         @if($prefix)
-            <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errors->has($name) ? 'border-red-600' : 'border-gray-300 dark:border-gray-600' }} bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-300">
+            <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errors->has($name) ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
                 {!! $prefix !!}
             </span>
         @endif
@@ -49,7 +50,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
             'name' => $name,
             'value' => old($name, $value),
             'placeholder' => $placeholder,
-            'id' => $name,
+            'id' => $id ?? $name,
             'class' => 'block w-full border shadow-xs placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ' .
                       $sizeClass .
                       ($prefix ? ' rounded-l-none' : ' rounded-l-md') .
@@ -64,7 +65,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
             {{ $disabled ? 'disabled' : '' }}
         />
         @if($suffix)
-            <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errors->has($name) ? 'border-red-600' : 'border-gray-300 dark:border-gray-600' }} bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-300">
+            <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errors->has($name) ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
                 {!! $suffix !!}
             </span>
         @endif
