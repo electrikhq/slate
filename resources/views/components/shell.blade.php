@@ -1,7 +1,3 @@
-@props([
-    'color' => 'light',
-])
-
 <div x-data="{ sidebarOpen: true }" @toggle-sidebar.window="sidebarOpen = !sidebarOpen" class="flex h-screen overflow-hidden">
     <!-- Primary Sidebar -->
     <div class="flex flex-col h-screen w-14 justify-between items-center py-4 bg-gray-200 dark:bg-black">
