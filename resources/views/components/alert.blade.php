@@ -21,8 +21,8 @@ $sizeClass = $sizes[$size] ?? $sizes['md'];
 if (in_array($color, ['black', 'white'])) {
     $colorClasses = $outlined
         ? ($color === 'black' 
-            ? 'border-black text-black dark:border-white dark:text-white' 
-            : 'border-white text-black dark:border-black dark:text-white')
+            ? 'border border-white text-black dark:border-black dark:text-white' 
+            : 'border border-black text-black dark:border-white dark:text-white')
         : ($color === 'black' 
             ? 'bg-black text-white dark:bg-white dark:text-black' 
             : 'bg-white text-black dark:bg-black dark:text-white');
