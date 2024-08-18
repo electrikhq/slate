@@ -26,15 +26,15 @@ $selectClasses = 'block w-full border border-gray-300 rounded-md shadow-sm focus
                  ' dark:bg-black dark:text-white dark:border-gray-900 dark:placeholder-gray-600';
 
 $labelClasses = 'block text-sm font-medium text-gray-700 dark:text-gray-300';
+
+$errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) : null);
+
 @endphp
 
 <div class="space-y-1">
     @if ($label)
-        <label for="{{ $name }}" class="{{ $labelClasses }}">
+        <label for="{{ $name }}" class="{{ $labelClasses }} {{ $errorMessage ? 'text-red-600' : '' }}">
             {{ $label }}
-            @if ($required)
-                <span class="text-red-500">*</span>
-            @endif
         </label>
     @endif
 
@@ -48,7 +48,7 @@ $labelClasses = 'block text-sm font-medium text-gray-700 dark:text-gray-300';
         @endforeach
     </select>
 
-    @if ($error)
-        <p class="mt-1 text-sm text-red-600">{{ $error }}</p>
+    @if ($errorMessage)
+        <p class="mt-1 text-sm text-red-600">{{ $errorMessage }}</p>
     @endif
 </div>

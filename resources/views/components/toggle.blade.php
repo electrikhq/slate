@@ -29,6 +29,9 @@ if (in_array($color, ['black', 'white'])) {
 }
 
 $sizeClass = $sizes[$size] ?? $sizes['md'];
+
+$errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) : null);
+
 @endphp
 
 <label class="flex items-start cursor-pointer">
@@ -46,7 +49,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md'];
     </div>
     @if ($label)
         <div class="ml-3 text-sm">
-            <span class="font-medium text-gray-700 dark:text-gray-300">{{ $label }}</span>
+            <span class="font-medium  {{ $errorMessage ? 'text-red-600' : 'text-gray-700 dark:text-gray-300' }}">{{ $label }}</span>
             @if ($helpText)
                 <p class="text-gray-500 dark:text-gray-400">{{ $helpText }}</p>
             @endif
@@ -54,6 +57,6 @@ $sizeClass = $sizes[$size] ?? $sizes['md'];
     @endif
 </label>
 
-@if ($error)
-    <p class="mt-1 text-sm text-red-600">{{ $error }}</p>
+@if ($errorMessage)
+    <p class="mt-1 text-sm text-red-600">{{ $errorMessage }}</p>
 @endif

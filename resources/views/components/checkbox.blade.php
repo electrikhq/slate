@@ -7,6 +7,10 @@
     'helpText' => null,
     'error' => null,
 ])
+@php
+    $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) : null);
+@endphp
+
 
 <div class="flex items-start">
     <div class="flex items-center h-5">
@@ -15,7 +19,7 @@
             'name' => $name,
             'id' => $name,
             'value' => $value,
-            'class' => 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded' . ($error ? ' border-red-500' : ''),
+            'class' => 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded' . ($errorMessage ? ' border-red-500' : ''),
             ]) }}
             {{ $checked ? 'checked' : '' }}
             {{ $disabled ? 'disabled' : '' }}
@@ -29,7 +33,7 @@
             @endif
         </div>
     @endif
-    @if ($error)
-        <p class="mt-2 text-sm text-red-600">{{ $error }}</p>
+    @if ($errorMessage)
+        <p class="mt-1 text-sm text-red-600">{{ $errorMessage }}</p>
     @endif
 </div>

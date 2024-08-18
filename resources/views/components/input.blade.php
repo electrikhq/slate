@@ -25,6 +25,9 @@ $sizes = [
 ];
 
 $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not provided or invalid
+
+$errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) : null);
+
 @endphp
 
 <div class="space-y-1">
@@ -34,6 +37,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
             {{ $attributes->class([
                 'block font-medium cursor-pointer text-gray-700 dark:text-gray-400',
                 'text-danger-600' => ($name && $errors->has($name)),
+                'text-red-600' => $errorMessage,
             ]) }}
         >
             {{ $label }}
@@ -41,7 +45,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
     @endif
     <div class="relative flex items-center">
         @if($prefix)
-            <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errors->has($name) ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
+            <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errorMessage ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
                 {!! $prefix !!}
             </span>
         @endif
@@ -55,7 +59,7 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
                       $sizeClass .
                       ($prefix ? ' rounded-l-none' : ' rounded-l-md') .
                       ($suffix ? ' rounded-r-none' : ' rounded-r-md') .
-                      ($errors->has($name) ? ' border-red-600' : ' border-gray-300 dark:border-gray-900') .
+                      ($errorMessage ? ' border-red-600' : ' border-gray-300 dark:border-gray-900') .
                       ($disabled ? ' bg-gray-100' : '') .
                       ($readonly ? ' bg-gray-100' : '') .
                       ' dark:bg-black dark:text-white dark:border-gray-900 dark:placeholder-gray-600'
@@ -65,15 +69,15 @@ $sizeClass = $sizes[$size] ?? $sizes['md']; // Fallback to 'md' if size is not p
             {{ $disabled ? 'disabled' : '' }}
         />
         @if($suffix)
-            <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errors->has($name) ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
+            <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errorMessage ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
                 {!! $suffix !!}
             </span>
         @endif
     </div>
     @if($helpText)
         <p class="mt-1 text-sm font-light text-gray-800 dark:text-gray-300">{{ $helpText }}</p>
-    @endif
-    @if($error)
-        <p class="mt-1 text-sm text-red-600">{{ $error }}</p>
+    @endif    
+    @if ($errorMessage)
+        <p class="mt-1 text-sm text-red-600">{{ $errorMessage }}</p>
     @endif
 </div>
