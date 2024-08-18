@@ -1,13 +1,7 @@
-<div x-data="{ sidebarOpen: true }" @toggle-sidebar.window="sidebarOpen = !sidebarOpen" class="flex h-screen overflow-hidden">
+<div x-data="{ sidebarOpen: true }" @toggle-sidebar.window="sidebarOpen = !sidebarOpen" class="flex min-h-full overflow-hidden">
     <!-- Primary Sidebar -->
-    <div class="flex flex-col h-screen w-14 justify-between items-center py-4 bg-gray-200 dark:bg-black">
-        <div>
-            <x-slate::icon icon="carbon-dashboard" size="md" class="hover:text-gray-700 cursor-pointer" />
-            <!-- Additional primary sidebar icons -->
-        </div>
-        <div>
-            <!-- Icons or buttons at the bottom of the primary sidebar -->
-        </div>
+    <div class="flex flex-col w-14 items-center py-4 bg-gray-200 dark:bg-black">
+        {{ $primarySidebar ?? '' }}
     </div>
 
     <!-- Secondary Sidebar -->
@@ -22,7 +16,7 @@
         <!-- Top Navigation Bar -->
         <div class="bg-white dark:bg-black">
             <div class="max-w-full w-full">
-                <div class="flex justify-between items-center ">
+                <div class="flex items-center">
                     <!-- Placeholder for content in the navbar -->
                     {{ $navbar ?? '' }}
                 </div>
