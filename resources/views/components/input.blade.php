@@ -11,8 +11,8 @@
     'helpText' => null,
     'error' => null,
     'size' => 'md',
-    'prefix' => null,
-    'suffix' => null,
+    'before' => null,
+    'after' => null,
 ])
 
 @php
@@ -44,9 +44,9 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
         </label>
     @endif
     <div class="relative flex items-center">
-        @if($prefix)
+        @if($before)
             <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errorMessage ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
-                {!! $prefix !!}
+                {!! $before !!}
             </span>
         @endif
         <input {{ $attributes->merge([
@@ -57,8 +57,8 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
             'id' => $id ?? $name,
             'class' => 'block w-full border shadow-xs placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ' .
                       $sizeClass .
-                      ($prefix ? ' rounded-l-none' : ' rounded-l-md') .
-                      ($suffix ? ' rounded-r-none' : ' rounded-r-md') .
+                      ($before ? ' rounded-l-none' : ' rounded-l-md') .
+                      ($after ? ' rounded-r-none' : ' rounded-r-md') .
                       ($errorMessage ? ' border-red-600' : ' border-gray-300 dark:border-gray-900') .
                       ($disabled ? ' bg-gray-100' : '') .
                       ($readonly ? ' bg-gray-100' : '') .
@@ -68,9 +68,9 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
             {{ $readonly ? 'readonly' : '' }}
             {{ $disabled ? 'disabled' : '' }}
         />
-        @if($suffix)
+        @if($after)
             <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errorMessage ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
-                {!! $suffix !!}
+                {!! $after !!}
             </span>
         @endif
     </div>
