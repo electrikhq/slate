@@ -7,7 +7,7 @@
     'disabled' => false,
     'href' => null,
     'icon' => null, // Icon name
-    'iconPosition' => 'prefix', // Icon position ('prefix' or 'suffix')
+    'iconPosition' => 'before', // Icon position ('before' or 'after')
     'loading' => false, // Loading state
 ])
 
@@ -54,9 +54,9 @@ $classes = implode(' ', [$baseClasses, $loadingClasses, $sizeClass, $colorClasse
 
 @if($href)
 <a href="{{ $href }}" {{ $attributes->merge(['class' => $classes]) }}>
-    @if($icon && $iconPosition === 'prefix') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="mr-1"/> @endif
+    @if($icon && $iconPosition === 'before') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="mr-1"/> @endif
     {{ $slot }}
-    @if($icon && $iconPosition === 'suffix') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="ml-1"/> @endif
+    @if($icon && $iconPosition === 'after') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="ml-1"/> @endif
 </a>
 @else
 <button type="{{ $type }}" {{ $disabled ? 'disabled' : '' }} {{ $attributes->merge(['class' => $classes]) }}>
@@ -65,8 +65,8 @@ $classes = implode(' ', [$baseClasses, $loadingClasses, $sizeClass, $colorClasse
             <x-slate::icon icon="carbon-renew" class="animate-spin" size="xs" color="$iconColor"/>
         </span>
     @endif
-    @if($icon && $iconPosition === 'prefix') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="mr-1"/> @endif
+    @if($icon && $iconPosition === 'before') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="mr-1"/> @endif
     {{ $slot }}
-    @if($icon && $iconPosition === 'suffix') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="ml-1"/> @endif
+    @if($icon && $iconPosition === 'after') <x-slate::icon :icon="$icon" size="xs" color="$iconColor" class="ml-1"/> @endif
 </button>
 @endif
