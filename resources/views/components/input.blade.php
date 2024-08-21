@@ -35,9 +35,9 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
         <label
             for="{{ $name }}"
             {{ $attributes->class([
-                'block font-medium cursor-pointer text-gray-700 dark:text-gray-400',
-                'text-danger-600' => ($name && $errors->has($name)),
-                'text-red-600' => $errorMessage,
+                'block font-medium cursor-pointer text-neutral-700 dark:text-neutral-300',
+                'text-danger-600 dark:text-danger-700' => ($name && $errors->has($name)),
+                'text-red-600 dark:text-red-700' => $errorMessage,
             ]) }}
         >
             {{ $label }}
@@ -45,7 +45,7 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
     @endif
     <div class="relative flex items-center">
         @if($before)
-            <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errorMessage ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
+            <span class="inline-flex items-center {{ $sizeClass }} rounded-l-md border border-r-0 {{ $errorMessage ? 'border-red-600 dark:border-red-700' : 'border-neutral-300 dark:border-neutral-600' }} bg-neutral-50 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-300">
                 {!! $before !!}
             </span>
         @endif
@@ -55,29 +55,29 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
             'value' => old($name, $value),
             'placeholder' => $placeholder,
             'id' => $id ?? $name,
-            'class' => 'block w-full border shadow-xs placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ' .
+            'class' => 'block w-full border shadow-xs placeholder-neutral-400 dark:placeholder-neutral-500 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-neutral-500 dark:focus:border-neutral-500 ' .
                       $sizeClass .
                       ($before ? ' rounded-l-none' : ' rounded-l-md') .
                       ($after ? ' rounded-r-none' : ' rounded-r-md') .
-                      ($errorMessage ? ' border-red-600' : ' border-gray-300 dark:border-gray-900') .
-                      ($disabled ? ' bg-gray-100' : '') .
-                      ($readonly ? ' bg-gray-100' : '') .
-                      ' dark:bg-black dark:text-white dark:border-gray-900 dark:placeholder-gray-600'
+                      ($errorMessage ? ' border-red-600 dark:border-red-700' : ' border-neutral-300 dark:border-neutral-600') .
+                      ($disabled ? ' bg-neutral-100 dark:bg-neutral-800' : '') .
+                      ($readonly ? ' bg-neutral-100 dark:bg-neutral-800' : '') .
+                      ' dark:bg-black dark:text-white'
             ]) }}
             {{ $required ? 'required' : '' }}
             {{ $readonly ? 'readonly' : '' }}
             {{ $disabled ? 'disabled' : '' }}
         />
         @if($after)
-            <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errorMessage ? 'border-red-600' : 'border-gray-300 dark:border-gray-900' }} bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-300">
+            <span class="inline-flex items-center {{ $sizeClass }} rounded-r-md border border-l-0 {{ $errorMessage ? 'border-red-600 dark:border-red-700' : 'border-neutral-300 dark:border-neutral-600' }} bg-neutral-50 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-300">
                 {!! $after !!}
             </span>
         @endif
     </div>
     @if($helpText)
-        <p class="mt-1 text-sm font-light text-gray-800 dark:text-gray-300">{{ $helpText }}</p>
+        <p class="mt-1 text-sm font-light text-neutral-700 dark:text-neutral-500">{{ $helpText }}</p>
     @endif    
     @if ($errorMessage)
-        <p class="mt-1 text-sm text-red-600">{{ $errorMessage }}</p>
+        <p class="mt-1 text-sm text-red-600 dark:text-red-700">{{ $errorMessage }}</p>
     @endif
 </div>

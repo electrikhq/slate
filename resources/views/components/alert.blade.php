@@ -2,7 +2,7 @@
     'size' => 'md', // Default size
     'dismissible' => false, // Option to make the alert dismissible
     'icon' => null, // Optional icon
-    'color' => 'blue', // Default color
+    'color' => 'primary', // Default color
     'outlined' => false, // Outlined style
     'fullWidth' => false, // Full-width style
 ])
@@ -36,7 +36,7 @@ if (in_array($color, ['black', 'white'])) {
 $fullWidthClass = $fullWidth ? 'w-full mx-0 px-2' : 'rounded-md shadow-sm';
 
 // Dismissible button class
-$dismissButtonClass = 'text-current hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:hover:text-gray-300';
+$dismissButtonClass = 'text-current hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:hover:text-neutral-300';
 
 // Merge all classes
 $classes = implode(' ', [$sizeClass, $colorClasses, $fullWidthClass, 'flex items-center justify-between']);

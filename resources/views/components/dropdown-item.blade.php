@@ -24,7 +24,7 @@ $iconSizes = [
 $sizeClass = $sizes[$size] ?? $sizes['md'];
 $iconSizeClass = $iconSizes[$size] ?? $iconSizes['md'];
 
-$baseClasses = 'flex items-center text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer whitespace-nowrap';
+$baseClasses = 'flex items-center text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer whitespace-nowrap';
 $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
 @endphp
 
@@ -35,7 +35,7 @@ $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
     <div class="flex flex-col">
         <span>{{ $label }}</span>
         @if($description)
-            <span class="text-xs text-gray-500 dark:text-gray-400">{{ $description }}</span>
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ $description }}</span>
         @endif
     </div>
 </a>
