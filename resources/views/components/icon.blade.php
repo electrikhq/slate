@@ -31,8 +31,8 @@ if ($color === 'currentColor' && $darkColor) {
         'danger' => 'text-danger-500 dark:text-danger-400',
         'warning' => 'text-warning-500 dark:text-warning-400',
         'info' => 'text-info-500 dark:text-info-400',
-        'light' => 'text-gray-100 dark:text-gray-300',
-        'dark' => 'text-gray-800 dark:text-gray-600',
+        'light' => 'text-neutral-100 dark:text-neutral-300',
+        'dark' => 'text-neutral-800 dark:text-neutral-600',
         // Add more mappings as needed
     ];
 
