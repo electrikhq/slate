@@ -5,7 +5,7 @@
     'initials' => null, // Initials to display if no image
     'rounded' => true, // Whether the avatar is fully rounded
     'status' => null, // Status indicator (e.g., 'online', 'offline', 'busy')
-    'color' => 'gray', // Background color for initials and status
+    'color' => 'primary', // Background color for initials and status
     'outlined' => false, // Outlined style
 
 ])
@@ -44,10 +44,10 @@ if (in_array($color, ['black', 'white'])) {
 // Status indicator classes
 $statusColors = [
     'online' => 'bg-green-500',
-    'offline' => 'bg-gray-500',
+    'offline' => 'bg-neutral-500',
     'busy' => 'bg-red-500',
 ];
-$statusClass = $status ? ($statusColors[$status] ?? 'bg-gray-500') : null;
+$statusClass = $status ? ($statusColors[$status] ?? 'bg-neutral-500') : null;
 @endphp
 
 <div class="relative inline-block {{ $sizeClass }} {{ $roundedClass }} overflow-hidden {{ $bgColorClass }} z-0">
@@ -60,6 +60,6 @@ $statusClass = $status ? ($statusColors[$status] ?? 'bg-gray-500') : null;
     @endif
 
     @if ($status)
-        <span class="absolute z-10 bottom-0 right-0 block w-3 h-3 {{ $roundedClass }} {{ $statusClass }} ring-2 ring-white dark:ring-gray-900"></span>
+        <span class="absolute z-10 bottom-0 right-0 block w-3 h-3 {{ $roundedClass }} {{ $statusClass }} ring-2 ring-white dark:ring-neutral-900"></span>
     @endif
 </div>

@@ -28,7 +28,7 @@ if (in_array($color, ['black', 'white'])) {
     // Handle other colors dynamically
     $colorClass = $outlined
         ? "text-{$color}-600 border border-{$color}-600 dark:text-{$color}-400 dark:border-{$color}-400"
-        : "bg-{$color}-500 text-white dark:bg-{$color}-700 dark:text-gray-200";
+        : "bg-{$color}-500 text-white dark:bg-{$color}-700 dark:text-neutral-200";
 }
 
 $sizeClass = $sizes[$size] ?? $sizes['md'];
