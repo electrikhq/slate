@@ -1,6 +1,6 @@
 <?php
 
-namespace Slate\Slate;
+namespace Electrik\Slate;
 
 use Illuminate\Support\ServiceProvider;
 

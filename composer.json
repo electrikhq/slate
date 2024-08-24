@@ -15,13 +15,16 @@
     },
 	"autoload": {
         "psr-4": {
-            "Slate\\Slate\\": "src/"
-        }
+            "Electrik\\Slate\\": "src/"
+        },
+        "files": [
+            "src/Helpers/SlateUiHelper.php"
+        ]
     },
 	"extra": {
         "laravel": {
             "providers": [
-                "Slate\\Slate\\SlateServiceProvider"
+                "Electrik\\Slate\\SlateServiceProvider"
             ]
         }
     }

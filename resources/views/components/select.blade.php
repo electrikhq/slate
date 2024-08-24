@@ -4,6 +4,7 @@
     'options' => [], // Options for the select dropdown
     'size' => 'md', // Size of the select element
     'placeholder' => null, // Optional placeholder option
+    'helpText' => null,
     'disabled' => false, // Disabled state
     'required' => false, // Required state
     'multiple' => false, // Allow multiple selections
@@ -16,16 +17,25 @@ $sizes = [
     'sm' => 'px-2 py-1 text-sm',
     'md' => 'px-3 py-2 text-base', // Default size
     'lg' => 'px-4 py-3 text-lg',
+    'xl' => 'px-6 py-6 text-xl',
 ];
 
 $sizeClass = $sizes[$size] ?? $sizes['md'];
+$textSizes = [
+    'sm' => 'text-sm',
+    'md' => 'text-base', // Default size
+    'lg' => 'text-lg',
+    'xl' => 'text-xl',
+];
+
+$labelTextSize = $textSizes[$size] ?? $textSizes['md'];
 
 // Combine all classes
-$selectClasses = 'block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ' .
-                 ($disabled ? 'bg-gray-100 cursor-not-allowed' : '') .
-                 ' dark:bg-black dark:text-white dark:border-gray-900 dark:placeholder-gray-600';
+$selectClasses = 'block w-full border border-neutral-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ' .
+                 ($disabled ? 'bg-neutral-100 cursor-not-allowed' : '') .
+                 ' dark:bg-black dark:text-white dark:border-neutral-900 dark:placeholder-neutral-600';
 
-$labelClasses = 'block text-sm font-medium text-gray-700 dark:text-gray-300';
+$labelClasses = 'block font-medium text-neutral-700 dark:text-neutral-300 ' . $labelTextSize;
 
 $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) : null);
 
@@ -47,6 +57,10 @@ $errorMessage = $error ?: ($name && $errors->has($name) ? $errors->first($name) 
             <option value="{{ $value }}">{{ $text }}</option>
         @endforeach
     </select>
+
+    @if($helpText)
+        <p class="mt-1 text-sm font-light text-neutral-700 dark:text-neutral-400">{{ $helpText }}</p>
+    @endif    
 
     @if ($errorMessage)
         <p class="mt-1 text-sm text-red-600">{{ $errorMessage }}</p>

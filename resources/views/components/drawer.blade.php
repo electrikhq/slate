@@ -1,6 +1,6 @@
 @props([
     'size' => 'md', // Default size
-    'color' => 'white', // Default color
+    'color' => 'primary', // Default color
     'outlined' => false, // Outlined style
     'position' => 'left', // Position of the drawer ('left', 'right', 'top', 'bottom')
 ])
@@ -29,15 +29,15 @@ if (in_array($color, ['black', 'white'])) {
     // Handle other colors dynamically
     $colorClass = $outlined
         ? "text-{$color}-600 bg-transparent dark:text-{$color}-200"
-        : "bg-{$color}-500 text-white dark:bg-{$color}-700 dark:text-gray-200";
+        : "bg-{$color}-500 text-white dark:bg-{$color}-700 dark:text-neutral-200";
 }
 
 // Determine position classes and transitions based on position
 $positionClass = match ($position) {
-    'right' => 'right-0 top-0 h-full',
-    'top' => 'top-0 left-0 w-full',
-    'bottom' => 'bottom-0 left-0 w-full',
-    default => 'left-0 top-0 h-full', // Default to left
+    'right' => 'right-0 top-0 h-full rounded-l-lg',
+    'top' => 'top-0 left-0 w-full rounded-b-lg',
+    'bottom' => 'bottom-0 left-0 w-full rounded-t-lg',
+    default => 'left-0 top-0 h-full rounded-r-lg', // Default to left
 };
 
 $visibilityClass = match ($position) {
@@ -55,7 +55,7 @@ $openClass = match ($position) {
 };
 
 $transitionClass = 'transition-transform ease-in-out duration-300';
-$roundedClass = 'rounded-lg shadow-lg'; // Consistent rounded corners and shadow for drawers
+$roundedClass = 'shadow-lg'; // Consistent rounded corners and shadow for drawers
 @endphp
 
 <div x-data="{ open: false }" 
@@ -86,7 +86,7 @@ $roundedClass = 'rounded-lg shadow-lg'; // Consistent rounded corners and shadow
                 <div class="flex-1">
                     {{ $header }}
                 </div>
-                <button type="button" @click="open = false" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white">
+                <button type="button" @click="open = false" class="text-neutral-500 hover:text-neutral-700 dark:text-neutral-300 dark:hover:text-white">
                     <x-slate::icon icon="carbon-close" size="md" />
                 </button>
             </div>

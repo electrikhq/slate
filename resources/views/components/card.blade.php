@@ -1,6 +1,6 @@
 @props([
     'size' => 'md', // Default size
-    'color' => 'white', // Default color
+    'color' => 'neutral', // Default color
     'outlined' => false, // Outlined style
     'header' => null, // Optional header content
     'footer' => null, // Optional footer content
