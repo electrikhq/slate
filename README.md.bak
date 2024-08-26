@@ -8,7 +8,9 @@ Slate UI Kit is a set of beautiful anonymous blade components built using [tailw
 This package is under active development. Use responsibly!
 ```
 
-![Slate UI Application Shell Screenshot](https://i.postimg.cc/DF8F9fFh/screenshot-rocks.png "Slate UI Application Shell Screenshot")
+![Slate UI Auth Login Screen Screenshot](https://i.postimg.cc/nV27DBj2/Electrik-Slate-Laravel-Blade-UI-Kit-Demo-Electrik-Laravel-Saa-S-Starter-Kit-Login-Screen.png)
+
+
 
 ## Requirements
 
@@ -23,7 +25,7 @@ Slate UI kit is entirely dependent on Tailwind CSS. If you are using another CSS
 **Start by installing the package using composer.**
 
 ```bash
-composer require neerajsohal/slate
+composer require electrik/slate
 ```
 
 Many of our components have (and will have) placeholders for icons. For these icons, we use blade [blade-carbon-icons](https://github.com/codeat3/blade-carbon-icons). You may use other icon sets available here - [blade-icons](https://github.com/blade-ui-kit/blade-icons).
@@ -81,7 +83,7 @@ const { fontFamily } = require('tailwindcss/defaultTheme')
 module.exports = {
     purge: [
         './resources/**/*.blade.php',
-        './vendor/neerajsohal/slate/resources/views/components/**/*.blade.php',
+        './vendor/electrik/slate/resources/views/components/**/*.blade.php',
     ],
     theme: {
         extend: {
@@ -116,5 +118,3 @@ For example, for badge using the following will generate badges
 <x-slate::badge color="success" size="sm">small badge</x-slate::badge> 
 <x-slate::badge color="success" size="lg">large badge</x-slate::badge> 
 ```
-
-![badges](https://i.postimg.cc/zXq4011d/Screenshot-2021-12-22-at-12-29-41.png)
