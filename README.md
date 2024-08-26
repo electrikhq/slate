@@ -1,16 +1,10 @@
-![](https://opengraph.githubassets.com/master/electrikhq/slate)
-
 # Slate
 
 Slate UI Kit is a set of beautiful anonymous blade components built using [tailwindcss](https://tailwindcss.com/) for your next [Laravel](https://laravel.com) project.
 
-```
-This package is under active development. Use responsibly!
-```
-
 ![Slate UI Auth Login Screen Screenshot](https://i.postimg.cc/nV27DBj2/Electrik-Slate-Laravel-Blade-UI-Kit-Demo-Electrik-Laravel-Saa-S-Starter-Kit-Login-Screen.png)
 
-
+[Demo](https://electrik.dev/demo/slate/forms) | [Documentation](https://electrik.dev/docs/slate/master)
 
 ## Requirements
 
