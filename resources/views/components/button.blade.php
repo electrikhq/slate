@@ -9,12 +9,13 @@
     'icon' => null,
     'iconPosition' => 'before',
     'loading' => false,
+    'fullWidth' => false,
 ])
 
 @php
 use Electrik\Slate\SlateUiHelper;
 
-$classes = SlateUiHelper::getButtonClasses($size, $color, $outlined, $rounded, $disabled, $loading);
+$classes = SlateUiHelper::getButtonClasses($size, $color, $outlined, $rounded, $disabled, $loading, $fullWidth);
 $iconColor = (!$outlined) ? 'white' : $color;
 @endphp
 
