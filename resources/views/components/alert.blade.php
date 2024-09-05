@@ -8,38 +8,18 @@
 ])
 
 @php
-// Define size classes
-$sizes = [
-    'sm' => 'px-3 py-2 text-sm',
-    'md' => 'px-4 py-3 text-base', // Default size
-    'lg' => 'px-5 py-4 text-lg',
-];
 
-$sizeClass = $sizes[$size] ?? $sizes['md'];
+use Electrik\Slate\SlateUiHelper;
 
-// Handle black and white colors explicitly
-if (in_array($color, ['black', 'white'])) {
-    $colorClasses = $outlined
-        ? ($color === 'black' 
-            ? 'border border-white text-black dark:border-black dark:text-white' 
-            : 'border border-black text-black dark:border-white dark:text-white')
-        : ($color === 'black' 
-            ? 'bg-black text-white dark:bg-white dark:text-black' 
-            : 'bg-white text-black dark:bg-black dark:text-white');
-} else {
-    // Handle other colors dynamically
-    $colorClasses = $outlined
-        ? "border border-{$color}-600 text-{$color}-600 dark:border-{$color}-400 dark:text-{$color}-200"
-        : "bg-{$color}-100 text-{$color}-800 dark:bg-{$color}-900 dark:text-{$color}-200";
-}
-
+$alertClasses = SlateUIHelper::getAlertClasses($size, $color, $outlined, $fullWidth);
 $fullWidthClass = $fullWidth ? 'w-full mx-0 px-2' : 'rounded-md shadow-sm';
 
 // Dismissible button class
 $dismissButtonClass = 'text-current hover:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 dark:hover:text-neutral-300';
 
 // Merge all classes
-$classes = implode(' ', [$sizeClass, $colorClasses, $fullWidthClass, 'flex items-center justify-between']);
+$classes = implode(' ', [$alertClasses, 'flex items-center justify-between']);
+
 @endphp
 
 <div x-data="{ alertDismissed: false }" x-show="!alertDismissed" {{ $attributes->merge(['class' => $classes]) }}>
