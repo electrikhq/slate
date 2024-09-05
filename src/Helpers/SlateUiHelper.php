@@ -19,6 +19,11 @@ class SlateUiHelper {
                 'md' => 'px-4 py-3 text-base',
                 'lg' => 'px-5 py-4 text-lg',
             ],
+            'header' => [
+                'sm' => 'px-3 py-2 text-sm',
+                'md' => 'px-4 py-3 text-base',
+                'lg' => 'px-5 py-4 text-lg',
+            ],
             'avatar' => [
                 'sm' => 'w-8 h-8 text-sm',
                 'md' => 'w-12 h-12 text-base',
@@ -226,6 +231,86 @@ class SlateUiHelper {
         return $outlined ? $borderClasses[$color]['outlined'] : $borderClasses['neutral']['default'];
     }
 
+    // Consolidated hover classes method
+    public static function getHoverClasses($color, $outlined, $component = 'default')
+    {
+        $hoverVariants = [
+            'black' => [
+                'default' => "hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black",
+                'outlined' => "hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black",
+            ],
+            'white' => [
+                'default' => "hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white",
+                'outlined' => "hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white",
+            ],
+            'red' => [
+                'default' => "hover:bg-red-600 hover:text-white dark:hover:bg-red-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900 dark:hover:text-red-200",
+            ],
+            'green' => [
+                'default' => "hover:bg-green-600 hover:text-white dark:hover:bg-green-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-green-50 hover:text-green-700 dark:hover:bg-green-900 dark:hover:text-green-200",
+            ],
+            'neutral' => [
+                'default' => "hover:bg-neutral-600 hover:text-white dark:hover:bg-neutral-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-neutral-50 hover:text-neutral-700 dark:hover:bg-neutral-900 dark:hover:text-neutral-200",
+            ],
+            'indigo' => [
+                'default' => "hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-indigo-50 hover:text-indigo-700 dark:hover:bg-indigo-900 dark:hover:text-indigo-200",
+            ],
+            'yellow' => [
+                'default' => "hover:bg-yellow-600 hover:text-white dark:hover:bg-yellow-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-yellow-50 hover:text-yellow-700 dark:hover:bg-yellow-900 dark:hover:text-yellow-200",
+            ],
+            'blue' => [
+                'default' => "hover:bg-blue-600 hover:text-white dark:hover:bg-blue-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-900 dark:hover:text-blue-200",
+            ],
+            'gray' => [
+                'default' => "hover:bg-gray-600 hover:text-white dark:hover:bg-gray-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-gray-900 dark:hover:text-gray-200",
+            ],
+            'primary' => [
+                'default' => "hover:bg-primary-600 hover:text-white dark:hover:bg-primary-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900 dark:hover:text-primary-200",
+            ],
+            'secondary' => [
+                'default' => "hover:bg-secondary-600 hover:text-white dark:hover:bg-secondary-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-secondary-50 hover:text-secondary-700 dark:hover:bg-secondary-900 dark:hover:text-secondary-200",
+            ],
+            'info' => [
+                'default' => "hover:bg-info-600 hover:text-white dark:hover:bg-info-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-info-50 hover:text-info-700 dark:hover:bg-info-900 dark:hover:text-info-200",
+            ],
+            'warning' => [
+                'default' => "hover:bg-warning-600 hover:text-white dark:hover:bg-warning-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-warning-50 hover:text-warning-700 dark:hover:bg-warning-900 dark:hover:text-warning-200",
+            ],
+            'success' => [
+                'default' => "hover:bg-success-600 hover:text-white dark:hover:bg-success-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-success-50 hover:text-success-700 dark:hover:bg-success-900 dark:hover:text-success-200",
+            ],
+            'danger' => [
+                'default' => "hover:bg-danger-600 hover:text-white dark:hover:bg-danger-800 dark:hover:text-neutral-200",
+                'outlined' => "hover:bg-danger-50 hover:text-danger-700 dark:hover:bg-danger-900 dark:hover:text-danger-200",
+            ],
+            // Add more colors here if necessary
+        ];
+
+        // Default hover classes to fall back on if a specific color is not defined
+        $defaultHoverClasses = [
+            'default' => "hover:bg-gray-600 hover:text-white dark:hover:bg-gray-800 dark:hover:text-neutral-200",
+            'outlined' => "hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-gray-900 dark:hover:text-gray-200",
+        ];
+
+        // Determine the variant based on whether it's outlined or not
+        $variant = $outlined ? 'outlined' : 'default';
+
+        // Return the hover classes for the specified color, or fall back to the default hover classes
+        return $hoverVariants[$color][$variant] ?? $defaultHoverClasses[$variant];
+    }
+
     // Consolidated background class method
     public static function getBackgroundClass($disabled, $readonly)
     {
@@ -268,6 +353,7 @@ class SlateUiHelper {
         $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
         $colorClasses = self::getColorClasses($color, $outlined);
         $fullWidthClassses = $fullWidth ? 'w-full' : '';
+        $hoverClasses = self::getHoverClasses($color, $outlined, 'button');
 
         return implode(' ', [
             $baseClasses,
@@ -277,6 +363,7 @@ class SlateUiHelper {
             $roundedClasses,
             $disabledClasses,
             $fullWidthClassses,
+            $hoverClasses,
         ]);
     }
 
@@ -308,6 +395,16 @@ class SlateUiHelper {
         $fullWidthClass = $fullWidth ? 'w-full mx-0 px-2' : 'rounded-md shadow-sm';
 
         return implode(' ', [$sizeClass, $colorClasses, $fullWidthClass]);
+    }
+
+    public static function getHeaderClasses($size, $color, $shadow, $fullWidth)
+    {
+        $sizeClass = self::getSizeClass('header', $size);
+        $colorClasses = self::getColorClasses($color, false, 'header');
+        $fullWidthClass = $fullWidth ? 'w-full mx-0 px-2' : 'rounded-md';
+        $shadowClass = $shadow ? 'shadow-xs' : '';
+
+        return implode(' ', [$sizeClass, $colorClasses, $fullWidthClass, $shadowClass]);
     }
 
     public static function getAvatarClasses($size, $color, $rounded, $outlined)
