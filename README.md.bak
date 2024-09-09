@@ -78,6 +78,7 @@ module.exports = {
     purge: [
         './resources/**/*.blade.php',
         './vendor/electrik/slate/resources/views/components/**/*.blade.php',
+        './vendor/electrik/slate/src/Helpers/SlateUiHelper.php',
     ],
     theme: {
         extend: {
