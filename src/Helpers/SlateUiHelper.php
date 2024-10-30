@@ -193,9 +193,17 @@ class SlateUiHelper {
     public static function getBorderColor($color, $outlined)
     {
         $borderClasses = [
+            'white' => [
+                'default' => 'border-white dark:border-white',
+                'outlined' => "border-white dark:border-white",
+            ],
+            'black' => [
+                'default' => 'border-black dark:border-black',
+                'outlined' => "border-black dark:border-black",
+            ],
             'neutral' => [
                 'default' => 'border-neutral-300 dark:border-neutral-600',
-                'outlined' => "border-{$color}-600 dark:border-{$color}-700",
+                'outlined' => "border-neutral-600 dark:border-neutral-700",
             ],
             'red' => [
                 'default' => 'border-red-300 dark:border-red-600',

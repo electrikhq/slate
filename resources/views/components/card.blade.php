@@ -15,6 +15,7 @@ use Electrik\Slate\SlateUiHelper;
 $cardClasses = SlateUiHelper::getCardClasses($size, $color, $outlined, $rounded);
 $borderClasses = SlateUiHelper::getBorderColor($color, $outlined);
 
+
 @endphp
 
 <div {{ $attributes->merge(['class' => "$cardClasses"]) }}>
@@ -37,7 +38,7 @@ $borderClasses = SlateUiHelper::getBorderColor($color, $outlined);
     </div>
 
     @if ($footer)
-        <div class="{{ $borderColorClass }} border-t px-2 py-2">
+        <div class="{{ $borderClasses }} border-t px-2 py-2">
             {{ $footer }}
         </div>
     @endif
