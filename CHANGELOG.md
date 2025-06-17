@@ -1,3 +1,20 @@
+## 1.2.0 (2025-06-17)
+
+### Feat
+
+- added header component
+- added header component
+
+### Refactor
+
+- added support for L12
+- added funding.json manifest url
+- updated card classes
+- added cz config
+- fixed classes, added default classes for custom colors, added bg transistion classes
+
+## 1.0.0 (2024-08-26)
+
 ## 1.1.0 (2024-09-05)
 
 ### Feat
