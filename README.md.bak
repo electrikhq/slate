@@ -1,13 +1,17 @@
 # Slate UI Kit
 
-A **shadcn/ui clone** for Laravel Blade - Beautiful, accessible components built with Tailwind CSS v4.
-
 [![Latest Version](https://img.shields.io/packagist/v/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
 [![Total Downloads](https://img.shields.io/packagist/dt/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
 
+Slate UI Kit is a set of beautiful anonymous blade components built using [tailwindcss](https://tailwindcss.com/) for your next [Laravel](https://laravel.com) project.
+
+![Slate UI Auth Login Screen Screenshot](https://i.postimg.cc/nV27DBj2/Electrik-Slate-Laravel-Blade-UI-Kit-Demo-Electrik-Laravel-Saa-S-Starter-Kit-Login-Screen.png)
+
+[Demo](https://electrik.dev/demo/slate/forms) | [Documentation](https://electrik.dev/docs/slate/master)
+
 ## ✨ Features
 
-- 🎨 **57 Components** - Complete shadcn/ui component library
+- 🎨 **57 Components** - Complete component library
 - 🎯 **Zero PHP Color Logic** - All colors controlled via CSS variables
 - 🌙 **Dark Mode** - Built-in dark mode support with automatic variable switching
 - ♿ **Accessible** - WCAG 2.1 AA compliant with proper ARIA attributes
@@ -81,7 +85,7 @@ That's it! Slate uses CSS variables and Tailwind v4's `@theme` system, so no `ta
 
 ## 🎨 Components
 
-Slate includes **57 components** matching shadcn/ui:
+Slate includes **57 components**:
 
 ### Core Components
 - Button, Input, Card, Label, Badge
@@ -171,7 +175,7 @@ Slate components are tested using:
 
 - **Unit Tests** - Blade component rendering with different props/variants
 - **Integration Tests** - Components in real Laravel views and forms
-- **Visual Regression Tests** - Screenshot comparison against shadcn/ui
+- **Visual Regression Tests**
 - **Accessibility Tests** - WCAG 2.1 AA compliance using axe-core/Pa11y
 
 ## 📚 Documentation

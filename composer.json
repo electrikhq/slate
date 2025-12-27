@@ -21,6 +21,15 @@
         "php": "^8.1|^8.2|^8.3|^8.4",
         "illuminate/support": "^10.0|^11.0|^12.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^10.6",
+        "phpunit/phpunit": "^12.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Electrik\\Slate\\Tests\\": "tests/"
+        }
+    },
     "autoload": {
         "psr-4": {
             "Electrik\\Slate\\": "src/"
