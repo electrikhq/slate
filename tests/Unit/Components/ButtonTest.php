@@ -161,5 +161,80 @@ class ButtonTest extends TestCase
         $view->assertSee('focus-visible:ring-2');
         $view->assertSee('focus-visible:ring-ring');
     }
+
+    #[Test]
+    public function it_renders_button_with_manual_loading_state()
+    {
+        $view = $this->blade('<x-slate::button loading>Submit</x-slate::button>');
+
+        $view->assertSee('disabled', false);
+        $view->assertSee('animate-spin');
+    }
+
+    #[Test]
+    public function it_shows_loading_text_when_provided()
+    {
+        $view = $this->blade('<x-slate::button loading loadingText="Saving...">Submit</x-slate::button>');
+
+        $view->assertSee('Saving...');
+        $view->assertDontSee('Submit');
+        $view->assertSee('animate-spin');
+    }
+
+    #[Test]
+    public function it_shows_original_text_when_loading_without_loading_text()
+    {
+        $view = $this->blade('<x-slate::button loading>Submit</x-slate::button>');
+
+        $view->assertSee('Submit');
+        $view->assertSee('animate-spin');
+    }
+
+    #[Test]
+    public function it_hides_spinner_when_show_spinner_is_false()
+    {
+        $view = $this->blade('<x-slate::button loading showSpinner="false">Submit</x-slate::button>');
+
+        $view->assertSee('Submit');
+        $view->assertDontSee('animate-spin');
+    }
+
+    #[Test]
+    public function it_auto_detects_livewire_wire_click()
+    {
+        $view = $this->blade('<x-slate::button wire:click="submit">Submit</x-slate::button>');
+
+        $view->assertSee('wire:click="submit"', false);
+        $view->assertSee('wire:loading.attr="disabled"', false);
+        $view->assertSee('wire:loading', false);
+    }
+
+    #[Test]
+    public function it_auto_detects_livewire_wire_submit()
+    {
+        $view = $this->blade('<x-slate::button wire:submit="save">Save</x-slate::button>');
+
+        $view->assertSee('wire:submit="save"', false);
+        $view->assertSee('wire:loading.attr="disabled"', false);
+        $view->assertSee('wire:loading', false);
+    }
+
+    #[Test]
+    public function it_shows_loading_text_with_livewire()
+    {
+        $view = $this->blade('<x-slate::button wire:click="submit" loadingText="Saving...">Submit</x-slate::button>');
+
+        $view->assertSee('wire:loading', false);
+        // Should show loading text when loading
+        $view->assertSee('Saving...');
+    }
+
+    #[Test]
+    public function it_uses_wire_target_when_provided()
+    {
+        $view = $this->blade('<x-slate::button wire:click="submit" wire:target="save">Submit</x-slate::button>');
+
+        $view->assertSee('wire:target="save"', false);
+    }
 }
 
