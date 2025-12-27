@@ -1,3 +1,14 @@
+## 2.0.0-b0 (2025-12-27)
+
+### BREAKING CHANGE
+
+- Foundation is solid. Ready to build components on top.
+
+### Feat
+
+- rebuild slate from scratch - foundation complete
+- added automatic sidebar detection to shell component
+
 ## 1.2.0 (2025-06-17)
 
 ### Feat
