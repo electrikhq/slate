@@ -1,0 +1,294 @@
+/**
+ * Slate UI Kit - CSS Variables
+ * Tailwind CSS v4 Compatible
+ * 
+ * This file defines all CSS variables used by Slate components.
+ * Colors follow standard semantic naming: success, warning, info, error, danger.
+ * 
+ * Colors are defined in :root for dark mode switching,
+ * with custom utilities in @layer utilities for hover variants.
+ */
+
+/* CSS Variables MUST be defined BEFORE utilities that reference them */
+:root {
+  /* Light Mode - Base Colors */
+  --color-background: 0 0% 100%;
+  --color-foreground: 0 0% 3.9%;
+  
+  /* Light Mode - Semantic Colors */
+  --color-primary: 0 0% 9%;
+  --color-primary-foreground: 0 0% 98%;
+  
+  /* Using neutral colors (no blue tint) */
+  --color-secondary: 0 0% 96.1%;
+  --color-secondary-foreground: 0 0% 9%;
+  
+  /* Success - Green */
+  --color-success: 142 71% 45%;
+  --color-success-foreground: 0 0% 98%;
+  
+  /* Warning - Yellow/Orange */
+  --color-warning: 38 92% 50%;
+  --color-warning-foreground: 0 0% 9%;
+  
+  /* Info - Blue */
+  --color-info: 199 89% 48%;
+  --color-info-foreground: 0 0% 98%;
+  
+  /* Error - Red */
+  --color-error: 0 84.2% 60.2%;
+  --color-error-foreground: 0 0% 98%;
+  
+  /* Danger - Darker Red */
+  --color-danger: 0 72% 51%;
+  --color-danger-foreground: 0 0% 98%;
+  
+  --color-muted: 0 0% 96.1%;
+  --color-muted-foreground: 0 0% 45.1%;
+  
+  --color-accent: 0 0% 96.1%;
+  --color-accent-foreground: 0 0% 9%;
+  
+  --color-card: 0 0% 100%;
+  --color-card-foreground: 0 0% 3.9%;
+  
+  --color-popover: 0 0% 100%;
+  --color-popover-foreground: 0 0% 3.9%;
+  
+  /* Light Mode - UI Colors (using neutral - no blue tint) */
+  --color-border: 0 0% 89.8%;
+  --color-input: 0 0% 89.8%;
+  --color-ring: 0 0% 3.9%;
+  
+  /* Border Radius */
+  --radius: 0.5rem;
+}
+
+/* Dark Mode */
+.dark {
+  /* Using neutral colors (no blue tint) */
+  --color-background: 0 0% 3.9%;
+  --color-foreground: 0 0% 98%;
+  
+  --color-primary: 0 0% 98%;
+  --color-primary-foreground: 0 0% 9%;
+  
+  --color-secondary: 0 0% 14.9%;
+  --color-secondary-foreground: 0 0% 98%;
+  
+  /* Success - Green (lighter for dark mode) */
+  --color-success: 142 70% 45%;
+  --color-success-foreground: 0 0% 98%;
+  
+  /* Warning - Yellow/Orange (lighter for dark mode) */
+  --color-warning: 38 92% 50%;
+  --color-warning-foreground: 0 0% 9%;
+  
+  /* Info - Blue (lighter for dark mode) */
+  --color-info: 199 89% 48%;
+  --color-info-foreground: 0 0% 98%;
+  
+  /* Error - Red (darker for dark mode) */
+  --color-error: 0 62.8% 50%;
+  --color-error-foreground: 0 0% 98%;
+  
+  /* Danger - Darker Red (darker for dark mode) */
+  --color-danger: 0 72% 45%;
+  --color-danger-foreground: 0 0% 98%;
+  
+  --color-muted: 0 0% 14.9%;
+  --color-muted-foreground: 0 0% 63.9%;
+  
+  --color-accent: 0 0% 14.9%;
+  --color-accent-foreground: 0 0% 98%;
+  
+  --color-card: 0 0% 3.9%;
+  --color-card-foreground: 0 0% 98%;
+  
+  --color-popover: 0 0% 3.9%;
+  --color-popover-foreground: 0 0% 98%;
+  
+  --color-border: 0 0% 14.9%;
+  --color-input: 0 0% 14.9%;
+  --color-ring: 0 0% 83.1%;
+}
+
+/* Custom utilities with hover variants - Tailwind v4 @theme conflicts with CSS variables */
+@layer utilities {
+  /* Base Colors */
+  .bg-background {
+    background-color: hsl(var(--color-background));
+  }
+  
+  .text-foreground {
+    color: hsl(var(--color-foreground));
+  }
+  
+  /* Primary Colors */
+  .bg-primary {
+    background-color: hsl(var(--color-primary));
+  }
+  
+  .text-primary {
+    color: hsl(var(--color-primary));
+  }
+  
+  .text-primary-foreground {
+    color: hsl(var(--color-primary-foreground));
+  }
+  
+  /* Secondary Colors */
+  .bg-secondary {
+    background-color: hsl(var(--color-secondary));
+  }
+  
+  .text-secondary {
+    color: hsl(var(--color-secondary));
+  }
+  
+  .text-secondary-foreground {
+    color: hsl(var(--color-secondary-foreground));
+  }
+  
+  /* Success Colors */
+  .bg-success {
+    background-color: hsl(var(--color-success));
+  }
+  
+  .text-success {
+    color: hsl(var(--color-success));
+  }
+  
+  .text-success-foreground {
+    color: hsl(var(--color-success-foreground));
+  }
+  
+  /* Warning Colors */
+  .bg-warning {
+    background-color: hsl(var(--color-warning));
+  }
+  
+  .text-warning {
+    color: hsl(var(--color-warning));
+  }
+  
+  .text-warning-foreground {
+    color: hsl(var(--color-warning-foreground));
+  }
+  
+  /* Info Colors */
+  .bg-info {
+    background-color: hsl(var(--color-info));
+  }
+  
+  .text-info {
+    color: hsl(var(--color-info));
+  }
+  
+  .text-info-foreground {
+    color: hsl(var(--color-info-foreground));
+  }
+  
+  /* Error Colors */
+  .bg-error {
+    background-color: hsl(var(--color-error));
+  }
+  
+  .text-error {
+    color: hsl(var(--color-error));
+  }
+  
+  .text-error-foreground {
+    color: hsl(var(--color-error-foreground));
+  }
+  
+  /* Danger Colors */
+  .bg-danger {
+    background-color: hsl(var(--color-danger));
+  }
+  
+  .text-danger {
+    color: hsl(var(--color-danger));
+  }
+  
+  .text-danger-foreground {
+    color: hsl(var(--color-danger-foreground));
+  }
+  
+  /* Muted Colors */
+  .bg-muted {
+    background-color: hsl(var(--color-muted));
+  }
+  
+  .text-muted-foreground {
+    color: hsl(var(--color-muted-foreground));
+  }
+  
+  /* Accent Colors */
+  .bg-accent {
+    background-color: hsl(var(--color-accent));
+  }
+  
+  .text-accent-foreground {
+    color: hsl(var(--color-accent-foreground));
+  }
+  
+  /* Card Colors */
+  .bg-card {
+    background-color: hsl(var(--color-card));
+  }
+  
+  .text-card-foreground {
+    color: hsl(var(--color-card-foreground));
+  }
+  
+  /* Border Colors */
+  .border-border {
+    border-color: hsl(var(--color-border));
+  }
+  
+  .border-input {
+    border-color: hsl(var(--color-input));
+  }
+  
+  /* Hover Variants */
+  .hover\:bg-primary\/90:hover {
+    background-color: hsl(var(--color-primary) / 0.9);
+  }
+  
+  .hover\:bg-primary\/80:hover {
+    background-color: hsl(var(--color-primary) / 0.8);
+  }
+  
+  .hover\:bg-secondary\/80:hover {
+    background-color: hsl(var(--color-secondary) / 0.8);
+  }
+  
+  .hover\:bg-success\/90:hover {
+    background-color: hsl(var(--color-success) / 0.9);
+  }
+  
+  .hover\:bg-warning\/90:hover {
+    background-color: hsl(var(--color-warning) / 0.9);
+  }
+  
+  .hover\:bg-info\/90:hover {
+    background-color: hsl(var(--color-info) / 0.9);
+  }
+  
+  .hover\:bg-error\/90:hover {
+    background-color: hsl(var(--color-error) / 0.9);
+  }
+  
+  .hover\:bg-danger\/90:hover {
+    background-color: hsl(var(--color-danger) / 0.9);
+  }
+  
+  .hover\:bg-accent:hover {
+    background-color: hsl(var(--color-accent));
+  }
+  
+  .hover\:text-accent-foreground:hover {
+    color: hsl(var(--color-accent-foreground));
+  }
+}
