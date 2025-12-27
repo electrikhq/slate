@@ -1,3 +1,27 @@
+## 2.0.0-b1 (2025-12-27)
+
+### BREAKING CHANGE
+
+- None
+- Foundation is solid. Ready to build components on top.
+
+### Feat
+
+- **components**: add Label component and integrated label support
+- add testing framework with component and CSS tests
+- rebuild slate from scratch - foundation complete
+- added automatic sidebar detection to shell component
+- added header component
+- added header component
+
+### Refactor
+
+- added support for L12
+- added funding.json manifest url
+- updated card classes
+- added cz config
+- fixed classes, added default classes for custom colors, added bg transistion classes
+
 ## 2.0.0-b0 (2025-12-27)
 
 ### BREAKING CHANGE
