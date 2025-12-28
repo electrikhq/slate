@@ -31,6 +31,7 @@ class InstallCommand extends Command
         $this->info('Installing Slate UI Kit...');
         $this->newLine();
 
+        $this->installBladeIcons();
         $this->copyCssFile();
         $this->updateAppCss();
         $this->updateTailwindConfig();
@@ -45,6 +46,26 @@ class InstallCommand extends Command
         $this->newLine();
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Setup Blade Icons (publish config).
+     * Note: Blade Icons and Carbon icons are installed automatically via Composer
+     * when Slate is installed, since they're dependencies in slate/composer.json
+     */
+    protected function installBladeIcons(): void
+    {
+        // Blade Icons and Carbon icons are already installed via Composer dependencies
+        $this->info('✅ Blade Icons and Carbon icons installed (via Composer dependencies)');
+
+        // Publish Blade Icons config
+        $this->info('Publishing Blade Icons configuration...');
+        $this->call('vendor:publish', [
+            '--tag' => 'blade-icons',
+            '--force' => false,
+        ]);
+        $this->info('✅ Blade Icons configuration published');
+        $this->info('💡 You can now use icons like: icon="carbon-envelope"');
     }
 
     /**

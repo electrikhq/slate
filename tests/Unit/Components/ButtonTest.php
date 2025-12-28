@@ -293,5 +293,115 @@ class ButtonTest extends TestCase
 
         $view->assertDontSee('aria-disabled', false);
     }
+
+    #[Test]
+    public function it_renders_button_with_icon_on_left()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-envelope">Send Email</x-slate::button>');
+
+        $view->assertSee('Send Email');
+        $view->assertSee('mr-2');
+    }
+
+    #[Test]
+    public function it_renders_button_with_icon_on_right()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-download" icon-position="right">Download</x-slate::button>');
+
+        $view->assertSee('Download');
+        $view->assertSee('ml-2');
+    }
+
+    #[Test]
+    public function it_renders_icon_only_button_when_slot_is_empty()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-settings"></x-slate::button>');
+
+        $view->assertSee('h-10 w-10');
+        $view->assertSee('p-0');
+        // Should not have spacing classes for icon-only
+        $view->assertDontSee('mr-2');
+        $view->assertDontSee('ml-2');
+    }
+
+    #[Test]
+    public function it_applies_correct_icon_size_for_small_button()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-envelope" size="sm">Small</x-slate::button>');
+
+        $view->assertSee('h-3 w-3');
+    }
+
+    #[Test]
+    public function it_applies_correct_icon_size_for_default_button()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-envelope">Default</x-slate::button>');
+
+        $view->assertSee('h-4 w-4');
+    }
+
+    #[Test]
+    public function it_applies_correct_icon_size_for_large_button()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-envelope" size="lg">Large</x-slate::button>');
+
+        $view->assertSee('h-5 w-5');
+    }
+
+    #[Test]
+    public function it_renders_icon_only_button_with_correct_dimensions_for_small()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-settings" size="sm"></x-slate::button>');
+
+        $view->assertSee('h-9 w-9');
+    }
+
+    #[Test]
+    public function it_renders_icon_only_button_with_correct_dimensions_for_large()
+    {
+        // Skip if Blade Icons not available
+        if (!function_exists('svg')) {
+            $this->markTestSkipped('Blade Icons not available in test environment');
+        }
+
+        $view = $this->blade('<x-slate::button icon="carbon-settings" size="lg"></x-slate::button>');
+
+        $view->assertSee('h-11 w-11');
+    }
 }
 

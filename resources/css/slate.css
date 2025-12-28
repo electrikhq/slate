@@ -63,7 +63,8 @@
   --color-popover-foreground: 0 0% 3.9%;
   
   /* Light Mode - UI Colors (using neutral - no blue tint) */
-  --color-border: 0 0% 89.8%;
+  /* Border color - very light gray for subtle borders (softer than before) */
+  --color-border: 0 0% 93%;
   --color-input: 0 0% 89.8%;
   --color-ring: 0 0% 3.9%;
   
@@ -256,6 +257,27 @@
   
   .border-input {
     border-color: hsl(var(--color-input));
+  }
+  
+  /* Semantic Border Colors */
+  .border-success {
+    border-color: hsl(var(--color-success));
+  }
+  
+  .border-warning {
+    border-color: hsl(var(--color-warning));
+  }
+  
+  .border-info {
+    border-color: hsl(var(--color-info));
+  }
+  
+  .border-error {
+    border-color: hsl(var(--color-error));
+  }
+  
+  .border-danger {
+    border-color: hsl(var(--color-danger));
   }
   
   /* Hover Variants */

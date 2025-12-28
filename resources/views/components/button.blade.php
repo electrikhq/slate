@@ -6,6 +6,8 @@
     'loading' => false,
     'loadingText' => null,
     'showSpinner' => true,
+    'icon' => null,
+    'iconPosition' => 'left',
 ])
 
 @php
@@ -13,14 +15,26 @@
     $loading = filter_var($loading, FILTER_VALIDATE_BOOLEAN);
     $showSpinner = filter_var($showSpinner, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
     
-    $baseClasses = 'inline-flex items-center justify-center rounded-md text-sm leading-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
-    
-    // Size classes - matching shadcn/ui exactly
-    $sizeClasses = [
-        'sm' => 'h-9 px-3',
-        'default' => 'h-10 px-4 py-2',
-        'lg' => 'h-11 px-8',
+    // Icon sizing based on button size (matching shadcn/ui patterns)
+    $iconSizeClasses = [
+        'sm' => 'h-3 w-3',
+        'default' => 'h-4 w-4',
+        'lg' => 'h-5 w-5',
     ];
+    $iconSize = $iconSizeClasses[$size] ?? $iconSizeClasses['default'];
+    
+    // Check if slot is empty (for icon-only detection)
+    $slotContent = trim($slot->toHtml());
+    $isIconOnly = !empty($icon) && empty($slotContent);
+    
+    // Adjust padding for icon-only buttons
+    $sizeClasses = [
+        'sm' => $isIconOnly ? 'h-9 w-9 p-0' : 'h-9 px-3',
+        'default' => $isIconOnly ? 'h-10 w-10 p-0' : 'h-10 px-4 py-2',
+        'lg' => $isIconOnly ? 'h-11 w-11 p-0' : 'h-11 px-8',
+    ];
+    
+    $baseClasses = 'inline-flex items-center justify-center rounded-md text-sm leading-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
     
     // Variant classes
     $variantClasses = [
@@ -125,13 +139,39 @@
     
     // Spinner SVG (reusable)
     $spinnerSvg = '<svg class="mr-2 h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+    
+    // Icon classes helper
+    $getIconClasses = function($position) use ($iconSize, $isIconOnly) {
+        $spacingClass = $isIconOnly ? '' : ($position === 'left' ? 'mr-2' : 'ml-2');
+        return trim("{$iconSize} {$spacingClass}");
+    };
+    
+    // Icon rendering helper using Blade Icons svg() function
+    $renderIcon = function($iconName, $position) use ($getIconClasses) {
+        if (empty($iconName)) {
+            return '';
+        }
+        $classes = $getIconClasses($position);
+        // Use svg() helper function from Blade Icons
+        if (function_exists('svg')) {
+            return svg($iconName, $classes)->toHtml();
+        }
+        // Fallback if Blade Icons not available
+        return '';
+    };
 @endphp
 
-<button type="{{ $type }}" {{ $buttonAttributes->except(['loading', 'loadingText', 'showSpinner']) }}>
+<button type="{{ $type }}" {{ $buttonAttributes->except(['loading', 'loadingText', 'showSpinner', 'icon', 'iconPosition']) }}>
     @if($wireLoadingEnabled)
         {{-- Livewire loading state --}}
         <span wire:loading.remove @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+            @if($icon && $iconPosition === 'left')
+                {!! $renderIcon($icon, 'left') !!}
+            @endif
             {{ $slot }}
+            @if($icon && $iconPosition === 'right')
+                {!! $renderIcon($icon, 'right') !!}
+            @endif
         </span>
         <span wire:loading @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
             @if($showSpinner)
@@ -147,7 +187,13 @@
         {{ $displayText }}
     @else
         {{-- Normal state --}}
+        @if($icon && $iconPosition === 'left')
+            {!! $renderIcon($icon, 'left') !!}
+        @endif
         {{ $slot }}
+        @if($icon && $iconPosition === 'right')
+            {!! $renderIcon($icon, 'right') !!}
+        @endif
     @endif
 </button>
 

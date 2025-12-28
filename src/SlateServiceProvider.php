@@ -64,6 +64,11 @@ class SlateServiceProvider extends ServiceProvider
                 'button',
                 'input',
                 'card',
+                'card-header',
+                'card-title',
+                'card-description',
+                'card-content',
+                'card-footer',
                 'label',
                 'badge',
                 // More components will be added as we build them
