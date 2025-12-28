@@ -9,6 +9,13 @@
  * with custom utilities in @layer utilities for hover variants.
  */
 
+/* Font Rendering Optimizations - Matching shadcn/ui sharpness */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 /* CSS Variables MUST be defined BEFORE utilities that reference them */
 :root {
   /* Light Mode - Base Colors */
