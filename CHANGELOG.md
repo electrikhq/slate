@@ -1,3 +1,9 @@
+## 2.0.0-b2 (2025-12-28)
+
+### Fix
+
+- **components**: align typography and accessibility with shadcn/ui
+
 ## 2.0.0-b1 (2025-12-27)
 
 ### BREAKING CHANGE
