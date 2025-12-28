@@ -236,5 +236,62 @@ class ButtonTest extends TestCase
 
         $view->assertSee('wire:target="save"', false);
     }
+
+    #[Test]
+    public function it_sets_aria_busy_when_loading_manually()
+    {
+        $view = $this->blade('<x-slate::button loading>Submit</x-slate::button>');
+
+        $view->assertSee('aria-busy="true"', false);
+    }
+
+    #[Test]
+    public function it_sets_aria_busy_when_livewire_detected()
+    {
+        $view = $this->blade('<x-slate::button wire:click="submit">Submit</x-slate::button>');
+
+        $view->assertSee('aria-busy="true"', false);
+    }
+
+    #[Test]
+    public function it_sets_aria_disabled_when_disabled()
+    {
+        $view = $this->blade('<x-slate::button disabled>Disabled</x-slate::button>');
+
+        $view->assertSee('aria-disabled="true"', false);
+    }
+
+    #[Test]
+    public function it_sets_aria_disabled_when_loading()
+    {
+        $view = $this->blade('<x-slate::button loading>Submit</x-slate::button>');
+
+        $view->assertSee('aria-disabled="true"', false);
+    }
+
+    #[Test]
+    public function it_sets_both_aria_attributes_when_loading()
+    {
+        $view = $this->blade('<x-slate::button loading>Submit</x-slate::button>');
+
+        $view->assertSee('aria-busy="true"', false);
+        $view->assertSee('aria-disabled="true"', false);
+    }
+
+    #[Test]
+    public function it_does_not_set_aria_busy_when_not_loading()
+    {
+        $view = $this->blade('<x-slate::button>Normal</x-slate::button>');
+
+        $view->assertDontSee('aria-busy', false);
+    }
+
+    #[Test]
+    public function it_does_not_set_aria_disabled_when_not_disabled_or_loading()
+    {
+        $view = $this->blade('<x-slate::button>Normal</x-slate::button>');
+
+        $view->assertDontSee('aria-disabled', false);
+    }
 }
 

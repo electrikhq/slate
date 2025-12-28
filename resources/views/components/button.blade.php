@@ -13,11 +13,11 @@
     $loading = filter_var($loading, FILTER_VALIDATE_BOOLEAN);
     $showSpinner = filter_var($showSpinner, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
     
-    $baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+    $baseClasses = 'inline-flex items-center justify-center rounded-md text-sm leading-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
     
     // Size classes - matching shadcn/ui exactly
     $sizeClasses = [
-        'sm' => 'h-9 px-3 text-sm',
+        'sm' => 'h-9 px-3',
         'default' => 'h-10 px-4 py-2',
         'lg' => 'h-11 px-8',
     ];
@@ -92,6 +92,24 @@
     
     // Build button attributes
     $buttonAttributes = $attributes->merge(['class' => $classes]);
+    
+    // WCAG compliance: aria-busy and aria-disabled for loading states
+    $isInLoadingState = $isLoading || $wireLoadingEnabled;
+    $isDisabled = $attributes->has('disabled') || $isInLoadingState;
+    
+    // Add aria-busy when loading (WCAG 2.1 AA compliance)
+    if ($isInLoadingState) {
+        $buttonAttributes = $buttonAttributes->merge([
+            'aria-busy' => 'true',
+        ]);
+    }
+    
+    // Add aria-disabled when disabled or loading (WCAG 2.1 AA compliance)
+    if ($isDisabled) {
+        $buttonAttributes = $buttonAttributes->merge([
+            'aria-disabled' => 'true',
+        ]);
+    }
     
     // Add wire:loading.attr directive if Livewire detected
     if ($wireLoadingEnabled) {

@@ -7,6 +7,7 @@
 
 @php
     // Base classes - matching shadcn/ui exactly (without text size, handled by size)
+    // Note: shadcn's "Small" typography uses font-medium, which is appropriate for labels
     $baseClasses = 'font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70';
     
     // Size classes (includes text size)
