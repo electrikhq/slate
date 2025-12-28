@@ -1,3 +1,19 @@
+## 2.0.0-b3 (2025-12-28)
+
+### BREAKING CHANGE
+
+- None
+
+### Feat
+
+- **components**: add Button icon support and Card component suite
+- **components**: add Label component and integrated label support
+
+### Fix
+
+- **components**: align typography and accessibility standards
+- **components**: align typography and accessibility standards
+
 ## 2.0.0-b2 (2025-12-28)
 
 ### Fix
