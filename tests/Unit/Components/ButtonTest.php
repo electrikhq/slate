@@ -403,5 +403,52 @@ class ButtonTest extends TestCase
 
         $view->assertSee('h-11 w-11');
     }
+
+    #[Test]
+    public function it_automatically_adds_aria_label_for_icon_only_button()
+    {
+        // Icon rendering may fail in test environment, but aria-label should still be added
+        $view = $this->blade('<x-slate::button icon="carbon-settings"></x-slate::button>');
+        $view->assertSee('aria-label="Settings"', false);
+    }
+
+    #[Test]
+    public function it_generates_readable_aria_label_from_icon_name()
+    {
+        $view = $this->blade('<x-slate::button icon="carbon-trash-can"></x-slate::button>');
+        $view->assertSee('aria-label="Trash Can"', false);
+    }
+
+    #[Test]
+    public function it_uses_manual_aria_label_over_automatic_one()
+    {
+        $view = $this->blade('<x-slate::button icon="carbon-settings" aria-label="Custom Label"></x-slate::button>');
+        $view->assertSee('aria-label="Custom Label"', false);
+        // Should not have automatic aria-label
+        $view->assertDontSee('aria-label="Settings"', false);
+    }
+
+    #[Test]
+    public function it_does_not_add_aria_label_when_button_has_text()
+    {
+        $view = $this->blade('<x-slate::button icon="carbon-settings">Settings</x-slate::button>');
+        // Should not have auto-generated aria-label since button has visible text
+        $view->assertDontSee('aria-label="Settings"', false);
+    }
+
+    #[Test]
+    public function it_handles_icon_names_without_carbon_prefix()
+    {
+        $view = $this->blade('<x-slate::button icon="settings"></x-slate::button>');
+        // Should still generate aria-label
+        $view->assertSee('aria-label="Settings"', false);
+    }
+
+    #[Test]
+    public function it_handles_icon_names_with_underscores()
+    {
+        $view = $this->blade('<x-slate::button icon="carbon-user_profile"></x-slate::button>');
+        $view->assertSee('aria-label="User Profile"', false);
+    }
 }
 

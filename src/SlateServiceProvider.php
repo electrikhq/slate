@@ -63,6 +63,7 @@ class SlateServiceProvider extends ServiceProvider
             $components = [
                 'button',
                 'input',
+                'textarea',
                 'card',
                 'card-header',
                 'card-title',

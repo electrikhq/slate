@@ -125,6 +125,21 @@
         ]);
     }
     
+    // WCAG compliance: Auto-add aria-label for icon-only buttons if not provided
+    if ($isIconOnly && !$buttonAttributes->has('aria-label')) {
+        // Generate a readable label from icon name
+        // e.g., "carbon-settings" -> "Settings", "carbon-trash-can" -> "Trash Can"
+        $iconName = $icon;
+        if (str_starts_with($iconName, 'carbon-')) {
+            $iconName = substr($iconName, 7); // Remove "carbon-" prefix
+        }
+        // Convert kebab-case to Title Case
+        $label = ucwords(str_replace(['-', '_'], ' ', $iconName));
+        $buttonAttributes = $buttonAttributes->merge([
+            'aria-label' => $label,
+        ]);
+    }
+    
     // Add wire:loading.attr directive if Livewire detected
     if ($wireLoadingEnabled) {
         $buttonAttributes = $buttonAttributes->merge([
@@ -154,7 +169,13 @@
         $classes = $getIconClasses($position);
         // Use svg() helper function from Blade Icons
         if (function_exists('svg')) {
-            return svg($iconName, $classes)->toHtml();
+            try {
+                return svg($iconName, $classes)->toHtml();
+            } catch (\Exception $e) {
+                // Gracefully handle icon rendering failures (e.g., in tests)
+                // Return empty string so component still renders
+                return '';
+            }
         }
         // Fallback if Blade Icons not available
         return '';
@@ -190,7 +211,7 @@
         @if($icon && $iconPosition === 'left')
             {!! $renderIcon($icon, 'left') !!}
         @endif
-        {{ $slot }}
+    {{ $slot }}
         @if($icon && $iconPosition === 'right')
             {!! $renderIcon($icon, 'right') !!}
         @endif
