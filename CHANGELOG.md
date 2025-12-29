@@ -1,3 +1,9 @@
+## 2.0.0-b6 (2025-12-29)
+
+### Feat
+
+- **components**: add Checkbox component and remove shadcn references
+
 ## 2.0.0-b5 (2025-12-29)
 
 ### BREAKING CHANGE
