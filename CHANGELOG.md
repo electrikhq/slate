@@ -1,3 +1,13 @@
+## 2.0.0-b5 (2025-12-29)
+
+### BREAKING CHANGE
+
+- None
+
+### Feat
+
+- **components**: add Select component and enhance Livewire compatibility
+
 ## 2.0.0-b4 (2025-12-29)
 
 ### Feat
