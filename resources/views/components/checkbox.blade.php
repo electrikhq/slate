@@ -1,29 +1,26 @@
 @props([
     'size' => 'default',
     'disabled' => false,
-    'readonly' => false,
     'required' => false,
-    'autofocus' => false,
-    'placeholder' => null,
+    'checked' => false,
     'name' => null,
     'id' => null,
-    'rows' => 3,
-    'cols' => null,
+    'value' => '1',
     'help' => null,
     'errorMessage' => null,
     'label' => null,
 ])
 
 @php
-    // Base classes (same as Input)
-    // Note: Removed file: classes as they're not applicable to textarea
-    $baseClasses = 'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors resize-y';
+    // Base classes - checkbox styling
+    // Uses: peer for styling the label, and standard checkbox with custom styling
+    $baseClasses = 'h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors';
     
-    // Size classes (same padding as Input)
+    // Size classes - checkbox size variants
     $sizeClasses = [
-        'sm' => 'px-2.5 py-2 text-sm min-h-[72px]',
-        'default' => 'px-3 py-2 text-sm min-h-[80px]',
-        'lg' => 'px-4 py-2 text-sm min-h-[88px]',
+        'sm' => 'h-3.5 w-3.5',
+        'default' => 'h-4 w-4',
+        'lg' => 'h-5 w-5',
     ];
     
     // Get size classes
@@ -79,23 +76,24 @@
         $baseClasses,
         $sizeClass,
         $errorClasses,
+        'peer', // For label styling
         $attributes->get('class'),
     ])));
     
     // Generate ID if not provided
-    $textareaId = $id ?? ($name ? "textarea-{$name}" : null);
+    $checkboxId = $id ?? ($name ? "checkbox-{$name}" : null);
     
     // Build aria attributes
     $ariaAttributes = [];
     $describedBy = [];
     
-    if ($hasError && $textareaId) {
+    if ($hasError && $checkboxId) {
         $ariaAttributes['aria-invalid'] = 'true';
-        $describedBy[] = "{$textareaId}-error";
+        $describedBy[] = "{$checkboxId}-error";
     }
     
-    if ($help && $textareaId) {
-        $describedBy[] = "{$textareaId}-help";
+    if ($help && $checkboxId) {
+        $describedBy[] = "{$checkboxId}-help";
     }
     
     if ($required) {
@@ -106,57 +104,56 @@
         $ariaAttributes['aria-describedby'] = implode(' ', $describedBy);
     }
     
-    // Get value from attributes (for Livewire or manual binding)
-    // For textarea, value can come from: attributes, old() helper, or slot content
-    // When using Livewire, don't set static value - let Livewire handle it
-    $value = '';
-    if (!$isLivewire) {
-        $value = $attributes->get('value');
-        if ($value === null && $name) {
-            $value = old($name);
-        }
-        // Convert to string to avoid issues
-        $value = $value !== null ? (string) $value : '';
+    // Get checked state - Priority: explicit checked prop > old() helper > attributes
+    $isChecked = $checked;
+    if (!$isChecked && $name && function_exists('old')) {
+        $oldValue = old($name);
+        // For checkboxes, old() returns the value if checked, or null if not
+        $isChecked = $oldValue !== null && $oldValue !== false && $oldValue !== '';
+    }
+    // Also check attributes for checked state
+    if (!$isChecked && $attributes->has('checked')) {
+        $isChecked = true;
     }
 @endphp
 
-<div class="w-full">
-    @if($label && $textareaId)
-        <x-slate::label 
-            :for="$textareaId" 
-            :required="$required" 
-            :size="$size" 
-            :error="$hasError"
-            class="mb-1"
-        >
-            {{ $label }}
-        </x-slate::label>
-    @endif
+<div class="flex flex-col items-start space-y-1">
+    <div class="flex items-center space-x-2">
+        <input
+            type="checkbox"
+            @if($name) name="{{ $name }}" @endif
+            @if($checkboxId) id="{{ $checkboxId }}" @endif
+            @if($value !== null) value="{{ $value }}" @endif
+            @if($isChecked) checked @endif
+            @if($disabled) disabled @endif
+            @if($required) required @endif
+            @foreach($ariaAttributes as $attr => $val)
+                {{ $attr }}="{{ $val }}"
+            @endforeach
+            {{ $attributes->merge(['class' => $classes])->except(['name', 'id', 'value', 'checked', 'disabled', 'required', 'size', 'help', 'errorMessage', 'label']) }}
+        />
+        
+        @if($label && $checkboxId)
+            <x-slate::label 
+                :for="$checkboxId" 
+                :required="$required" 
+                :size="$size" 
+                :error="$hasError"
+                class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+            >
+                {{ $label }}
+            </x-slate::label>
+        @endif
+    </div>
     
-    <textarea
-        @if($name) name="{{ $name }}" @endif
-        @if($textareaId) id="{{ $textareaId }}" @endif
-        @if($placeholder) placeholder="{{ $placeholder }}" @endif
-        @if($rows) rows="{{ $rows }}" @endif
-        @if($cols) cols="{{ $cols }}" @endif
-        @if($disabled) disabled @endif
-        @if($readonly) readonly @endif
-        @if($required) required @endif
-        @if($autofocus) autofocus @endif
-        @foreach($ariaAttributes as $attr => $val)
-            {{ $attr }}="{{ $val }}"
-        @endforeach
-        {{ $attributes->merge(['class' => $classes])->except(['name', 'id', 'placeholder', 'disabled', 'readonly', 'required', 'autofocus', 'rows', 'cols', 'size', 'help', 'errorMessage', 'label', 'value']) }}
-    >{{ $value }}</textarea>
-    
-    @if($help && $textareaId)
-        <p id="{{ $textareaId }}-help" class="mt-1 text-sm text-muted-foreground">
+    @if($help && $checkboxId)
+        <p id="{{ $checkboxId }}-help" class="text-sm text-muted-foreground ml-6">
             {{ $help }}
         </p>
     @endif
     
-    @if($hasError && $finalErrorMessage && $textareaId)
-        <p id="{{ $textareaId }}-error" class="mt-1 text-sm text-danger">
+    @if($hasError && $finalErrorMessage && $checkboxId)
+        <p id="{{ $checkboxId }}-error" class="text-sm text-danger ml-6">
             {{ $finalErrorMessage }}
         </p>
     @endif

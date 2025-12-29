@@ -1,12 +1,11 @@
 {
     "name": "electrik/slate",
-    "description": "A shadcn/ui clone for Laravel Blade - Beautiful, accessible components built with Tailwind CSS v4",
+    "description": "Beautiful, accessible Laravel Blade components built with Tailwind CSS v4",
     "keywords": [
         "laravel",
         "blade",
         "components",
         "tailwind",
-        "shadcn",
         "ui",
         "design-system"
     ],

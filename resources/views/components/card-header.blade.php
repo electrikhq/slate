@@ -3,7 +3,7 @@
 ])
 
 @php
-    // Base classes - matching shadcn/ui exactly
+    // Base classes
     $baseClasses = 'flex flex-col space-y-1.5 p-6';
     
     // Build classes

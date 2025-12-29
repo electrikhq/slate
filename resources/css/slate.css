@@ -9,7 +9,7 @@
  * with custom utilities in @layer utilities for hover variants.
  */
 
-/* Font Rendering Optimizations - Matching shadcn/ui sharpness */
+/* Font Rendering Optimizations */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

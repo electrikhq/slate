@@ -3,7 +3,7 @@
 ])
 
 @php
-    // Base classes - matching shadcn/ui exactly
+    // Base classes
     // Typography: Muted text uses text-sm (normal weight) per Pattern 6
     $baseClasses = 'text-sm text-muted-foreground';
     

@@ -3,7 +3,7 @@
 ])
 
 @php
-    // Base classes - matching shadcn/ui exactly
+    // Base classes
     $baseClasses = 'flex items-center p-6 pt-0';
     
     // Build classes

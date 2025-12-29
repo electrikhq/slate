@@ -34,7 +34,7 @@
 
 ### Fix
 
-- **components**: align typography and accessibility with shadcn/ui
+- **components**: align typography and accessibility standards
 
 ## 2.0.0-b1 (2025-12-27)
 

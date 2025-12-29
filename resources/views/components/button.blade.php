@@ -15,7 +15,7 @@
     $loading = filter_var($loading, FILTER_VALIDATE_BOOLEAN);
     $showSpinner = filter_var($showSpinner, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
     
-    // Icon sizing based on button size (matching shadcn/ui patterns)
+    // Icon sizing based on button size
     $iconSizeClasses = [
         'sm' => 'h-3 w-3',
         'default' => 'h-4 w-4',

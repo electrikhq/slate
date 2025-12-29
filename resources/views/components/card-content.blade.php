@@ -3,7 +3,7 @@
 ])
 
 @php
-    // Base classes - matching shadcn/ui pattern
+    // Base classes
     // Default: p-6 (full padding) for standalone content
     // When header exists above, user should add pt-0 to remove top padding
     // This way: standalone content works by default, header+content works with pt-0

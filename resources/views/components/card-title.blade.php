@@ -3,7 +3,7 @@
 ])
 
 @php
-    // Base classes - matching shadcn/ui exactly
+    // Base classes
     // Typography: h3 uses text-2xl font-semibold tracking-tight per Pattern 6
     $baseClasses = 'text-2xl font-semibold leading-none tracking-tight';
     
