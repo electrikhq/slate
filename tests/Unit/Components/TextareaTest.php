@@ -304,6 +304,49 @@ class TextareaTest extends TestCase
     }
 
     #[Test]
+    public function it_uses_wire_model_property_name_for_error_detection()
+    {
+        $validator = Validator::make(['userDescription' => ''], [
+            'userDescription' => 'required',
+        ]);
+
+        view()->share('errors', $validator->errors());
+
+        // wire:model property name differs from name attribute
+        $view = $this->blade('<x-slate::textarea wire:model="userDescription" name="description" />');
+
+        $view->assertSee('border-danger');
+        $view->assertSee('aria-invalid="true"', false);
+    }
+
+    #[Test]
+    public function it_does_not_set_value_when_using_wire_model()
+    {
+        $view = $this->blade('<x-slate::textarea wire:model="description" value="static-value" />');
+
+        // When using wire:model, value should not be set (Livewire handles it)
+        $html = (string) $view;
+        $this->assertStringNotContainsString('static-value', $html);
+        $this->assertStringContainsString('wire:model="description"', $html);
+    }
+
+    #[Test]
+    public function it_sets_value_when_not_using_wire_model()
+    {
+        $view = $this->blade('<x-slate::textarea name="description" value="static-value" />');
+
+        $view->assertSee('static-value', false);
+    }
+
+    #[Test]
+    public function it_detects_wire_model_blur()
+    {
+        $view = $this->blade('<x-slate::textarea wire:model.blur="description" name="description" />');
+
+        $view->assertSee('wire:model.blur="description"', false);
+    }
+
+    #[Test]
     public function it_renders_textarea_with_integrated_label()
     {
         $view = $this->blade('<x-slate::textarea name="description" label="Description" />');

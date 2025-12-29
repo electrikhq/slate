@@ -1,14 +1,13 @@
 @props([
     'size' => 'default',
     'disabled' => false,
-    'readonly' => false,
     'required' => false,
     'autofocus' => false,
     'placeholder' => null,
     'name' => null,
     'id' => null,
-    'rows' => 3,
-    'cols' => null,
+    'options' => [],
+    'value' => null,
     'help' => null,
     'errorMessage' => null,
     'label' => null,
@@ -16,14 +15,13 @@
 
 @php
     // Base classes - matching shadcn/ui exactly (same as Input)
-    // Note: Removed file: classes as they're not applicable to textarea
-    $baseClasses = 'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors resize-y';
+    $baseClasses = 'flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors';
     
-    // Size classes - matching shadcn/ui exactly (same padding as Input)
+    // Size classes - matching shadcn/ui exactly (same as Input)
     $sizeClasses = [
-        'sm' => 'px-2.5 py-2 text-sm min-h-[72px]',
-        'default' => 'px-3 py-2 text-sm min-h-[80px]',
-        'lg' => 'px-4 py-2 text-sm min-h-[88px]',
+        'sm' => 'h-9 px-2.5 text-sm',
+        'default' => 'h-10 px-3 py-2 text-sm',
+        'lg' => 'h-11 px-4 text-sm',
     ];
     
     // Get size classes
@@ -83,19 +81,19 @@
     ])));
     
     // Generate ID if not provided
-    $textareaId = $id ?? ($name ? "textarea-{$name}" : null);
+    $selectId = $id ?? ($name ? "select-{$name}" : null);
     
     // Build aria attributes
     $ariaAttributes = [];
     $describedBy = [];
     
-    if ($hasError && $textareaId) {
+    if ($hasError && $selectId) {
         $ariaAttributes['aria-invalid'] = 'true';
-        $describedBy[] = "{$textareaId}-error";
+        $describedBy[] = "{$selectId}-error";
     }
     
-    if ($help && $textareaId) {
-        $describedBy[] = "{$textareaId}-help";
+    if ($help && $selectId) {
+        $describedBy[] = "{$selectId}-help";
     }
     
     if ($required) {
@@ -106,24 +104,38 @@
         $ariaAttributes['aria-describedby'] = implode(' ', $describedBy);
     }
     
-    // Get value from attributes (for Livewire or manual binding)
-    // For textarea, value can come from: attributes, old() helper, or slot content
-    // When using Livewire, don't set static value - let Livewire handle it
-    $value = '';
+    // Get selected value from attributes, old() helper, or prop
+    // Priority: explicit value prop > attributes value > old() helper
+    // When using Livewire, don't set static selected value - let Livewire handle it
+    $selectedValue = null;
     if (!$isLivewire) {
-        $value = $attributes->get('value');
-        if ($value === null && $name) {
-            $value = old($name);
+        $selectedValue = $value ?? $attributes->get('value');
+        if ($selectedValue === null && $name && function_exists('old')) {
+            $selectedValue = old($name);
         }
-        // Convert to string to avoid issues
-        $value = $value !== null ? (string) $value : '';
+    }
+    
+    // Normalize options - handle both array formats
+    // ['value' => 'label'] or ['value1', 'value2'] or [['value' => 'val', 'label' => 'Label']]
+    $normalizedOptions = [];
+    foreach ($options as $key => $option) {
+        if (is_array($option) && isset($option['value']) && isset($option['label'])) {
+            // Format: [['value' => 'val', 'label' => 'Label']]
+            $normalizedOptions[$option['value']] = $option['label'];
+        } elseif (is_numeric($key) && is_string($option)) {
+            // Format: ['value1', 'value2'] - use value as label
+            $normalizedOptions[$option] = $option;
+        } else {
+            // Format: ['value' => 'label']
+            $normalizedOptions[$key] = $option;
+        }
     }
 @endphp
 
 <div class="w-full">
-    @if($label && $textareaId)
+    @if($label && $selectId)
         <x-slate::label 
-            :for="$textareaId" 
+            :for="$selectId" 
             :required="$required" 
             :size="$size" 
             :error="$hasError"
@@ -133,30 +145,41 @@
         </x-slate::label>
     @endif
     
-    <textarea
+    <select
         @if($name) name="{{ $name }}" @endif
-        @if($textareaId) id="{{ $textareaId }}" @endif
-        @if($placeholder) placeholder="{{ $placeholder }}" @endif
-        @if($rows) rows="{{ $rows }}" @endif
-        @if($cols) cols="{{ $cols }}" @endif
+        @if($selectId) id="{{ $selectId }}" @endif
         @if($disabled) disabled @endif
-        @if($readonly) readonly @endif
         @if($required) required @endif
         @if($autofocus) autofocus @endif
         @foreach($ariaAttributes as $attr => $val)
             {{ $attr }}="{{ $val }}"
         @endforeach
-        {{ $attributes->merge(['class' => $classes])->except(['name', 'id', 'placeholder', 'disabled', 'readonly', 'required', 'autofocus', 'rows', 'cols', 'size', 'help', 'errorMessage', 'label', 'value']) }}
-    >{{ $value }}</textarea>
+        {{ $attributes->merge(['class' => $classes])->except(['name', 'id', 'disabled', 'readonly', 'required', 'autofocus', 'size', 'help', 'errorMessage', 'label', 'options', 'value', 'placeholder']) }}
+    >
+        @if($placeholder)
+            <option value="" disabled @if($selectedValue === null || $selectedValue === '') selected @endif>
+                {{ $placeholder }}
+            </option>
+        @endif
+        
+        @foreach($normalizedOptions as $optionValue => $optionLabel)
+            <option 
+                value="{{ $optionValue }}"
+                @if($selectedValue !== null && (string)$selectedValue === (string)$optionValue) selected @endif
+            >
+                {{ $optionLabel }}
+            </option>
+        @endforeach
+    </select>
     
-    @if($help && $textareaId)
-        <p id="{{ $textareaId }}-help" class="mt-1 text-sm text-muted-foreground">
+    @if($help && $selectId)
+        <p id="{{ $selectId }}-help" class="mt-1 text-sm text-muted-foreground">
             {{ $help }}
         </p>
     @endif
     
-    @if($hasError && $finalErrorMessage && $textareaId)
-        <p id="{{ $textareaId }}-error" class="mt-1 text-sm text-danger">
+    @if($hasError && $finalErrorMessage && $selectId)
+        <p id="{{ $selectId }}-error" class="mt-1 text-sm text-danger">
             {{ $finalErrorMessage }}
         </p>
     @endif

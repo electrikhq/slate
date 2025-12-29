@@ -310,6 +310,65 @@ class InputTest extends TestCase
     }
 
     #[Test]
+    public function it_uses_wire_model_property_name_for_error_detection()
+    {
+        $validator = Validator::make(['userEmail' => 'invalid'], [
+            'userEmail' => 'required|email',
+        ]);
+
+        view()->share('errors', $validator->errors());
+
+        // wire:model property name differs from name attribute
+        $view = $this->blade('<x-slate::input wire:model="userEmail" name="email" />');
+
+        $view->assertSee('border-danger');
+        $view->assertSee('aria-invalid="true"', false);
+    }
+
+    #[Test]
+    public function it_does_not_set_value_when_using_wire_model()
+    {
+        $view = $this->blade('<x-slate::input wire:model="email" value="static-value" />');
+
+        // When using wire:model, value should not be set (Livewire handles it)
+        $html = (string) $view;
+        $this->assertStringNotContainsString('value="static-value"', $html);
+        $this->assertStringContainsString('wire:model="email"', $html);
+    }
+
+    #[Test]
+    public function it_sets_value_when_not_using_wire_model()
+    {
+        $view = $this->blade('<x-slate::input name="email" value="static-value" />');
+
+        $view->assertSee('value="static-value"', false);
+    }
+
+    #[Test]
+    public function it_detects_wire_model_blur()
+    {
+        $view = $this->blade('<x-slate::input wire:model.blur="email" name="email" />');
+
+        $view->assertSee('wire:model.blur="email"', false);
+    }
+
+    #[Test]
+    public function it_detects_wire_model_live()
+    {
+        $view = $this->blade('<x-slate::input wire:model.live="email" name="email" />');
+
+        $view->assertSee('wire:model.live="email"', false);
+    }
+
+    #[Test]
+    public function it_detects_wire_model_defer()
+    {
+        $view = $this->blade('<x-slate::input wire:model.defer="email" name="email" />');
+
+        $view->assertSee('wire:model.defer="email"', false);
+    }
+
+    #[Test]
     public function it_renders_input_with_integrated_label()
     {
         $view = $this->blade('<x-slate::input name="email" label="Email Address" />');

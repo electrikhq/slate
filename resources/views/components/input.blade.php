@@ -31,7 +31,19 @@
     // Auto-detect Livewire
     $isLivewire = $attributes->has('wire:model') || 
                   $attributes->has('wire:model.live') ||
-                  $attributes->has('wire:model.defer');
+                  $attributes->has('wire:model.defer') ||
+                  $attributes->has('wire:model.blur');
+    
+    // Get Livewire model property name for error detection
+    $livewireProperty = null;
+    if ($isLivewire) {
+        $livewireProperty = $attributes->get('wire:model') ?? 
+                           $attributes->get('wire:model.live') ?? 
+                           $attributes->get('wire:model.defer') ??
+                           $attributes->get('wire:model.blur');
+        // Remove quotes if present
+        $livewireProperty = trim($livewireProperty, '\'"');
+    }
     
     // Auto-detect Laravel form
     $isLaravelForm = $name !== null;
@@ -48,9 +60,13 @@
     // Priority 2: Auto-detect from Laravel/Livewire errors bag
     elseif ($isLivewire || $isLaravelForm) {
         $errors = $errors ?? (function_exists('view') && view()->shared('errors') ? view()->shared('errors') : null);
-        if ($errors && $errors->has($name)) {
-            $hasError = true;
-            $finalErrorMessage = $errors->first($name);
+        if ($errors) {
+            // For Livewire, check both the wire:model property name and the name attribute
+            $errorKey = $isLivewire && $livewireProperty ? $livewireProperty : $name;
+            if ($errorKey && $errors->has($errorKey)) {
+                $hasError = true;
+                $finalErrorMessage = $errors->first($errorKey);
+            }
         }
     }
     
@@ -107,7 +123,7 @@
         type="{{ $type }}"
         @if($name) name="{{ $name }}" @endif
         @if($inputId) id="{{ $inputId }}" @endif
-        @if($value !== null) value="{{ $value }}" @endif
+        @if(!$isLivewire && $value !== null) value="{{ $value }}" @endif
         @if($placeholder) placeholder="{{ $placeholder }}" @endif
         @if($disabled) disabled @endif
         @if($readonly) readonly @endif

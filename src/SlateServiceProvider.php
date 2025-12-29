@@ -64,6 +64,7 @@ class SlateServiceProvider extends ServiceProvider
                 'button',
                 'input',
                 'textarea',
+                'select',
                 'card',
                 'card-header',
                 'card-title',
