@@ -1,3 +1,9 @@
+## 2.0.0-b4 (2025-12-29)
+
+### Feat
+
+- **components**: add Textarea component and auto aria-label for icon buttons
+
 ## 2.0.0-b3 (2025-12-28)
 
 ### BREAKING CHANGE
