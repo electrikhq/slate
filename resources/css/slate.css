@@ -259,6 +259,15 @@
     border-color: hsl(var(--color-input));
   }
   
+  /* Background Colors for UI Elements */
+  .bg-border {
+    background-color: hsl(var(--color-border));
+  }
+  
+  .bg-input {
+    background-color: hsl(var(--color-input));
+  }
+  
   /* Semantic Border Colors */
   .border-success {
     border-color: hsl(var(--color-success));
@@ -320,4 +329,76 @@
   .hover\:text-accent-foreground:hover {
     color: hsl(var(--color-accent-foreground));
   }
+}
+
+/* Range Slider Component Styles */
+/* Track - Webkit (Chrome, Safari, Edge) */
+.range-slider::-webkit-slider-runnable-track {
+  height: var(--slider-track-height, 0.5rem);
+  border-radius: 9999px;
+  background-color: var(--slider-track-color, hsl(var(--color-muted)));
+  cursor: pointer;
+}
+
+/* Track - Mozilla (Firefox) */
+.range-slider::-moz-range-track {
+  height: var(--slider-track-height, 0.5rem);
+  border-radius: 9999px;
+  background-color: var(--slider-track-color, hsl(var(--color-muted)));
+  cursor: pointer;
+}
+
+/* Thumb - Webkit */
+.range-slider::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: calc((var(--slider-track-height, 0.5rem) - 1.25rem) / 2);
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--color-background));
+  border: 1px solid hsl(var(--color-border));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+/* Thumb - Mozilla */
+.range-slider::-moz-range-thumb {
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 9999px;
+  background-color: hsl(var(--color-background));
+  border: 1px solid hsl(var(--color-border));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+/* Active state */
+.range-slider:active::-webkit-slider-thumb,
+.range-slider:active::-moz-range-thumb {
+  cursor: grabbing;
+}
+
+/* Focus state */
+.range-slider:focus-visible::-webkit-slider-thumb {
+  outline: none;
+  box-shadow: 0 0 0 4px hsl(var(--color-ring) / 0.2);
+}
+
+.range-slider:focus-visible::-moz-range-thumb {
+  outline: none;
+  box-shadow: 0 0 0 4px hsl(var(--color-ring) / 0.2);
+}
+
+/* Disabled state */
+.range-slider:disabled::-webkit-slider-runnable-track,
+.range-slider:disabled::-moz-range-track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.range-slider:disabled::-webkit-slider-thumb,
+.range-slider:disabled::-moz-range-thumb {
+  cursor: not-allowed;
 }
