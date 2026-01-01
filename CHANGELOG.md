@@ -1,3 +1,13 @@
+## 2.0.0-b7 (2026-01-01)
+
+### BREAKING CHANGE
+
+- Slider styles now require CSS file to be rebuilt
+
+### Fix
+
+- **slider**: move styles to CSS file and fix track/thumb styling
+
 ## 2.0.0-b6 (2025-12-29)
 
 ### Feat
