@@ -15,7 +15,7 @@ class CheckboxTest extends TestCase
 
         $view->assertSee('type="checkbox"', false);
         $view->assertSee('h-4 w-4');
-        $view->assertSee('border-primary');
+        $view->assertSee('border-input');
         $view->assertSee('ring-offset-background');
     }
 

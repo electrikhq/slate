@@ -50,7 +50,7 @@
   --color-danger: 0 72% 51%;
   --color-danger-foreground: 0 0% 98%;
   
-  --color-muted: 0 0% 86.1%;
+  --color-muted: 0 0% 91.1%;
   --color-muted-foreground: 0 0% 45.1%;
   
   --color-accent: 0 0% 96.1%;
@@ -104,7 +104,7 @@
   --color-danger: 0 72% 45%;
   --color-danger-foreground: 0 0% 98%;
   
-  --color-muted: 0 0% 24.9%;
+  --color-muted: 0 0% 19.9%;
   --color-muted-foreground: 0 0% 63.9%;
   
   --color-accent: 0 0% 14.9%;
@@ -401,4 +401,16 @@
 .range-slider:disabled::-webkit-slider-thumb,
 .range-slider:disabled::-moz-range-thumb {
   cursor: not-allowed;
+}
+
+/* Checkbox Component Styles */
+/* Ensure checkbox border matches Input/Textarea exactly */
+input[type="checkbox"] {
+  border-color: hsl(var(--color-input));
+  border-width: 1px;
+  border-style: solid;
+}
+
+[x-cloak] {
+  display: none !important;
 }
