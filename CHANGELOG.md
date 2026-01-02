@@ -1,3 +1,9 @@
+## 2.0.0-b8 (2026-01-02)
+
+### Feat
+
+- add overlay components (Dialog, Drawer, Popover, Tooltip) and form helpers
+
 ## 2.0.0-b7 (2026-01-01)
 
 ### BREAKING CHANGE
