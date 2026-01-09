@@ -1,3 +1,9 @@
+## 2.0.0 (2026-01-09)
+
+### Feat
+
+- **components**: add 169+ new components and improve existing ones
+
 ## 2.0.0-b8 (2026-01-02)
 
 ### Feat
