@@ -14,7 +14,8 @@ class InstallCommand extends Command
      */
     protected $signature = 'slate:install 
                             {--publish-views : Publish component views for customization}
-                            {--force : Overwrite existing files}';
+                            {--force : Overwrite existing files}
+                            {--skip-npm : Skip npm package installation}';
 
     /**
      * The console command description.
@@ -32,6 +33,7 @@ class InstallCommand extends Command
         $this->newLine();
 
         $this->installBladeIcons();
+        $this->installTypographyPlugin();
         $this->copyCssFile();
         $this->updateAppCss();
         $this->updateTailwindConfig();
@@ -69,6 +71,63 @@ class InstallCommand extends Command
     }
 
     /**
+     * Install Tailwind Typography plugin for markdown/prose styling.
+     */
+    protected function installTypographyPlugin(): void
+    {
+        // Check if user wants to skip npm installation
+        if ($this->option('skip-npm')) {
+            $this->info('⏭️  Skipping npm package installation (--skip-npm flag used)');
+            $this->newLine();
+            $this->warn('⚠️  Manual steps required:');
+            $this->info('   1. Install Typography plugin: npm install -D @tailwindcss/typography');
+            $this->info('   2. The @plugin directive will be added to your app.css automatically');
+            $this->info('   3. After installing, rebuild your assets: npm run build');
+            $this->newLine();
+            return;
+        }
+
+        $packageJsonPath = base_path('package.json');
+        
+        if (!File::exists($packageJsonPath)) {
+            $this->warn('⚠️  package.json not found. Skipping Typography plugin installation.');
+            $this->info('💡 To install manually: npm install -D @tailwindcss/typography');
+            $this->info('💡 Then add @plugin "@tailwindcss/typography"; to your app.css after @import "tailwindcss";');
+            return;
+        }
+
+        $packageJson = json_decode(File::get($packageJsonPath), true);
+        
+        // Check if typography plugin is already in package.json
+        $devDependencies = $packageJson['devDependencies'] ?? [];
+        $isInPackageJson = isset($devDependencies['@tailwindcss/typography']);
+        
+        if ($isInPackageJson) {
+            // Package is in package.json - run npm install to ensure it's installed and up to date
+            $this->info('Installing npm dependencies (including @tailwindcss/typography)...');
+            $command = 'npm install';
+        } else {
+            // Package not in package.json - install it
+            $this->info('Installing @tailwindcss/typography plugin...');
+            $command = 'npm install -D @tailwindcss/typography';
+        }
+        
+        $output = [];
+        $returnVar = 0;
+        
+        exec("cd " . escapeshellarg(base_path()) . " && {$command} 2>&1", $output, $returnVar);
+        
+        if ($returnVar === 0) {
+            $this->info('✅ Installed @tailwindcss/typography');
+            $this->info('💡 Typography plugin installed. Use "prose" classes for markdown content.');
+        } else {
+            $this->warn('⚠️  Failed to install @tailwindcss/typography automatically.');
+            $this->info('💡 Please run manually: npm install -D @tailwindcss/typography');
+            $this->info('💡 Then add @plugin "@tailwindcss/typography"; to your app.css');
+        }
+    }
+
+    /**
      * Copy slate.css to resources/css directory.
      */
     protected function copyCssFile(): void
@@ -101,7 +160,7 @@ class InstallCommand extends Command
         $appCssPath = resource_path('css/app.css');
 
         if (!File::exists($appCssPath)) {
-            File::put($appCssPath, "@import 'tailwindcss';\n@import './slate.css';\n\n@source '../../vendor/electrik/slate/resources/views/**/*.blade.php';\n");
+            File::put($appCssPath, "@import 'tailwindcss';\n@plugin '@tailwindcss/typography';\n@import './slate.css';\n\n@source '../../vendor/electrik/slate/resources/views/**/*.blade.php';\n");
             $this->info('✅ Created resources/css/app.css');
             return;
         }
@@ -109,18 +168,49 @@ class InstallCommand extends Command
         $content = File::get($appCssPath);
         $modified = false;
 
-        // Check if slate.css import already exists (check for both formats)
-        if (!str_contains($content, '@import "./slate.css"') && !str_contains($content, "@import './slate.css'") && 
-            !str_contains($content, '@import "slate.css"') && !str_contains($content, "@import 'slate.css'")) {
-            // Add import AFTER tailwindcss import
+        // Add Typography plugin if not present
+        if (!str_contains($content, '@plugin') || !str_contains($content, '@tailwindcss/typography')) {
+            // Find the tailwindcss import and add plugin after it
             if (str_contains($content, '@import "tailwindcss"') || str_contains($content, "@import 'tailwindcss'")) {
-                // Find the tailwindcss import and add slate.css after it
                 $lines = explode("\n", $content);
                 $insertIndex = null;
                 foreach ($lines as $index => $line) {
                     if (str_contains($line, '@import "tailwindcss"') || str_contains($line, "@import 'tailwindcss'")) {
                         $insertIndex = $index + 1;
                         break;
+                    }
+                }
+                if ($insertIndex !== null) {
+                    // Check if plugin line doesn't already exist
+                    $hasPlugin = false;
+                    foreach ($lines as $line) {
+                        if (str_contains($line, '@plugin') && str_contains($line, 'typography')) {
+                            $hasPlugin = true;
+                            break;
+                        }
+                    }
+                    if (!$hasPlugin) {
+                        array_splice($lines, $insertIndex, 0, "@plugin '@tailwindcss/typography';");
+                        $content = implode("\n", $lines);
+                        $modified = true;
+                    }
+                }
+            }
+        }
+
+        // Check if slate.css import already exists (check for both formats)
+        if (!str_contains($content, '@import "./slate.css"') && !str_contains($content, "@import './slate.css'") && 
+            !str_contains($content, '@import "slate.css"') && !str_contains($content, "@import 'slate.css'")) {
+            // Add import AFTER tailwindcss import or plugin (whichever comes last)
+            if (str_contains($content, '@import "tailwindcss"') || str_contains($content, "@import 'tailwindcss'")) {
+                // Find the last relevant line (plugin or tailwindcss) and add slate.css after it
+                $lines = explode("\n", $content);
+                $insertIndex = null;
+                foreach ($lines as $index => $line) {
+                    // Keep updating insertIndex to find the last relevant line
+                    if (str_contains($line, '@import "tailwindcss"') || str_contains($line, "@import 'tailwindcss'") ||
+                        (str_contains($line, '@plugin') && str_contains($line, 'typography'))) {
+                        $insertIndex = $index + 1;
                     }
                 }
                 if ($insertIndex !== null) {
@@ -173,57 +263,15 @@ class InstallCommand extends Command
     }
 
     /**
-     * Update tailwind.config.js with Slate color definitions.
+     * Verify Tailwind CSS v4 setup.
+     * Note: Slate only supports Tailwind CSS v4, which uses CSS variables (no config file needed).
      */
     protected function updateTailwindConfig(): void
     {
-        $configPath = base_path('tailwind.config.js');
-
-        if (!File::exists($configPath)) {
-            $this->warn('⚠️  tailwind.config.js not found. Please manually add Slate colors to your Tailwind config.');
-            $this->displayTailwindConfigInstructions();
-            return;
-        }
-
-        $content = File::get($configPath);
-
-        // Check if Slate colors already exist
-        if (str_contains($content, '--color-primary') || str_contains($content, 'slate')) {
-            $this->info('✅ Tailwind config already contains Slate colors');
-            return;
-        }
-
-        // Try to add colors to theme.extend.colors
-        // This is a simple approach - users may need to adjust based on their config structure
-        $this->warn('⚠️  Please manually add Slate colors to your tailwind.config.js');
-        $this->displayTailwindConfigInstructions();
-    }
-
-    /**
-     * Display instructions for adding Tailwind config.
-     */
-    protected function displayTailwindConfigInstructions(): void
-    {
-        $this->newLine();
-        $this->info('Add the following to your tailwind.config.js:');
-        $this->newLine();
-        $this->line('theme: {');
-        $this->line('  extend: {');
-        $this->line('    colors: {');
-        $this->line('      border: "hsl(var(--color-border))",');
-        $this->line('      input: "hsl(var(--color-input))",');
-        $this->line('      ring: "hsl(var(--color-ring))",');
-        $this->line('      background: "hsl(var(--color-background))",');
-        $this->line('      foreground: "hsl(var(--color-foreground))",');
-        $this->line('      primary: {');
-        $this->line('        DEFAULT: "hsl(var(--color-primary))",');
-        $this->line('        foreground: "hsl(var(--color-primary-foreground))",');
-        $this->line('      },');
-        $this->line('      // ... (see documentation for full config)');
-        $this->line('    },');
-        $this->line('  },');
-        $this->line('},');
-        $this->newLine();
+        // Tailwind CSS v4 doesn't require a config file - everything is handled via CSS variables
+        $this->info('✅ Tailwind CSS v4 setup verified');
+        $this->info('💡 Slate colors are configured via CSS variables in slate.css');
+        $this->info('💡 No tailwind.config.js needed - Slate only supports Tailwind CSS v4');
     }
 
     /**

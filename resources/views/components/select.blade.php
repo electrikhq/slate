@@ -1,31 +1,24 @@
+{{-- select.blade.php --}}
 @props([
-    'size' => 'default',
+    'value' => null,
+    'defaultValue' => null,
+    'name' => null,
     'disabled' => false,
     'required' => false,
-    'autofocus' => false,
-    'placeholder' => null,
-    'name' => null,
+    'size' => 'default',
     'id' => null,
-    'options' => [],
-    'value' => null,
+    'options' => null,
+    'placeholder' => 'Select an option...',
+    'label' => null,
     'help' => null,
     'errorMessage' => null,
-    'label' => null,
 ])
 
 @php
-    // Base classes (same as Input)
-    $baseClasses = 'flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors';
+    $initialValue = $value ?? $defaultValue;
     
-    // Size classes (same as Input)
-    $sizeClasses = [
-        'sm' => 'h-9 px-2.5 text-sm',
-        'default' => 'h-10 px-3 py-2 text-sm',
-        'lg' => 'h-11 px-4 text-sm',
-    ];
-    
-    // Get size classes
-    $sizeClass = $sizeClasses[$size] ?? $sizeClasses['default'];
+    // Generate ID if not provided
+    $selectId = $id ?? ($name ? "select-{$name}" : 'select-' . uniqid());
     
     // Auto-detect Livewire
     $isLivewire = $attributes->has('wire:model') || 
@@ -56,32 +49,54 @@
         $hasError = true;
         $finalErrorMessage = $errorMessage;
     }
-    // Priority 2: Auto-detect from Laravel/Livewire errors bag
-    elseif ($isLivewire || $isLaravelForm) {
-        $errors = $errors ?? (function_exists('view') && view()->shared('errors') ? view()->shared('errors') : null);
-        if ($errors) {
-            // For Livewire, check both the wire:model property name and the name attribute
-            $errorKey = $isLivewire && $livewireProperty ? $livewireProperty : $name;
-            if ($errorKey && $errors->has($errorKey)) {
-                $hasError = true;
-                $finalErrorMessage = $errors->first($errorKey);
+    // Priority 2: Laravel validation errors (if name provided)
+    elseif ($isLaravelForm && $name && isset($errors) && $errors->has($name)) {
+        $hasError = true;
+        $finalErrorMessage = $errors->first($name);
+    }
+    // Priority 3: Livewire validation errors
+    elseif ($isLivewire && $livewireProperty && isset($errors) && $errors->has($livewireProperty)) {
+        $hasError = true;
+        $finalErrorMessage = $errors->first($livewireProperty);
+    }
+    
+    // Process options if provided
+    $processedOptions = null;
+    if ($options !== null) {
+        if (is_array($options)) {
+            $processedOptions = [];
+            foreach ($options as $key => $option) {
+                if (is_array($option)) {
+                    // Array format: [['value' => 'us', 'label' => 'United States'], ...]
+                    $processedOptions[] = [
+                        'value' => $option['value'] ?? $option[0] ?? null,
+                        'label' => $option['label'] ?? $option[1] ?? $option[0] ?? '',
+                    ];
+                } elseif (is_numeric($key)) {
+                    // Indexed array: ['Red', 'Green', 'Blue']
+                    $processedOptions[] = [
+                        'value' => $option,
+                        'label' => $option,
+                    ];
+                } else {
+                    // Associative array: ['us' => 'United States', 'ca' => 'Canada']
+                    $processedOptions[] = [
+                        'value' => $key,
+                        'label' => $option,
+                    ];
+                }
             }
         }
     }
     
-    // Add error classes if validation failed
-    $errorClasses = $hasError ? 'border-danger focus-visible:ring-danger' : '';
+    // Size classes
+    $sizeClasses = [
+        'sm' => 'h-9 px-2.5 text-sm',
+        'default' => 'h-10 px-3 py-2 text-sm',
+        'lg' => 'h-11 px-4 text-sm',
+    ];
     
-    // Build classes
-    $classes = trim(implode(' ', array_filter([
-        $baseClasses,
-        $sizeClass,
-        $errorClasses,
-        $attributes->get('class'),
-    ])));
-    
-    // Generate ID if not provided
-    $selectId = $id ?? ($name ? "select-{$name}" : null);
+    $sizeClass = $sizeClasses[$size] ?? $sizeClasses['default'];
     
     // Build aria attributes
     $ariaAttributes = [];
@@ -104,32 +119,17 @@
         $ariaAttributes['aria-describedby'] = implode(' ', $describedBy);
     }
     
-    // Get selected value from attributes, old() helper, or prop
-    // Priority: explicit value prop > attributes value > old() helper
-    // When using Livewire, don't set static selected value - let Livewire handle it
-    $selectedValue = null;
-    if (!$isLivewire) {
-        $selectedValue = $value ?? $attributes->get('value');
-        if ($selectedValue === null && $name && function_exists('old')) {
-            $selectedValue = old($name);
-        }
+    // Build class string
+    $selectClasses = "flex w-full rounded-md border bg-background {$sizeClass} ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors appearance-none pr-8";
+    
+    if ($hasError) {
+        $selectClasses .= ' border-danger focus-visible:ring-danger';
+    } else {
+        $selectClasses .= ' border-input';
     }
     
-    // Normalize options - handle both array formats
-    // ['value' => 'label'] or ['value1', 'value2'] or [['value' => 'val', 'label' => 'Label']]
-    $normalizedOptions = [];
-    foreach ($options as $key => $option) {
-        if (is_array($option) && isset($option['value']) && isset($option['label'])) {
-            // Format: [['value' => 'val', 'label' => 'Label']]
-            $normalizedOptions[$option['value']] = $option['label'];
-        } elseif (is_numeric($key) && is_string($option)) {
-            // Format: ['value1', 'value2'] - use value as label
-            $normalizedOptions[$option] = $option;
-        } else {
-            // Format: ['value' => 'label']
-            $normalizedOptions[$key] = $option;
-        }
-    }
+    // Arrow SVG as data URL (properly encoded)
+    $arrowSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E";
 @endphp
 
 <div class="w-full">
@@ -146,30 +146,33 @@
     @endif
     
     <select
-        @if($name) name="{{ $name }}" @endif
-        @if($selectId) id="{{ $selectId }}" @endif
+        id="{{ $selectId }}"
+        name="{{ $name }}"
         @if($disabled) disabled @endif
         @if($required) required @endif
-        @if($autofocus) autofocus @endif
         @foreach($ariaAttributes as $attr => $val)
             {{ $attr }}="{{ $val }}"
         @endforeach
-        {{ $attributes->merge(['class' => $classes])->except(['name', 'id', 'disabled', 'readonly', 'required', 'autofocus', 'size', 'help', 'errorMessage', 'label', 'options', 'value', 'placeholder']) }}
+        class="{{ $selectClasses }}"
+        style="background-image: url('{{ $arrowSvg }}'); background-size: 16px 16px; background-position: right 0.75rem center; background-repeat: no-repeat;"
+        {{ $attributes->except(['options', 'name', 'id', 'value', 'placeholder', 'disabled', 'required', 'size', 'help', 'errorMessage', 'label', 'defaultValue'])->merge(['value' => $initialValue]) }}
     >
-        @if($placeholder)
-            <option value="" disabled @if($selectedValue === null || $selectedValue === '') selected @endif>
-                {{ $placeholder }}
-            </option>
+        @if($placeholder && !$initialValue)
+            <option value="" disabled selected>{{ $placeholder }}</option>
         @endif
         
-        @foreach($normalizedOptions as $optionValue => $optionLabel)
-            <option 
-                value="{{ $optionValue }}"
-                @if($selectedValue !== null && (string)$selectedValue === (string)$optionValue) selected @endif
-            >
-                {{ $optionLabel }}
-            </option>
-        @endforeach
+        @if($processedOptions !== null)
+            @foreach($processedOptions as $option)
+                <option 
+                    value="{{ $option['value'] }}"
+                    @if($initialValue !== null && (string)$initialValue === (string)$option['value']) selected @endif
+                >
+                    {{ $option['label'] }}
+                </option>
+            @endforeach
+        @else
+            {{ $slot }}
+        @endif
     </select>
     
     @if($help && $selectId)
@@ -184,4 +187,3 @@
         </p>
     @endif
 </div>
-

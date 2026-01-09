@@ -49,7 +49,7 @@
 
 ### Feat
 
-- **components**: add Checkbox component and remove shadcn references
+- **components**: add Checkbox component
 
 ## 2.0.0-b5 (2025-12-29)
 

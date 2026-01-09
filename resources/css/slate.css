@@ -250,6 +250,15 @@
     color: hsl(var(--color-card-foreground));
   }
   
+  /* Popover Colors */
+  .bg-popover {
+    background-color: hsl(var(--color-popover));
+  }
+  
+  .text-popover-foreground {
+    color: hsl(var(--color-popover-foreground));
+  }
+  
   /* Border Colors */
   .border-border {
     border-color: hsl(var(--color-border));
@@ -414,3 +423,174 @@ input[type="checkbox"] {
 [x-cloak] {
   display: none !important;
 }
+
+/* Accordion Animations */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+}
+
+/* Marquee Animations */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes marquee-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes marquee-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-marquee-slow {
+  animation: marquee-left 60s linear infinite;
+}
+
+.animate-marquee-fast {
+  animation: marquee-left 15s linear infinite;
+}
+
+.animate-marquee-left {
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 30s linear infinite;
+}
+
+.animate-marquee-up {
+  animation: marquee-up 30s linear infinite;
+}
+
+.animate-marquee-down {
+  animation: marquee-down 30s linear infinite;
+}
+
+/* Scroll Area - Custom Scrollbar */
+.scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--color-border)) transparent;
+}
+
+.scroll-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--color-border));
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--color-muted-foreground) / 0.5);
+}
+
+
+/* Ensure prose respects dark mode background and colors */
+.prose {
+    background-color: transparent;
+}
+
+.dark .prose,
+.dark .prose-invert {
+    background-color: transparent;
+    color: hsl(var(--color-foreground));
+}
+
+/* Override prose default colors to use Slate tokens */
+.dark .prose,
+.dark .prose-invert {
+    --tw-prose-body: hsl(var(--color-foreground));
+    --tw-prose-headings: hsl(var(--color-foreground));
+    --tw-prose-lead: hsl(var(--color-muted-foreground));
+    --tw-prose-links: hsl(var(--color-primary));
+    --tw-prose-bold: hsl(var(--color-foreground));
+    --tw-prose-counters: hsl(var(--color-muted-foreground));
+    --tw-prose-bullets: hsl(var(--color-muted-foreground));
+    --tw-prose-hr: hsl(var(--color-border));
+    --tw-prose-quotes: hsl(var(--color-foreground));
+    --tw-prose-quote-borders: hsl(var(--color-border));
+    --tw-prose-captions: hsl(var(--color-muted-foreground));
+    --tw-prose-code: hsl(var(--color-foreground));
+    --tw-prose-pre-code: hsl(var(--color-foreground));
+    --tw-prose-pre-bg: hsl(var(--color-muted));
+    --tw-prose-th-borders: hsl(var(--color-border));
+    --tw-prose-td-borders: hsl(var(--color-border));
+}
+
+/* Ensure all prose text elements use foreground color */
+.dark .prose p,
+.dark .prose li,
+.dark .prose blockquote,
+.dark .prose strong,
+.dark .prose em {
+    color: hsl(var(--color-foreground));
+}
+
+/* Headings should use foreground color */
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+    color: hsl(var(--color-foreground));
+}
+

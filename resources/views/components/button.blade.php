@@ -29,9 +29,9 @@
     
     // Adjust padding for icon-only buttons
     $sizeClasses = [
-        'sm' => $isIconOnly ? 'h-9 w-9 p-0' : 'h-9 px-3',
-        'default' => $isIconOnly ? 'h-10 w-10 p-0' : 'h-10 px-4 py-2',
-        'lg' => $isIconOnly ? 'h-11 w-11 p-0' : 'h-11 px-8',
+        'sm' => $isIconOnly ? 'h-8 w-8 p-0' : 'h-8 px-2.5',
+        'default' => $isIconOnly ? 'h-9 w-9 p-0' : 'h-9 px-3',
+        'lg' => $isIconOnly ? 'h-10 w-10 p-0' : 'h-10 px-4',
     ];
     
     $baseClasses = 'inline-flex items-center justify-center rounded-md text-sm leading-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
@@ -47,6 +47,7 @@
         'outline' => 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         'ghost' => 'hover:bg-accent hover:text-accent-foreground',
+        'subtle' => 'hover:text-accent-foreground',
         'link' => 'text-primary underline-offset-4 hover:underline',
     ];
     
@@ -67,7 +68,11 @@
         $variantClasses['default'] = 'bg-danger text-danger-foreground hover:bg-danger/90';
     }
     
-    $classes = trim($baseClasses . ' ' . ($sizeClasses[$size] ?? $sizeClasses['default']) . ' ' . ($variantClasses[$variant] ?? $variantClasses['default']));
+    // Check if button has href (for link buttons)
+    $hasHref = $attributes->has('href');
+    $cursorClass = $hasHref ? 'cursor-pointer' : '';
+    
+    $classes = trim($baseClasses . ' ' . ($sizeClasses[$size] ?? $sizeClasses['default']) . ' ' . ($variantClasses[$variant] ?? $variantClasses['default']) . ' ' . $cursorClass);
     
     // Auto-detect Livewire
     $wireClick = $attributes->get('wire:click');

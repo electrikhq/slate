@@ -1,15 +1,24 @@
+{{-- radio-group.blade.php --}}
 @props([
-    'name' => null,
+    'value' => null,
+    'defaultValue' => null,
+    'name' => 'radio-group-' . uniqid(),
+    'id' => null,
+    'disabled' => false,
+    'required' => false,
+    'size' => 'default',
+    'options' => null,
     'label' => null,
     'help' => null,
     'errorMessage' => null,
-    'required' => false,
-    'size' => 'default',
-    'options' => [],
-    'value' => null,
 ])
 
 @php
+    $initialValue = $value ?? $defaultValue;
+    
+    // Generate ID if not provided
+    $groupId = $id ?? ($name ? "radio-group-{$name}" : 'radio-group-' . uniqid());
+    
     // Auto-detect Livewire
     $isLivewire = $attributes->has('wire:model') || 
                   $attributes->has('wire:model.live') ||
@@ -39,28 +48,52 @@
         $hasError = true;
         $finalErrorMessage = $errorMessage;
     }
-    // Priority 2: Auto-detect from Laravel/Livewire errors bag
-    elseif ($isLivewire || $isLaravelForm) {
-        $errors = $errors ?? (function_exists('view') && view()->shared('errors') ? view()->shared('errors') : null);
-        if ($errors) {
-            // For Livewire, check both the wire:model property name and the name attribute
-            $errorKey = $isLivewire && $livewireProperty ? $livewireProperty : $name;
-            if ($errorKey && $errors->has($errorKey)) {
-                $hasError = true;
-                $finalErrorMessage = $errors->first($errorKey);
+    // Priority 2: Laravel validation errors (if name provided)
+    elseif ($isLaravelForm && $name && isset($errors) && $errors->has($name)) {
+        $hasError = true;
+        $finalErrorMessage = $errors->first($name);
+    }
+    // Priority 3: Livewire validation errors
+    elseif ($isLivewire && $livewireProperty && isset($errors) && $errors->has($livewireProperty)) {
+        $hasError = true;
+        $finalErrorMessage = $errors->first($livewireProperty);
+    }
+    
+    // Process options if provided
+    $processedOptions = null;
+    if ($options !== null) {
+        if (is_array($options)) {
+            $processedOptions = [];
+            foreach ($options as $key => $option) {
+                if (is_array($option)) {
+                    // Array format: [['value' => 'yes', 'label' => 'Yes'], ...]
+                    $processedOptions[] = [
+                        'value' => $option['value'] ?? $option[0] ?? null,
+                        'label' => $option['label'] ?? $option[1] ?? $option[0] ?? '',
+                    ];
+                } elseif (is_numeric($key)) {
+                    // Indexed array: ['Red', 'Green', 'Blue']
+                    $processedOptions[] = [
+                        'value' => $option,
+                        'label' => $option,
+                    ];
+                } else {
+                    // Associative array: ['yes' => 'Yes', 'no' => 'No']
+                    $processedOptions[] = [
+                        'value' => $key,
+                        'label' => $option,
+                    ];
+                }
             }
         }
     }
     
-    // Generate group ID if not provided
-    $groupId = $attributes->get('id') ?? ($name ? "radio-group-{$name}" : null);
-    
-    // Build aria attributes for the group
-    $groupAriaAttributes = [];
+    // Build aria attributes
+    $ariaAttributes = [];
     $describedBy = [];
     
     if ($hasError && $groupId) {
-        $groupAriaAttributes['aria-invalid'] = 'true';
+        $ariaAttributes['aria-invalid'] = 'true';
         $describedBy[] = "{$groupId}-error";
     }
     
@@ -69,110 +102,65 @@
     }
     
     if ($required) {
-        $groupAriaAttributes['aria-required'] = 'true';
+        $ariaAttributes['aria-required'] = 'true';
     }
     
     if (!empty($describedBy)) {
-        $groupAriaAttributes['aria-describedby'] = implode(' ', $describedBy);
-    }
-    
-    // Get selected value - Priority: explicit value prop > old() helper > attributes
-    $selectedValue = $value;
-    if ($selectedValue === null && $name && function_exists('old') && !$isLivewire) {
-        $selectedValue = old($name);
-    }
-    // Also check attributes for value
-    if ($selectedValue === null && !$isLivewire) {
-        $selectedValue = $attributes->get('value');
-    }
-    
-    // Normalize options - handle both array formats
-    // ['value' => 'label'] or ['value1', 'value2'] or [['value' => 'val', 'label' => 'Label']]
-    $normalizedOptions = [];
-    foreach ($options as $key => $option) {
-        if (is_array($option) && isset($option['value']) && isset($option['label'])) {
-            // Format: [['value' => 'val', 'label' => 'Label']]
-            $normalizedOptions[$option['value']] = $option['label'];
-        } elseif (is_numeric($key) && is_string($option)) {
-            // Format: ['value1', 'value2'] - use value as label
-            $normalizedOptions[$option] = $option;
-        } else {
-            // Format: ['value' => 'label']
-            $normalizedOptions[$key] = $option;
-        }
+        $ariaAttributes['aria-describedby'] = implode(' ', $describedBy);
     }
 @endphp
 
-<div class="flex flex-col space-y-2" 
-     @if($groupId) id="{{ $groupId }}" @endif
-     @foreach($groupAriaAttributes as $attr => $val)
-         {{ $attr }}="{{ $val }}"
-     @endforeach
-     role="radiogroup"
->
-    @if($label)
+<div class="w-full">
+    @if($label && $groupId)
         <x-slate::label 
+            :for="$groupId" 
             :required="$required" 
             :size="$size" 
             :error="$hasError"
-            class="mb-2"
+            class="mb-1"
         >
             {{ $label }}
         </x-slate::label>
     @endif
     
-    <div class="space-y-2">
-        @foreach($normalizedOptions as $optionValue => $optionLabel)
-            @php
-                // Generate unique ID for each radio
-                $radioId = $groupId ? "{$groupId}-{$optionValue}" : ($name ? "{$name}-{$optionValue}" : null);
-                
-                // Check if this option is selected
-                $isChecked = false;
-                if (!$isLivewire) {
-                    $isChecked = $selectedValue !== null && (string)$selectedValue === (string)$optionValue;
-                }
-            @endphp
-            
-            <div class="flex items-center space-x-2">
-                @php
-                    // Build radio classes with error state
-                    $radioErrorClasses = $hasError ? 'border-danger focus-visible:ring-danger' : 'border-primary';
-                    $radioClasses = "h-4 w-4 shrink-0 rounded-full border {$radioErrorClasses} ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors peer";
-                @endphp
-                <input
-                    type="radio"
-                    @if($name) name="{{ $name }}" @endif
-                    @if($radioId) id="{{ $radioId }}" @endif
-                    value="{{ $optionValue }}"
-                    @if($isChecked) checked @endif
-                    @if($hasError) aria-invalid="true" @endif
-                    class="{{ $radioClasses }}"
-                    {{ $attributes->except(['id', 'name', 'value', 'options', 'label', 'help', 'errorMessage', 'required', 'size']) }}
-                />
-                
-                <x-slate::label 
-                    :for="$radioId" 
-                    :size="$size" 
-                    :error="$hasError"
-                    class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
-                    {{ $optionLabel }}
-                </x-slate::label>
-            </div>
+    <div
+        x-data="{
+            value: @js($initialValue),
+            name: '{{ $name }}',
+            setValue(newValue) {
+                if ({{ $disabled ? 'true' : 'false' }}) return;
+                this.value = newValue;
+                this.$dispatch('change', { value: this.value });
+            }
+        }"
+        x-id="['radio-group']"
+        id="{{ $groupId }}"
+        role="radiogroup"
+        @foreach($ariaAttributes as $attr => $val)
+            {{ $attr }}="{{ $val }}"
         @endforeach
+        {{ $attributes->except(['options', 'name', 'id', 'value', 'disabled', 'required', 'size', 'help', 'errorMessage', 'label', 'defaultValue'])->merge([
+            'class' => 'grid gap-2'
+        ]) }}
+    >
+        @if($processedOptions !== null)
+            @foreach($processedOptions as $option)
+                <x-slate::radio-group-item value="{{ $option['value'] }}" :disabled="$disabled">{{ $option['label'] }}</x-slate::radio-group-item>
+            @endforeach
+        @else
+            {{ $slot }}
+        @endif
     </div>
     
     @if($help && $groupId)
-        <p id="{{ $groupId }}-help" class="text-sm text-muted-foreground">
+        <p id="{{ $groupId }}-help" class="mt-1 text-sm text-muted-foreground">
             {{ $help }}
         </p>
     @endif
     
     @if($hasError && $finalErrorMessage && $groupId)
-        <p id="{{ $groupId }}-error" class="text-sm text-danger">
+        <p id="{{ $groupId }}-error" class="mt-1 text-sm text-danger">
             {{ $finalErrorMessage }}
         </p>
     @endif
 </div>
-

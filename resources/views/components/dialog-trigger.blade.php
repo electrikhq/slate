@@ -1,6 +1,6 @@
 {{-- dialog-trigger.blade.php --}}
 @props([
-    'as' => 'button',
+    'as' => 'div',
 ])
 
 @if ($as === 'button')
@@ -21,7 +21,7 @@
         @keydown.enter.prevent="open = true"
         @keydown.space.prevent="open = true"
         {{ $attributes->merge([
-            'class' => 'cursor-pointer'
+            'class' => 'inline-block'
         ]) }}
     >
         {{ $slot }}
