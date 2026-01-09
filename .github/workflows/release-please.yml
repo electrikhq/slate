@@ -1,26 +1,23 @@
-name: release-please
+name: release
 on:
   push:
-    branches:
-      - 2.x
+    tags:
+      - '*' # Triggers only when you push a tag starting with 'v'
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  release-please:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          # Use 'node' for JS/TS projects, or 'simple' for general repos
-          release-type: simple 
+          fetch-depth: 0 # Essential for generating full changelogs
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true # Auto-generates notes from Conventional Commits
           token: ${{ secrets.GITHUB_TOKEN }}
-    
-      # Automatically merge the Release PR if it was created
-      - name: Auto-merge release PR
-        if: ${{ steps.release.outputs.pr }}
-        run: gh pr merge "${{ steps.release.outputs.pr }}" --auto --squash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
