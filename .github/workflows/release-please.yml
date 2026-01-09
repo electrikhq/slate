@@ -17,3 +17,10 @@ jobs:
           # Use 'node' for JS/TS projects, or 'simple' for general repos
           release-type: simple 
           token: ${{ secrets.GITHUB_TOKEN }}
+    
+      # Automatically merge the Release PR if it was created
+      - name: Auto-merge release PR
+        if: ${{ steps.release.outputs.pr }}
+        run: gh pr merge "${{ steps.release.outputs.pr }}" --auto --squash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
