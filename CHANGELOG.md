@@ -1,3 +1,9 @@
+## 2.1.0 (2026-01-20)
+
+### Feat
+
+- add dark-mode-toggle component and enhance button with href support
+
 ## 2.0.0 (2026-01-09)
 
 ### Feat
