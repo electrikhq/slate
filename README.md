@@ -4,6 +4,18 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
 [![License](https://img.shields.io/packagist/l/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
 [![PHP Version](https://img.shields.io/packagist/php-v/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
+[![Laravel Version](https://img.shields.io/badge/Laravel-10.x%20%7C%2011.x%20%7C%2012.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
+[![Tests](https://img.shields.io/github/actions/workflow/status/electrikhq/slate/.github/workflows/tests.yml?branch=2.x&label=tests&style=flat-square)](https://github.com/electrikhq/slate/actions)
+[![Code Coverage](https://img.shields.io/badge/coverage-coming%20soon-lightgrey?style=flat-square)](https://github.com/electrikhq/slate)
+[![Code Quality](https://img.shields.io/badge/code%20quality-coming%20soon-lightgrey?style=flat-square)](https://github.com/electrikhq/slate)
+[![WCAG 2.1 AA](https://img.shields.io/badge/WCAG-2.1%20AA-4CAF50?style=flat-square&logo=accessibility&logoColor=white)](https://www.w3.org/WAI/WCAG21/quickref/?currentsidebar=%23col_customize&levels=aaa)
+[![ARIA Support](https://img.shields.io/badge/ARIA-supported-4CAF50?style=flat-square&logo=accessibility&logoColor=white)](https://www.w3.org/WAI/ARIA/)
+[![GitHub Stars](https://img.shields.io/github/stars/electrikhq/slate.svg?style=flat-square&label=stars)](https://github.com/electrikhq/slate)
+[![GitHub Forks](https://img.shields.io/github/forks/electrikhq/slate.svg?style=flat-square&label=forks)](https://github.com/electrikhq/slate)
+[![GitHub Issues](https://img.shields.io/github/issues/electrikhq/slate.svg?style=flat-square&label=issues)](https://github.com/electrikhq/slate/issues)
+[![GitHub PRs](https://img.shields.io/github/issues-pr/electrikhq/slate.svg?style=flat-square&label=PRs)](https://github.com/electrikhq/slate/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/electrikhq/slate/2.x.svg?style=flat-square&label=last%20commit)](https://github.com/electrikhq/slate)
+[![Maintained](https://img.shields.io/maintenance/yes/2026.svg?style=flat-square&label=maintained)](https://github.com/electrikhq/slate)
 
 **Slate** - a Laravel Blade UI Kit is a set of anonymous blade components built using [TailwindCSS](https://tailwindcss.com/) v4 with built-in dark mode support for your next [Laravel](https://laravel.com) project. Perfect for Laravel UI development with beautiful, accessible components.
 
