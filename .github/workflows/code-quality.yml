@@ -18,7 +18,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.3
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
 
@@ -37,3 +37,7 @@ jobs:
       - name: Run Pint
         if: steps.check_pint.outputs.pint_available == 'true'
         run: vendor/bin/pint --test || (vendor/bin/pint && exit 1)
+      
+      - name: Skip if Pint not available
+        if: steps.check_pint.outputs.pint_available == 'false'
+        run: echo "Laravel Pint is not installed. Skipping code quality check."
