@@ -1,0 +1,39 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ '2.x', 'main' ]
+  pull_request:
+    branches: [ '2.x', 'main' ]
+
+jobs:
+  pint:
+    name: Laravel Pint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Check if Pint is available
+        id: check_pint
+        run: |
+          if composer show laravel/pint 2>/dev/null; then
+            echo "pint_available=true" >> $GITHUB_OUTPUT
+          else
+            echo "pint_available=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Pint
+        if: steps.check_pint.outputs.pint_available == 'true'
+        run: vendor/bin/pint --test || (vendor/bin/pint && exit 1)

@@ -1,13 +1,17 @@
 {
     "name": "electrik/slate",
-    "description": "Beautiful, accessible Laravel Blade components built with Tailwind CSS v4 for your next Laravel or Livewire project",
+    "description": "Slate - a Laravel Blade UI Kit is a set of anonymous blade components built using TailwindCSS v4 with built-in dark mode support for your next Laravel project",
     "keywords": [
         "laravel",
+        "laravel-ui",
         "blade",
         "components",
         "tailwind",
+        "tailwindcss",
         "ui",
-        "design-system"
+        "ui-kit",
+        "design-system",
+        "dark-mode"
     ],
     "authors": [
         {

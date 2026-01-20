@@ -2,8 +2,10 @@
 
 [![Latest Version](https://img.shields.io/packagist/v/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
 [![Total Downloads](https://img.shields.io/packagist/dt/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
+[![License](https://img.shields.io/packagist/l/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
+[![PHP Version](https://img.shields.io/packagist/php-v/electrik/slate.svg?style=flat-square)](https://packagist.org/packages/electrik/slate)
 
-Slate UI Kit is a set of beautiful anonymous blade components built using [tailwindcss](https://tailwindcss.com/) for your next [Laravel](https://laravel.com) project.
+**Slate** - a Laravel Blade UI Kit is a set of anonymous blade components built using [TailwindCSS](https://tailwindcss.com/) v4 with built-in dark mode support for your next [Laravel](https://laravel.com) project. Perfect for Laravel UI development with beautiful, accessible components.
 
 ![Slate UI Auth Login Screen Screenshot](https://i.postimg.cc/nV27DBj2/Electrik-Slate-Laravel-Blade-UI-Kit-Demo-Electrik-Laravel-Saa-S-Starter-Kit-Login-Screen.png)
 
