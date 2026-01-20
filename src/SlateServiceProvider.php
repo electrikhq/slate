@@ -294,6 +294,7 @@ class SlateServiceProvider extends ServiceProvider
                 'app-shell-sidebar',
                 'app-shell-header',
                 'app-shell-footer',
+                'dark-mode-toggle',
                 // More components will be added as we build them
             ];
 

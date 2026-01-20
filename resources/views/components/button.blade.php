@@ -70,14 +70,14 @@
     
     // Check if button has href (for link buttons)
     $hasHref = $attributes->has('href');
-    $cursorClass = $hasHref ? 'cursor-pointer' : '';
+    $href = $attributes->get('href');
     
-    $classes = trim($baseClasses . ' ' . ($sizeClasses[$size] ?? $sizeClasses['default']) . ' ' . ($variantClasses[$variant] ?? $variantClasses['default']) . ' ' . $cursorClass);
+    $classes = trim($baseClasses . ' ' . ($sizeClasses[$size] ?? $sizeClasses['default']) . ' ' . ($variantClasses[$variant] ?? $variantClasses['default']));
     
-    // Auto-detect Livewire
+    // Auto-detect Livewire (only for buttons, not links)
     $wireClick = $attributes->get('wire:click');
     $wireSubmit = $attributes->get('wire:submit');
-    $hasWireClick = $wireClick !== null || $wireSubmit !== null;
+    $hasWireClick = !$hasHref && ($wireClick !== null || $wireSubmit !== null);
     
     // Get wire:target if specified, otherwise use wire:click or wire:submit value
     $wireTarget = $attributes->get('wire:target');
@@ -85,16 +85,18 @@
         $wireTarget = $wireClick ?? $wireSubmit;
     }
     
-    // Loading state logic
+    // Loading state logic (only for buttons, not links)
     $isLoading = false;
     $wireLoadingEnabled = false;
     
-    if ($loading === true) {
-        // Manual loading
-        $isLoading = true;
-    } elseif ($hasWireClick) {
-        // Auto-enable wire:loading
-        $wireLoadingEnabled = true;
+    if (!$hasHref) {
+        if ($loading === true) {
+            // Manual loading
+            $isLoading = true;
+        } elseif ($hasWireClick) {
+            // Auto-enable wire:loading
+            $wireLoadingEnabled = true;
+        }
     }
     
     // Loading text logic
@@ -109,29 +111,39 @@
         }
     }
     
-    // Build button attributes
-    $buttonAttributes = $attributes->merge(['class' => $classes]);
+    // Build attributes
+    $componentAttributes = $attributes->merge(['class' => $classes]);
     
-    // WCAG compliance: aria-busy and aria-disabled for loading states
+    // WCAG compliance: aria-busy and aria-disabled for loading states (buttons only)
     $isInLoadingState = $isLoading || $wireLoadingEnabled;
-    $isDisabled = $attributes->has('disabled') || $isInLoadingState;
+    $isDisabled = $attributes->has('disabled') || ($isInLoadingState && !$hasHref);
     
     // Add aria-busy when loading (WCAG 2.1 AA compliance)
-    if ($isInLoadingState) {
-        $buttonAttributes = $buttonAttributes->merge([
+    if ($isInLoadingState && !$hasHref) {
+        $componentAttributes = $componentAttributes->merge([
             'aria-busy' => 'true',
         ]);
     }
     
     // Add aria-disabled when disabled or loading (WCAG 2.1 AA compliance)
     if ($isDisabled) {
-        $buttonAttributes = $buttonAttributes->merge([
-            'aria-disabled' => 'true',
-        ]);
+        if ($hasHref) {
+            // For links, use aria-disabled and pointer-events-none instead of disabled attribute
+            $componentAttributes = $componentAttributes->merge([
+                'aria-disabled' => 'true',
+            ]);
+            // Add pointer-events-none class for disabled links
+            $classes = $classes . ' pointer-events-none';
+            $componentAttributes = $componentAttributes->merge(['class' => trim($classes)]);
+        } else {
+            $componentAttributes = $componentAttributes->merge([
+                'aria-disabled' => 'true',
+            ]);
+        }
     }
     
     // WCAG compliance: Auto-add aria-label for icon-only buttons if not provided
-    if ($isIconOnly && !$buttonAttributes->has('aria-label')) {
+    if ($isIconOnly && !$componentAttributes->has('aria-label')) {
         // Generate a readable label from icon name
         // e.g., "carbon-settings" -> "Settings", "carbon-trash-can" -> "Trash Can"
         $iconName = $icon;
@@ -140,21 +152,29 @@
         }
         // Convert kebab-case to Title Case
         $label = ucwords(str_replace(['-', '_'], ' ', $iconName));
-        $buttonAttributes = $buttonAttributes->merge([
+        $componentAttributes = $componentAttributes->merge([
             'aria-label' => $label,
         ]);
     }
     
-    // Add wire:loading.attr directive if Livewire detected
-    if ($wireLoadingEnabled) {
-        $buttonAttributes = $buttonAttributes->merge([
+    // Add wire:loading.attr directive if Livewire detected (buttons only)
+    if ($wireLoadingEnabled && !$hasHref) {
+        $componentAttributes = $componentAttributes->merge([
             'wire:loading.attr' => 'disabled',
         ]);
     }
     
-    // Disable button if manual loading
-    if ($isLoading && !$wireLoadingEnabled) {
-        $buttonAttributes = $buttonAttributes->merge(['disabled' => true]);
+    // Disable button if manual loading (buttons only)
+    if ($isLoading && !$wireLoadingEnabled && !$hasHref) {
+        $componentAttributes = $componentAttributes->merge(['disabled' => true]);
+    }
+    
+    // Attributes to exclude (component-specific props)
+    $excludedAttributes = ['loading', 'loadingText', 'showSpinner', 'icon', 'iconPosition'];
+    
+    // For links, also exclude button-specific attributes
+    if ($hasHref) {
+        $excludedAttributes = array_merge($excludedAttributes, ['type', 'disabled', 'wire:click', 'wire:submit', 'wire:target', 'wire:loading.attr']);
     }
     
     // Spinner SVG (reusable)
@@ -187,10 +207,33 @@
     };
 @endphp
 
-<button type="{{ $type }}" {{ $buttonAttributes->except(['loading', 'loadingText', 'showSpinner', 'icon', 'iconPosition']) }}>
-    @if($wireLoadingEnabled)
-        {{-- Livewire loading state --}}
-        <span wire:loading.remove @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+@if($hasHref)
+    <a {{ $componentAttributes->except($excludedAttributes) }}>
+        @if($wireLoadingEnabled)
+            {{-- Livewire loading state --}}
+            <span wire:loading.remove @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+                @if($icon && $iconPosition === 'left')
+                    {!! $renderIcon($icon, 'left') !!}
+                @endif
+                {{ $slot }}
+                @if($icon && $iconPosition === 'right')
+                    {!! $renderIcon($icon, 'right') !!}
+                @endif
+            </span>
+            <span wire:loading @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+                @if($showSpinner)
+                    {!! $spinnerSvg !!}
+                @endif
+                {{ $displayText }}
+            </span>
+        @elseif($isLoading)
+            {{-- Manual loading state --}}
+            @if($showSpinner)
+                {!! $spinnerSvg !!}
+            @endif
+            {{ $displayText }}
+        @else
+            {{-- Normal state --}}
             @if($icon && $iconPosition === 'left')
                 {!! $renderIcon($icon, 'left') !!}
             @endif
@@ -198,28 +241,43 @@
             @if($icon && $iconPosition === 'right')
                 {!! $renderIcon($icon, 'right') !!}
             @endif
-        </span>
-        <span wire:loading @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+        @endif
+    </a>
+@else
+    <button type="{{ $type }}" {{ $componentAttributes->except($excludedAttributes) }}>
+        @if($wireLoadingEnabled)
+            {{-- Livewire loading state --}}
+            <span wire:loading.remove @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+                @if($icon && $iconPosition === 'left')
+                    {!! $renderIcon($icon, 'left') !!}
+                @endif
+                {{ $slot }}
+                @if($icon && $iconPosition === 'right')
+                    {!! $renderIcon($icon, 'right') !!}
+                @endif
+            </span>
+            <span wire:loading @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
+                @if($showSpinner)
+                    {!! $spinnerSvg !!}
+                @endif
+                {{ $displayText }}
+            </span>
+        @elseif($isLoading)
+            {{-- Manual loading state --}}
             @if($showSpinner)
                 {!! $spinnerSvg !!}
             @endif
             {{ $displayText }}
-        </span>
-    @elseif($isLoading)
-        {{-- Manual loading state --}}
-        @if($showSpinner)
-            {!! $spinnerSvg !!}
+        @else
+            {{-- Normal state --}}
+            @if($icon && $iconPosition === 'left')
+                {!! $renderIcon($icon, 'left') !!}
+            @endif
+            {{ $slot }}
+            @if($icon && $iconPosition === 'right')
+                {!! $renderIcon($icon, 'right') !!}
+            @endif
         @endif
-        {{ $displayText }}
-    @else
-        {{-- Normal state --}}
-        @if($icon && $iconPosition === 'left')
-            {!! $renderIcon($icon, 'left') !!}
-        @endif
-    {{ $slot }}
-        @if($icon && $iconPosition === 'right')
-            {!! $renderIcon($icon, 'right') !!}
-        @endif
-    @endif
-</button>
+    </button>
+@endif
 
