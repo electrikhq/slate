@@ -1,0 +1,89 @@
+@source "../views/**/*.blade.php";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    --color-background: var(--slate-background);
+    --color-foreground: var(--slate-foreground);
+    --color-card: var(--slate-card);
+    --color-card-foreground: var(--slate-card-foreground);
+    --color-popover: var(--slate-popover);
+    --color-popover-foreground: var(--slate-popover-foreground);
+    --color-primary: var(--slate-primary);
+    --color-primary-foreground: var(--slate-primary-foreground);
+    --color-secondary: var(--slate-secondary);
+    --color-secondary-foreground: var(--slate-secondary-foreground);
+    --color-muted: var(--slate-muted);
+    --color-muted-foreground: var(--slate-muted-foreground);
+    --color-accent: var(--slate-accent);
+    --color-accent-foreground: var(--slate-accent-foreground);
+    --color-destructive: var(--slate-destructive);
+    --color-border: var(--slate-border);
+    --color-input: var(--slate-input);
+    --color-ring: var(--slate-ring);
+    --radius-sm: calc(var(--slate-radius) * 0.6);
+    --radius-md: calc(var(--slate-radius) * 0.8);
+    --radius-lg: var(--slate-radius);
+    --radius-xl: calc(var(--slate-radius) * 1.4);
+    --radius-2xl: calc(var(--slate-radius) * 1.8);
+    --radius-3xl: calc(var(--slate-radius) * 2.2);
+    --radius-4xl: calc(var(--slate-radius) * 2.6);
+}
+
+:root {
+    --slate-radius: 0.625rem;
+    --slate-background: oklch(1 0 0);
+    --slate-foreground: oklch(0.145 0 0);
+    --slate-card: oklch(1 0 0);
+    --slate-card-foreground: oklch(0.145 0 0);
+    --slate-popover: oklch(1 0 0);
+    --slate-popover-foreground: oklch(0.145 0 0);
+    --slate-primary: oklch(0.205 0 0);
+    --slate-primary-foreground: oklch(0.985 0 0);
+    --slate-secondary: oklch(0.97 0 0);
+    --slate-secondary-foreground: oklch(0.205 0 0);
+    --slate-muted: oklch(0.97 0 0);
+    --slate-muted-foreground: oklch(0.556 0 0);
+    --slate-accent: oklch(0.97 0 0);
+    --slate-accent-foreground: oklch(0.205 0 0);
+    --slate-destructive: oklch(0.577 0.245 27.325);
+    --slate-border: oklch(0.922 0 0);
+    --slate-input: oklch(0.922 0 0);
+    --slate-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --slate-background: oklch(0.145 0 0);
+    --slate-foreground: oklch(0.985 0 0);
+    --slate-card: oklch(0.205 0 0);
+    --slate-card-foreground: oklch(0.985 0 0);
+    --slate-popover: oklch(0.205 0 0);
+    --slate-popover-foreground: oklch(0.985 0 0);
+    --slate-primary: oklch(0.922 0 0);
+    --slate-primary-foreground: oklch(0.205 0 0);
+    --slate-secondary: oklch(0.269 0 0);
+    --slate-secondary-foreground: oklch(0.985 0 0);
+    --slate-muted: oklch(0.269 0 0);
+    --slate-muted-foreground: oklch(0.708 0 0);
+    --slate-accent: oklch(0.269 0 0);
+    --slate-accent-foreground: oklch(0.985 0 0);
+    --slate-destructive: oklch(0.704 0.191 22.216);
+    --slate-border: oklch(1 0 0 / 10%);
+    --slate-input: oklch(1 0 0 / 15%);
+    --slate-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        font-family: var(--font-sans);
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+    }
+}
