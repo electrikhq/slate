@@ -1,8 +1,34 @@
 {
     "name": "electrik/slate",
-    "description": "A shadcn-inspired Blade UI kit for Laravel.",
+    "description": "A shadcn-inspired Blade UI kit for Laravel with anonymous components, Tailwind CSS v4, and Slate-owned theme tokens.",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "laravel",
+        "laravel-ui",
+        "blade",
+        "components",
+        "tailwind",
+        "tailwindcss",
+        "ui",
+        "ui-kit",
+        "design-system",
+        "dark-mode",
+        "livewire",
+        "shadcn"
+    ],
+    "authors": [
+        {
+            "name": "neerajsohal",
+            "email": "hello@neerajkumar.name"
+        }
+    ],
+    "homepage": "https://github.com/electrikhq/slate",
+    "support": {
+        "issues": "https://github.com/electrikhq/slate/issues",
+        "source": "https://github.com/electrikhq/slate"
+    },
+    "version": "3.0.0-alpha.2",
     "require": {
         "php": "^8.3",
         "illuminate/support": "^12.0|^13.0"
