@@ -2,7 +2,7 @@
     'variant' => 'default',
     'size' => 'default',
     'rounded' => null,
-    'animation' => 'auto',
+    'animation' => 'none',
     'loadingText' => null,
     'as' => 'button',
     'type' => 'button',
@@ -20,7 +20,9 @@
 
     $resolvedRounded = $roundedClasses[$rounded ?? 'md'] ?? $roundedClasses['md'];
 
-    $baseClasses = "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap {$resolvedRounded} text-sm font-medium transition-all motion-reduce:transform-none motion-reduce:transition-none outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\"size-\"])]:size-4";
+    $svgSize = '[&_svg:not([class*="size-"])]:size-4';
+
+    $baseClasses = "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap {$resolvedRounded} text-sm font-medium transition-all motion-reduce:transform-none motion-reduce:transition-none outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 {$svgSize}";
 
     $variantClasses = [
         'default' => 'bg-primary text-primary-foreground hover:bg-primary/90',
@@ -33,13 +35,13 @@
 
     $sizeClasses = [
         'xs' => 'h-6 gap-1 px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*="size-"])]:size-3',
-        'sm' => 'h-8 gap-1.5 px-3 has-[>svg]:px-2.5',
-        'default' => 'h-9 px-4 py-2 has-[>svg]:px-3',
-        'lg' => 'h-10 px-6 has-[>svg]:px-4',
-        'icon' => 'size-9',
+        'sm' => 'h-8 gap-1.5 px-3 has-[>svg]:px-2.5 [&_svg:not([class*="size-"])]:size-4',
+        'default' => 'h-9 px-4 py-2 has-[>svg]:px-3 [&_svg:not([class*="size-"])]:size-4',
+        'lg' => 'h-10 px-6 has-[>svg]:px-4 [&_svg:not([class*="size-"])]:size-4',
         'icon-xs' => 'size-6 [&_svg:not([class*="size-"])]:size-3',
-        'icon-sm' => 'size-8',
-        'icon-lg' => 'size-10',
+        'icon-sm' => 'size-8 [&_svg:not([class*="size-"])]:size-4',
+        'icon' => 'size-9 [&_svg:not([class*="size-"])]:size-4',
+        'icon-lg' => 'size-10 [&_svg:not([class*="size-"])]:size-4',
     ];
 
     $resolvedAnimation = $animation === 'auto'

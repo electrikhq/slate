@@ -2,6 +2,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+[x-cloak] {
+    display: none !important;
+}
+
 @theme inline {
     --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
     --color-background: var(--slate-background);
