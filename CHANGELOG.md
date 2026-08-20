@@ -4,6 +4,12 @@ All notable changes to the `3.x` line are documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Cloudflare Worker remote MCP (`mcp/worker`) with the same tools as `@electrik/slate-mcp`
+- Shared MCP catalog (`mcp/shared/catalog.js`) for stdio + Worker
+- GitHub Action to deploy the MCP Worker (`deploy-mcp-worker.yml`)
+
 ## 3.0.0-alpha.4 - 2026-08-20
 
 ### Added

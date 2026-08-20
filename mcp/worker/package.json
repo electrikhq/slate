@@ -1,0 +1,19 @@
+{
+  "name": "electrik-slate-mcp-worker",
+  "version": "3.0.0-alpha.4",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "agents": "^0.20.1",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.105.0"
+  }
+}

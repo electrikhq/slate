@@ -1,65 +1,30 @@
 #!/usr/bin/env node
 /**
- * Read-only MCP server for Electrik Slate.
+ * Read-only MCP server for Electrik Slate (stdio / npm).
  * Fetches docs from slate.electrik.dev and Blade source from GitHub 3.x.
  */
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import {
+  BLOCKS,
+  COMPONENTS,
+  VERSION,
+  fetchText,
+  normalizeComponentSlug,
+  normalizeDocsPath,
+  resolveDocsUrl,
+  resolveSourceUrl,
+  textResult,
+} from '../shared/catalog.js';
 
-const DOCS_URL = (process.env.SLATE_DOCS_URL || 'https://slate.electrik.dev').replace(/\/$/, '');
-const SOURCE_URL = (
-  process.env.SLATE_SOURCE_URL ||
-  'https://raw.githubusercontent.com/electrikhq/slate/3.x'
-).replace(/\/$/, '');
-
-const COMPONENTS = [
-  'button', 'badge', 'card', 'alert', 'separator', 'avatar', 'skeleton', 'dialog',
-  'tabs', 'spinner', 'breadcrumb', 'progress', 'kbd', 'aspect-ratio', 'tooltip',
-  'collapsible', 'accordion', 'popover', 'toggle', 'toggle-group', 'empty', 'slider',
-  'pagination', 'table', 'hover-card', 'alert-dialog', 'sheet', 'scroll-area',
-  'button-group', 'dropdown-menu', 'input', 'textarea', 'select', 'checkbox',
-  'switch', 'radio', 'field', 'dark-mode-toggle', 'radio-group', 'file-input',
-  'form', 'rating', 'timeline', 'stepper', 'marquee', 'drawer', 'carousel',
-  'resizable', 'context-menu', 'command', 'combobox', 'calendar', 'menubar',
-  'navigation-menu', 'sidebar', 'app-shell', 'chart', 'spotlight', 'toast',
-];
-
-const BLOCKS = [
-  { id: 'login', title: 'Login', category: 'Auth' },
-  { id: 'register', title: 'Register', category: 'Auth' },
-  { id: 'settings', title: 'Settings', category: 'Application' },
-  { id: 'app-shell', title: 'App shell', category: 'Application' },
-  { id: 'empty-state', title: 'Empty state', category: 'Application' },
-  { id: 'pricing', title: 'Pricing', category: 'Marketing' },
-  { id: 'form-validation', title: 'Form validation', category: 'Forms' },
-  { id: 'toast-action', title: 'Toast action', category: 'Feedback' },
-  { id: 'hero', title: 'Hero', category: 'Marketing' },
-];
-
-async function fetchText(url) {
-  const response = await fetch(url, {
-    headers: { 'User-Agent': 'electrik-slate-mcp/3.0.0-alpha.4' },
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} for ${url}`);
-  }
-
-  return response.text();
-}
-
-function textResult(text, isError = false) {
-  return {
-    content: [{ type: 'text', text }],
-    isError,
-  };
-}
+const DOCS_URL = resolveDocsUrl(process.env.SLATE_DOCS_URL);
+const SOURCE_URL = resolveSourceUrl(process.env.SLATE_SOURCE_URL);
 
 const server = new McpServer({
   name: 'electrik-slate',
-  version: '3.0.0-alpha.4',
+  version: VERSION,
 });
 
 server.tool(
@@ -111,7 +76,7 @@ server.tool(
       .describe('Component slug, e.g. button, alert-dialog, dark-mode-toggle'),
   },
   async ({ name }) => {
-    const slug = name.trim().toLowerCase().replace(/^x-slate::/, '');
+    const slug = normalizeComponentSlug(name);
 
     if (!COMPONENTS.includes(slug)) {
       return textResult(
@@ -138,11 +103,7 @@ server.tool(
       .describe('Docs path without leading docs/, e.g. getting-started/installation or design-tokens'),
   },
   async ({ path }) => {
-    const clean = path
-      .trim()
-      .replace(/^\/+/, '')
-      .replace(/^docs\//, '')
-      .replace(/\.md$/, '');
+    const clean = normalizeDocsPath(path);
 
     try {
       const markdown = await fetchText(`${DOCS_URL}/docs/${clean}.md`);
@@ -162,7 +123,7 @@ server.tool(
       .describe('Component slug, e.g. button, dialog, toaster'),
   },
   async ({ name }) => {
-    const slug = name.trim().toLowerCase().replace(/^x-slate::/, '');
+    const slug = normalizeComponentSlug(name);
     const url = `${SOURCE_URL}/resources/views/components/${slug}.blade.php`;
 
     try {

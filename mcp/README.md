@@ -4,26 +4,31 @@ Read-only [MCP](https://modelcontextprotocol.io/) server for [Electrik Slate](ht
 
 Browsing and fetching only — it does **not** install Composer packages.
 
-## Install
+## Two ways to connect
+
+### 1. Remote (Cloudflare Worker)
+
+Deploy `mcp/worker` then point Cursor at the Worker URL (Streamable HTTP):
+
+```json
+{
+  "mcpServers": {
+    "slate": {
+      "url": "https://electrik-slate-mcp.<your-subdomain>.workers.dev"
+    }
+  }
+}
+```
+
+See [`worker/README.md`](worker/README.md).
+
+### 2. Local (npm / stdio)
 
 ```bash
 npm install -g @electrik/slate-mcp
 # or
 npx -y @electrik/slate-mcp
 ```
-
-## Tools
-
-| Tool | Purpose |
-| --- | --- |
-| `list_components` | Shipped component slugs + docs URLs |
-| `list_blocks` | Docs-site blocks gallery |
-| `get_component_docs` | Component markdown from slate.electrik.dev |
-| `get_docs_page` | Docs markdown (`installation`, `livewire`, …) |
-| `get_component_source` | Blade file from GitHub `3.x` |
-| `get_llms_index` | Fetch `/llms.txt` |
-
-## Cursor (`.cursor/mcp.json`)
 
 ```json
 {
@@ -36,11 +41,16 @@ npx -y @electrik/slate-mcp
 }
 ```
 
-Local checkout:
+## Tools
 
-```bash
-cd mcp && npm install && npm start
-```
+| Tool | Purpose |
+| --- | --- |
+| `list_components` | Shipped component slugs + docs URLs |
+| `list_blocks` | Docs-site blocks gallery |
+| `get_component_docs` | Component markdown from slate.electrik.dev |
+| `get_docs_page` | Docs markdown (`installation`, `livewire`, …) |
+| `get_component_source` | Blade file from GitHub `3.x` |
+| `get_llms_index` | Fetch `/llms.txt` |
 
 ## Env
 

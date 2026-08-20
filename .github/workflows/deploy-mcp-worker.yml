@@ -1,0 +1,37 @@
+name: Deploy Slate MCP Worker
+
+on:
+  push:
+    branches: [3.x]
+    paths:
+      - 'mcp/worker/**'
+      - 'mcp/shared/**'
+      - '.github/workflows/deploy-mcp-worker.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp/worker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: mcp/worker/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: mcp/worker
+          command: deploy

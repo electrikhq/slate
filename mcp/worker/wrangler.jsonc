@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "electrik-slate-mcp",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "SLATE_DOCS_URL": "https://slate.electrik.dev",
+    "SLATE_SOURCE_URL": "https://raw.githubusercontent.com/electrikhq/slate/3.x"
+  }
+}
