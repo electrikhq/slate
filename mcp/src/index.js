@@ -40,7 +40,7 @@ const BLOCKS = [
 
 async function fetchText(url) {
   const response = await fetch(url, {
-    headers: { 'User-Agent': 'electrik-slate-mcp/3.0.0-alpha.2' },
+    headers: { 'User-Agent': 'electrik-slate-mcp/3.0.0-alpha.4' },
   });
 
   if (!response.ok) {
@@ -59,7 +59,7 @@ function textResult(text, isError = false) {
 
 const server = new McpServer({
   name: 'electrik-slate',
-  version: '3.0.0-alpha.2',
+  version: '3.0.0-alpha.4',
 });
 
 server.tool(

@@ -1,0 +1,35 @@
+name: Consumer sandbox
+
+on:
+  push:
+    branches: [3.x, main]
+  pull_request:
+    branches: [3.x, main]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, xml, ctype, json, tokenizer, fileinfo
+          coverage: none
+          tools: composer:v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup path-linked consumer sandbox
+        run: |
+          chmod +x scripts/setup-consumer-sandbox.sh
+          scripts/setup-consumer-sandbox.sh
+
+      - name: Run critical smoke test
+        working-directory: .ci-sandbox
+        run: php artisan test --filter=SlateCriticalSmoke

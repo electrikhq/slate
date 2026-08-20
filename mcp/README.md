@@ -4,6 +4,14 @@ Read-only [MCP](https://modelcontextprotocol.io/) server for [Electrik Slate](ht
 
 Browsing and fetching only — it does **not** install Composer packages.
 
+## Install
+
+```bash
+npm install -g @electrik/slate-mcp
+# or
+npx -y @electrik/slate-mcp
+```
+
 ## Tools
 
 | Tool | Purpose |
@@ -15,62 +23,31 @@ Browsing and fetching only — it does **not** install Composer packages.
 | `get_component_source` | Blade file from GitHub `3.x` |
 | `get_llms_index` | Fetch `/llms.txt` |
 
-## Run
-
-```bash
-cd mcp
-npm install
-npm start
-```
-
-### Cursor (`.cursor/mcp.json`)
-
-From a clone of this repo:
+## Cursor (`.cursor/mcp.json`)
 
 ```json
 {
   "mcpServers": {
     "slate": {
       "command": "npx",
-      "args": ["-y", "tsx", "mcp/src/index.js"],
-      "cwd": "/absolute/path/to/slate"
+      "args": ["-y", "@electrik/slate-mcp"]
     }
   }
 }
 ```
 
-Or after `npm install` in `mcp/`:
+Local checkout:
 
-```json
-{
-  "mcpServers": {
-    "slate": {
-      "command": "node",
-      "args": ["/absolute/path/to/slate/mcp/src/index.js"]
-    }
-  }
-}
-```
-
-With Composer path/vendor install (after `npm install` inside `vendor/electrik/slate/mcp`):
-
-```json
-{
-  "mcpServers": {
-    "slate": {
-      "command": "node",
-      "args": ["./vendor/electrik/slate/mcp/src/index.js"]
-    }
-  }
-}
+```bash
+cd mcp && npm install && npm start
 ```
 
 ## Env
 
-| Variable | Default |
-| --- | --- |
-| `SLATE_DOCS_URL` | `https://slate.electrik.dev` |
-| `SLATE_SOURCE_URL` | `https://raw.githubusercontent.com/electrikhq/slate/3.x` |
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `SLATE_DOCS_URL` | `https://slate.electrik.dev` | Docs / markdown base |
+| `SLATE_SOURCE_URL` | GitHub raw `3.x` | Blade source base |
 
 ## Docs
 

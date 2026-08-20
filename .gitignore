@@ -793,3 +793,9 @@ FodyWeavers.xsd
 docs/
 .phpunit.cache/*
 .phpunit.cache/test-results
+# CI consumer sandbox
+.ci-sandbox/
+/tests/visual/node_modules/
+/tests/visual/test-results/
+/tests/visual/playwright-report/
+

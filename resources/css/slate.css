@@ -200,3 +200,23 @@
 
 [dir="rtl"] .slate-slide-from-start { transform: translate3d(100%, 0, 0); }
 [dir="rtl"] .slate-slide-from-end { transform: translate3d(-100%, 0, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+    .slate-motion-fade,
+    .slate-motion-fade-out,
+    .slate-motion-slide,
+    .slate-motion-slide-out,
+    [data-slot$="-overlay"],
+    [data-slot$="-content"] {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
+    .slate-slide-from-bottom,
+    .slate-slide-from-top,
+    .slate-slide-from-start,
+    .slate-slide-from-end,
+    .slate-slide-to {
+        transform: none !important;
+    }
+}

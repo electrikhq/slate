@@ -1,0 +1,67 @@
+name: Visual regression
+
+on:
+  push:
+    branches: [3.x, main]
+  pull_request:
+    branches: [3.x, main]
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, xml, ctype, json, tokenizer, fileinfo
+          coverage: none
+          tools: composer:v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup path-linked consumer sandbox
+        run: |
+          chmod +x scripts/setup-consumer-sandbox.sh
+          scripts/setup-consumer-sandbox.sh
+
+      - name: Install Playwright
+        working-directory: tests/visual
+        run: |
+          npm install
+          npx playwright install chromium --with-deps
+
+      - name: Serve sandbox
+        working-directory: .ci-sandbox
+        run: php artisan serve --host=127.0.0.1 --port=8000 &
+
+      - name: Wait for server
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/slate-critical >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
+
+      - name: Run visual tests
+        working-directory: tests/visual
+        env:
+          SLATE_VISUAL_BASE_URL: http://127.0.0.1:8000
+          CI: "true"
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            tests/visual/playwright-report
+            tests/visual/test-results
+          retention-days: 7

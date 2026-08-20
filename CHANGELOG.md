@@ -4,9 +4,23 @@ All notable changes to the `3.x` line are documented in this file.
 
 ## Unreleased
 
+## 3.0.0-alpha.4 - 2026-08-20
+
+### Added
+
+- Consumer sandbox CI (`scripts/setup-consumer-sandbox.sh`, critical smoke page + PHPUnit, GitHub Actions)
+- Visual regression Playwright suite for critical demos (light/dark, dialog, toast)
+- Shared nesting-safe overlay stack (scroll-lock + topmost Escape) for dialog / sheet / drawer / alert-dialog
+- Focus restore to the trigger when overlays close; improved Tab focusables filter
+- `prefers-reduced-motion` short-circuit for overlay motion classes
+- Docs: [API freeze](https://slate.electrik.dev/docs/api-freeze), [Form matrix](https://slate.electrik.dev/docs/form-matrix)
+- Form matrix consumer fixture page
+- `@electrik/slate-mcp` `publishConfig.access=public` and version string sync for npm publish
+
 ### Changed
 
 - Expand README with banner, product gallery screenshots, TOC, and AI/MCP discoverability copy
+- Toaster mounts via Alpine `x-teleport` from a hidden `x-data` host so top-level pages initialize reliably
 
 ## 3.0.0-alpha.3 - 2026-08-20
 

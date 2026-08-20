@@ -28,41 +28,44 @@
     ]));
 @endphp
 
-<template x-teleport="body">
-    <{{ $as }}
-        data-slot="toaster"
-        data-position="{{ $resolvedPosition }}"
-        x-data="{
-            toasts: [],
-            defaultDuration: {{ $defaultDuration }},
-            add(detail = {}) {
-                const id = detail.id ?? ('toast-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8));
-                const toast = {
-                    id,
-                    title: detail.title ?? '',
-                    description: detail.description ?? '',
-                    variant: detail.variant ?? 'default',
-                    duration: detail.duration != null ? Number(detail.duration) : this.defaultDuration,
-                    open: false,
-                };
-                this.toasts = [...this.toasts, toast];
-                this.$nextTick(() => {
-                    this.toasts = this.toasts.map((item) => item.id === id ? { ...item, open: true } : item);
-                });
-                if (toast.duration > 0) {
-                    setTimeout(() => this.dismiss(id), toast.duration);
+{{-- Fixed viewport stack. Prefer mounting near the end of <body>. --}}
+<div hidden x-data>
+    <template x-teleport="body">
+        <{{ $as }}
+            data-slot="toaster"
+            data-position="{{ $resolvedPosition }}"
+            x-data="{
+                toasts: [],
+                defaultDuration: {{ $defaultDuration }},
+                add(detail = {}) {
+                    const id = detail.id ?? ('toast-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8));
+                    const toast = {
+                        id,
+                        title: detail.title ?? '',
+                        description: detail.description ?? '',
+                        variant: detail.variant ?? 'default',
+                        duration: detail.duration != null ? Number(detail.duration) : this.defaultDuration,
+                        open: false,
+                    };
+                    this.toasts = [...this.toasts, toast];
+                    this.$nextTick(() => {
+                        this.toasts = this.toasts.map((item) => item.id === id ? { ...item, open: true } : item);
+                    });
+                    if (toast.duration > 0) {
+                        setTimeout(() => this.dismiss(id), toast.duration);
+                    }
+                },
+                dismiss(id) {
+                    this.toasts = this.toasts.map((item) => item.id === id ? { ...item, open: false } : item);
+                    setTimeout(() => {
+                        this.toasts = this.toasts.filter((item) => item.id !== id);
+                    }, 320);
                 }
-            },
-            dismiss(id) {
-                this.toasts = this.toasts.map((item) => item.id === id ? { ...item, open: false } : item);
-                setTimeout(() => {
-                    this.toasts = this.toasts.filter((item) => item.id !== id);
-                }, 320);
-            }
-        }"
-        @slate-toast.window="add($event.detail || {})"
-        {{ $attributes->merge(['class' => $stackClasses]) }}
-    >
-        @include('slate::components.partials.toaster-stack')
-    </{{ $as }}>
-</template>
+            }"
+            x-on:slate-toast.window="add($event.detail || {})"
+            {{ $attributes->merge(['class' => $stackClasses]) }}
+        >
+            @include('slate::components.partials.toaster-stack')
+        </{{ $as }}>
+    </template>
+</div>

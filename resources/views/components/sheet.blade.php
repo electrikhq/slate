@@ -3,15 +3,9 @@
     'as' => 'div',
 ])
 
-@php
-    $isOpen = filter_var($open, FILTER_VALIDATE_BOOL);
-@endphp
-
 <{{ $as }}
     data-slot="sheet"
-    x-data="{ open: {{ $isOpen ? 'true' : 'false' }} }"
-    x-effect="document.documentElement.classList.toggle('slate-scroll-lock', open)"
-    @keydown.escape.window="if (open) open = false"
+    @include('slate::components.partials.overlay-root-attrs', ['open' => $open])
     {{ $attributes }}
 >
     {{ $slot }}

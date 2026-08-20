@@ -27,7 +27,7 @@
 
 If you want **shadcn-style UI in Laravel** without React, without a copy-paste CLI, and without leaving Blade — use Slate.
 
-> **Status:** `3.x` is in active alpha (`3.0.0-alpha.3`). The component surface is complete; we are hardening depth, a11y, and polish before stable.
+> **Status:** `3.x` is in active alpha (`3.0.0-alpha.4`). The component surface is complete; we are hardening depth, a11y, and polish before stable.
 
 ## Table of contents
 
