@@ -1,0 +1,29 @@
+---
+description: On every ship/release — update CHANGELOG.md and create a matching git tag
+alwaysApply: true
+---
+
+# Changelog + tag on ship
+
+Whenever you **ship**, **release**, **publish**, or the user asks to **commit a versioned release** for `electrik/slate`:
+
+1. **Changelog first** — update `CHANGELOG.md` before the release commit:
+   - Move items out of `## Unreleased` into a new heading `## X.Y.Z[-suffix] - YYYY-MM-DD`
+   - Use Keep a Changelog groups: `Added`, `Changed`, `Fixed`, `Deprecated`, `Removed`, `Security`
+   - Match the version in `composer.json` (`version` field)
+2. **Commit** the changelog (and version bump) with the release
+3. **Tag** with an annotated tag equal to that version string (no `v` prefix — match existing tags like `3.0.0-alpha.3`):
+
+```bash
+git tag -a "X.Y.Z-suffix" -m "Release X.Y.Z-suffix"
+git push origin HEAD --tags
+```
+
+4. **Do not** ship a package version bump without both the changelog section and the git tag
+5. Docs-only or WIP commits may land under `## Unreleased` without a tag; creating a tag requires a changelog release section
+
+## Examples
+
+- Shipping alpha.4 → `CHANGELOG.md` has `## 3.0.0-alpha.4 - 2026-…`, `composer.json` says `3.0.0-alpha.4`, tag `3.0.0-alpha.4`
+- Bad: push a release commit with no changelog entry
+- Bad: create a tag that does not match `composer.json` / changelog heading

@@ -4,6 +4,10 @@ All notable changes to the `3.x` line are documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Expand README with banner, product gallery screenshots, TOC, and AI/MCP discoverability copy
+
 ## 3.0.0-alpha.3 - 2026-08-20
 
 ### Added
