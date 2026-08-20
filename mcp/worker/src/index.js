@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker — remote Electrik Slate MCP (stateless Streamable HTTP).
+ * Cloudflare Worker — Electrik Slate remote MCP (stateless Streamable HTTP).
  */
 
 import { McpServer } from '@modelcontextprotocol/server';
@@ -190,13 +190,12 @@ export default {
       return Response.json({
         name: 'electrik-slate',
         version: VERSION,
-        mcp: 'Connect Cursor (or any MCP client) to this Worker URL via Streamable HTTP.',
+        transport: 'streamable-http',
         docs: 'https://slate.electrik.dev/docs/ai',
         local: 'npx -y @electrik/slate-mcp',
       });
     }
 
-    // Factory must close over env — do not reuse one global server instance.
     return createMcpHandler(() => createServer(env))(request, env, ctx);
   },
 };
