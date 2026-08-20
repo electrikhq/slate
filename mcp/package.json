@@ -4,10 +4,9 @@
   "description": "Read-only MCP server for Electrik Slate docs, blocks, and Blade source",
   "type": "module",
   "bin": {
-    "slate-mcp": "./bin/slate-mcp.js"
+    "slate-mcp": "./src/index.js"
   },
   "files": [
-    "bin",
     "src",
     "README.md"
   ],
