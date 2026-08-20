@@ -4,6 +4,13 @@ All notable changes to the `3.x` line are documented in this file.
 
 ## Unreleased
 
+## 3.0.0-alpha.3 - 2026-08-20
+
+### Added
+
+- AI surface for agents: `llms.txt` / `llms-full.txt` on the docs site, read-only `@electrik/slate-mcp` server (`mcp/`), `AGENTS.md`, Cursor rule, and skill
+- Docs page: [AI & MCP](https://slate.electrik.dev/docs/ai)
+
 ## 3.0.0-alpha.2 - 2026-08-20
 
 ### Added

@@ -1,0 +1,18 @@
+---
+description: Electrik Slate 3.x Blade UI kit conventions (progressive props, tokens, Livewire)
+globs: "**/*.{blade.php,php,css,md}"
+alwaysApply: false
+---
+
+# Electrik Slate
+
+When building UI in this project with `electrik/slate`:
+
+- Use `<x-slate::*>` anonymous Blade components only — no React/Vue/shadcn copies.
+- Prefer progressive props: `label`, `description`, `errorMessage`.
+- Do not nest the same Slate component inside itself.
+- Do not put `@if` inside `<x-slate::*>` opening tags.
+- Prefer logical properties (`start`/`end`) for spacing and positioning.
+- Theme with `--slate-*` OKLCH tokens; import `vendor/electrik/slate/resources/css/slate.css` after Tailwind v4.
+- Interactive overlays need Alpine; mount `<x-slate::toaster />` once for toasts (`slate-toast` events).
+- Read docs from https://slate.electrik.dev/llms.txt or `*.md` component URLs before inventing APIs.

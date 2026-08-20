@@ -14,7 +14,7 @@
 
 The `3.x` line is a clean rebuild focused on visual quality, customization power, and Laravel-native ergonomics.
 
-[Documentation](https://slate.electrik.dev) | [Issues](https://github.com/electrikhq/slate/issues) | [Discussions](https://github.com/electrikhq/slate/discussions)
+[Documentation](https://slate.electrik.dev) | [AI & MCP](https://slate.electrik.dev/docs/ai) | [Issues](https://github.com/electrikhq/slate/issues) | [Discussions](https://github.com/electrikhq/slate/discussions)
 
 ## Features
 
@@ -25,6 +25,7 @@ The `3.x` line is a clean rebuild focused on visual quality, customization power
 - Livewire-aware form primitives
 - Accessible defaults with ARIA and validation wiring
 - Static-first primitives with room for Alpine-powered interactive components later
+- AI-ready docs (`llms.txt`), read-only MCP server, and Cursor / AGENTS guidance
 
 ## Requirements
 

@@ -1,0 +1,39 @@
+{
+  "name": "@electrik/slate-mcp",
+  "version": "3.0.0-alpha.3",
+  "description": "Read-only MCP server for Electrik Slate docs, blocks, and Blade source",
+  "type": "module",
+  "bin": {
+    "slate-mcp": "./bin/slate-mcp.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "mcp": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.1"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electrikhq/slate.git",
+    "directory": "mcp"
+  },
+  "homepage": "https://slate.electrik.dev/docs/ai",
+  "keywords": [
+    "mcp",
+    "slate",
+    "laravel",
+    "blade",
+    "electrik"
+  ]
+}
