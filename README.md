@@ -31,7 +31,7 @@ The `3.x` line is a clean rebuild focused on visual quality, customization power
 - PHP 8.3+
 - Laravel 12.x or 13.x
 - Tailwind CSS v4
-- Alpine.js for interactive components such as `dark-mode-toggle`
+- Alpine.js for interactive components such as `dark-mode-toggle`, `dialog`, `tabs`, `tooltip`, `collapsible`, `accordion`, `popover`, `toggle`, `toggle-group`, `slider`, `hover-card`, `alert-dialog`, `sheet`, `dropdown-menu`, `drawer`, `carousel`, `resizable`, `context-menu`, `command`, `combobox`, `calendar`, `menubar`, `navigation-menu`, `sidebar`, `rating`, `radio-group`, `spotlight`, and `toast` / `toaster`
 
 ## Installation
 
@@ -75,10 +75,44 @@ Form field composition:
 </x-slate::field>
 ```
 
+Or the progressive prop API (builds on the same field helpers):
+
+```blade
+<x-slate::input
+    label="Email"
+    type="email"
+    wire:model="email"
+    description="We will never share your email."
+/>
+
+<x-slate::checkbox
+    label="Product updates"
+    description="Receive occasional release notes by email."
+/>
+```
+
 Dark mode toggle:
 
 ```blade
 <x-slate::dark-mode-toggle />
+```
+
+Card composition:
+
+```blade
+<x-slate::card class="w-full max-w-sm">
+    <x-slate::card-header>
+        <x-slate::card-title>Account</x-slate::card-title>
+        <x-slate::card-description>Manage your workspace settings.</x-slate::card-description>
+    </x-slate::card-header>
+    <x-slate::card-content>
+        ...
+    </x-slate::card-content>
+    <x-slate::card-footer class="justify-end gap-2 border-t">
+        <x-slate::button variant="outline">Cancel</x-slate::button>
+        <x-slate::button>Save</x-slate::button>
+    </x-slate::card-footer>
+</x-slate::card>
 ```
 
 ## Current Components
@@ -86,18 +120,69 @@ Dark mode toggle:
 The `3.x` rebuild currently includes:
 
 - `button`
+- `badge`
+- `card`, `card-header`, `card-title`, `card-description`, `card-action`, `card-content`, `card-footer`
+- `alert`, `alert-title`, `alert-description`, `alert-action`
+- `separator`
+- `avatar`, `avatar-image`, `avatar-fallback`, `avatar-badge`, `avatar-group`, `avatar-group-count`
+- `skeleton`
+- `dialog`, `dialog-trigger`, `dialog-content`, `dialog-header`, `dialog-footer`, `dialog-title`, `dialog-description`, `dialog-close`
+- `tabs`, `tabs-list`, `tabs-trigger`, `tabs-content`
+- `spinner`
+- `breadcrumb`, `breadcrumb-list`, `breadcrumb-item`, `breadcrumb-link`, `breadcrumb-page`, `breadcrumb-separator`, `breadcrumb-ellipsis`
+- `progress`
+- `kbd`, `kbd-group`
+- `aspect-ratio`
+- `tooltip`, `tooltip-trigger`, `tooltip-content`
+- `collapsible`, `collapsible-trigger`, `collapsible-content`
+- `accordion`, `accordion-item`, `accordion-trigger`, `accordion-content`
+- `popover`, `popover-trigger`, `popover-content`
+- `toggle`
+- `toggle-group`, `toggle-group-item`
+- `empty`, `empty-header`, `empty-media`, `empty-title`, `empty-description`, `empty-content`
+- `slider`
+- `pagination`, `pagination-content`, `pagination-item`, `pagination-link`, `pagination-previous`, `pagination-next`, `pagination-ellipsis`
+- `table`, `table-header`, `table-body`, `table-footer`, `table-row`, `table-head`, `table-cell`, `table-caption`
+- `hover-card`, `hover-card-trigger`, `hover-card-content`
+- `alert-dialog`, `alert-dialog-trigger`, `alert-dialog-content`, `alert-dialog-header`, `alert-dialog-footer`, `alert-dialog-title`, `alert-dialog-description`, `alert-dialog-action`, `alert-dialog-cancel`
+- `sheet`, `sheet-trigger`, `sheet-content`, `sheet-header`, `sheet-footer`, `sheet-title`, `sheet-description`, `sheet-close`
+- `scroll-area`
+- `button-group`
+- `dropdown-menu`, `dropdown-menu-trigger`, `dropdown-menu-content`, `dropdown-menu-item`, `dropdown-menu-label`, `dropdown-menu-separator`, `dropdown-menu-shortcut`
 - `input`
 - `textarea`
 - `select`
 - `checkbox`
 - `switch`
+- `radio`
 - `dark-mode-toggle`
 - `field`
 - `field-label`
 - `field-description`
 - `field-error`
+- `radio-group`, `radio-group-item`
+- `file-input`
+- `form`, `form-item`
+- `rating`
+- `timeline`, `timeline-item`, `timeline-indicator`, `timeline-content`, `timeline-title`, `timeline-description`
+- `stepper`, `stepper-item`, `stepper-title`, `stepper-description`
+- `marquee`
+- `drawer`, `drawer-trigger`, `drawer-content`, `drawer-header`, `drawer-footer`, `drawer-title`, `drawer-description`, `drawer-close`
+- `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`
+- `resizable-panel-group`, `resizable-panel`, `resizable-handle`
+- `context-menu`, `context-menu-trigger`, `context-menu-content`, `context-menu-item`, `context-menu-separator`, `context-menu-label`
+- `command`, `command-input`, `command-list`, `command-empty`, `command-group`, `command-item`, `command-separator`
+- `combobox`, `combobox-input`, `combobox-content`, `combobox-item`
+- `calendar`
+- `menubar`, `menubar-menu`, `menubar-trigger`, `menubar-content`, `menubar-item`, `menubar-separator`
+- `navigation-menu`, `navigation-menu-list`, `navigation-menu-item`, `navigation-menu-trigger`, `navigation-menu-content`, `navigation-menu-link`
+- `sidebar-provider`, `sidebar`, `sidebar-header`, `sidebar-content`, `sidebar-footer`, `sidebar-menu`, `sidebar-menu-item`, `sidebar-menu-button`, `sidebar-inset`, `sidebar-trigger`
+- `app-shell`
+- `chart`, `chart-bar`
+- `spotlight`
+- `toaster`, `toast`, `toast-title`, `toast-description`, `toast-action`, `toast-close`
 
-More primitives and interactive components will land incrementally on `3.x`.
+The `3.x` alpha surface set is complete. Further work focuses on depth (richer calendar/combobox/chart behavior), accessibility hardening, and polish — not adding stub component names.
 
 ## Theming
 

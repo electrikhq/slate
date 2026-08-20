@@ -1,6 +1,7 @@
 @source "../views/**/*.blade.php";
 
-@custom-variant dark (&:is(.dark *));
+/* Descendants of .dark, excluding nested .light islands (docs previews). */
+@custom-variant dark (&:is(.dark *):not(.light *));
 
 [x-cloak] {
     display: none !important;
@@ -33,6 +34,12 @@
     --color-border: var(--slate-border);
     --color-input: var(--slate-input);
     --color-ring: var(--slate-ring);
+    --color-sidebar: var(--slate-sidebar);
+    --color-sidebar-foreground: var(--slate-sidebar-foreground);
+    --color-sidebar-accent: var(--slate-sidebar-accent);
+    --color-sidebar-accent-foreground: var(--slate-sidebar-accent-foreground);
+    --color-sidebar-border: var(--slate-sidebar-border);
+    --color-sidebar-ring: var(--slate-sidebar-ring);
     --radius-sm: calc(var(--slate-radius) * 0.6);
     --radius-md: calc(var(--slate-radius) * 0.8);
     --radius-lg: var(--slate-radius);
@@ -69,6 +76,12 @@
     --slate-border: oklch(0.922 0 0);
     --slate-input: oklch(0.922 0 0);
     --slate-ring: oklch(0.708 0 0);
+    --slate-sidebar: oklch(0.985 0 0);
+    --slate-sidebar-foreground: oklch(0.145 0 0);
+    --slate-sidebar-accent: oklch(0.97 0 0);
+    --slate-sidebar-accent-foreground: oklch(0.205 0 0);
+    --slate-sidebar-border: oklch(0.922 0 0);
+    --slate-sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
@@ -97,6 +110,47 @@
     --slate-border: oklch(1 0 0 / 10%);
     --slate-input: oklch(1 0 0 / 15%);
     --slate-ring: oklch(0.556 0 0);
+    --slate-sidebar: oklch(0.205 0 0);
+    --slate-sidebar-foreground: oklch(0.985 0 0);
+    --slate-sidebar-accent: oklch(0.269 0 0);
+    --slate-sidebar-accent-foreground: oklch(0.985 0 0);
+    --slate-sidebar-border: oklch(1 0 0 / 10%);
+    --slate-sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Nested light island — resets tokens when forced light inside html.dark. */
+.light {
+    --slate-background: oklch(1 0 0);
+    --slate-foreground: oklch(0.145 0 0);
+    --slate-card: oklch(1 0 0);
+    --slate-card-foreground: oklch(0.145 0 0);
+    --slate-popover: oklch(1 0 0);
+    --slate-popover-foreground: oklch(0.145 0 0);
+    --slate-primary: oklch(0.205 0 0);
+    --slate-primary-foreground: oklch(0.985 0 0);
+    --slate-secondary: oklch(0.97 0 0);
+    --slate-secondary-foreground: oklch(0.205 0 0);
+    --slate-muted: oklch(0.97 0 0);
+    --slate-muted-foreground: oklch(0.556 0 0);
+    --slate-accent: oklch(0.97 0 0);
+    --slate-accent-foreground: oklch(0.205 0 0);
+    --slate-destructive: oklch(0.577 0.245 27.325);
+    --slate-destructive-foreground: oklch(0.985 0 0);
+    --slate-success: oklch(0.627 0.194 149.214);
+    --slate-success-foreground: oklch(0.985 0 0);
+    --slate-warning: oklch(0.769 0.188 70.08);
+    --slate-warning-foreground: oklch(0.205 0 0);
+    --slate-info: oklch(0.623 0.214 259.815);
+    --slate-info-foreground: oklch(0.985 0 0);
+    --slate-border: oklch(0.922 0 0);
+    --slate-input: oklch(0.922 0 0);
+    --slate-ring: oklch(0.708 0 0);
+    --slate-sidebar: oklch(0.985 0 0);
+    --slate-sidebar-foreground: oklch(0.145 0 0);
+    --slate-sidebar-accent: oklch(0.97 0 0);
+    --slate-sidebar-accent-foreground: oklch(0.205 0 0);
+    --slate-sidebar-border: oklch(0.922 0 0);
+    --slate-sidebar-ring: oklch(0.708 0 0);
 }
 
 @layer base {
@@ -108,7 +162,41 @@
         font-family: var(--font-sans);
     }
 
+    html.slate-scroll-lock {
+        overflow: hidden;
+    }
+
     body {
         @apply bg-background text-foreground antialiased;
     }
 }
+
+/* Overlay / panel motion — translate3d stays on the compositor (smoother than utility class swaps). */
+.slate-motion-fade {
+    transition: opacity 500ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.slate-motion-fade-out {
+    transition: opacity 300ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.slate-motion-slide {
+    transition: transform 500ms cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.slate-motion-slide-out {
+    transition: transform 300ms cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.slate-slide-from-bottom { transform: translate3d(0, 100%, 0); }
+.slate-slide-from-top { transform: translate3d(0, -100%, 0); }
+.slate-slide-from-start { transform: translate3d(-100%, 0, 0); }
+.slate-slide-from-end { transform: translate3d(100%, 0, 0); }
+.slate-slide-to { transform: translate3d(0, 0, 0); }
+
+[dir="rtl"] .slate-slide-from-start { transform: translate3d(100%, 0, 0); }
+[dir="rtl"] .slate-slide-from-end { transform: translate3d(-100%, 0, 0); }

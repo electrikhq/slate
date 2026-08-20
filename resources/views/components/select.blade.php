@@ -3,6 +3,11 @@
     'errorKey' => null,
     'rounded' => null,
     'placeholder' => null,
+    'label' => null,
+    'description' => null,
+    'help' => null,
+    'errorMessage' => null,
+    'showError' => null,
 ])
 
 @php
@@ -33,44 +38,65 @@
     $identifierSource = $resolvedName ?? $validationKey;
     $identifier = $identifierSource ? str_replace(['.', '[', ']'], ['-', '-', ''], $identifierSource) : null;
 
-    $describedBy = trim((string) $attributes->get('aria-describedby'));
-    $errorDescribedBy = $hasError && $identifier ? "{$identifier}-error" : null;
+    $resolvedId = $attributes->get('id') ?? ($identifier ? "select-{$identifier}" : 'select-'.uniqid());
+    $resolvedDescription = $description ?? $help;
 
-    if ($errorDescribedBy && ! str_contains(" {$describedBy} ", " {$errorDescribedBy} ")) {
-        $describedBy = trim($describedBy . ' ' . $errorDescribedBy);
+    $composed = filled($label) || filled($resolvedDescription) || filled($errorMessage);
+    $shouldShowError = $showError ?? $composed;
+
+    $describedBy = trim((string) $attributes->get('aria-describedby'));
+    $descriptionId = filled($resolvedDescription) ? "{$resolvedId}-description" : null;
+    $errorDescribedBy = ($hasError || filled($errorMessage)) && $identifier ? "{$identifier}-error" : null;
+
+    foreach ([$descriptionId, $errorDescribedBy] as $idRef) {
+        if ($idRef && ! str_contains(" {$describedBy} ", " {$idRef} ")) {
+            $describedBy = trim($describedBy.' '.$idRef);
+        }
     }
 
     $resolvedAriaInvalid = $attributes->get('aria-invalid');
 
-    if ($resolvedAriaInvalid === null && $hasError) {
+    if ($resolvedAriaInvalid === null && ($hasError || filled($errorMessage))) {
         $resolvedAriaInvalid = 'true';
     }
+
+    $isInvalid = filter_var($resolvedAriaInvalid, FILTER_VALIDATE_BOOL);
+    $isDisabled = filter_var($attributes->get('disabled'), FILTER_VALIDATE_BOOL);
 
     $currentValue = $attributes->get('value');
 
     if ($currentValue === null && $resolvedName) {
         $currentValue = old($resolvedName);
     }
+
+    $fieldClass = $composed ? $attributes->get('class') : null;
+    $controlAttributes = $composed
+        ? $attributes->except(['name', 'id', 'aria-describedby', 'aria-invalid', 'value', 'class'])
+        : $attributes->except(['name', 'id', 'aria-describedby', 'aria-invalid', 'value']);
 @endphp
 
-<div data-slot="select-wrapper" class="relative">
-    <select
-        data-slot="select"
-        @if($resolvedName) name="{{ $resolvedName }}" @endif
-        @if($resolvedAriaInvalid !== null) aria-invalid="{{ $resolvedAriaInvalid }}" @endif
-        @if($describedBy) aria-describedby="{{ $describedBy }}" @endif
-        {{ $attributes->except(['name', 'aria-describedby', 'aria-invalid'])->merge(['class' => $classes]) }}
+@if($composed)
+    <x-slate::field
+        :name="$validationKey"
+        :invalid="$isInvalid"
+        :disabled="$isDisabled"
+        data-slot="select-field"
+        @class([$fieldClass])
     >
-        @if($placeholder !== null)
-            <option value="" disabled hidden @selected(blank($currentValue))>{{ $placeholder }}</option>
+        @if(filled($label))
+            <x-slate::field-label :for="$resolvedId">{{ $label }}</x-slate::field-label>
         @endif
 
-        {{ $slot }}
-    </select>
+        @include('slate::components.partials.select-control')
 
-    <span class="pointer-events-none absolute inset-y-0 end-3 inline-flex items-center text-muted-foreground">
-        <svg class="size-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-        </svg>
-    </span>
-</div>
+        @if(filled($resolvedDescription))
+            <x-slate::field-description :id="$descriptionId">{{ $resolvedDescription }}</x-slate::field-description>
+        @endif
+
+        @if($shouldShowError)
+            <x-slate::field-error :name="$validationKey" :message="$errorMessage" />
+        @endif
+    </x-slate::field>
+@else
+    @include('slate::components.partials.select-control')
+@endif

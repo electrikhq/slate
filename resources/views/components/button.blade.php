@@ -3,6 +3,7 @@
     'size' => 'default',
     'rounded' => null,
     'animation' => 'none',
+    'loading' => false,
     'loadingText' => null,
     'as' => 'button',
     'type' => 'button',
@@ -54,6 +55,8 @@
         'lift' => 'motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-sm motion-safe:active:translate-y-0',
     ];
 
+    $isLoading = filter_var($loading, FILTER_VALIDATE_BOOL);
+
     $hasLivewireAction = $attributes->has('wire:click')
         || $attributes->has('wire:click.prevent')
         || $attributes->has('wire:click.stop')
@@ -68,15 +71,27 @@
         $sizeClasses[$size] ?? $sizeClasses['default'],
         $animationClasses[$resolvedAnimation] ?? $animationClasses['subtle'],
     ]));
+
+    $isDisabled = $isLoading || filter_var($attributes->get('disabled'), FILTER_VALIDATE_BOOL);
+    $mergedAttributes = $attributes
+        ->except(['disabled'])
+        ->merge(['class' => $classes]);
 @endphp
 
 <{{ $as }}
     data-slot="button"
     @if($as === 'button') type="{{ $type }}" @endif
-    @if($as === 'button' && $hasLivewireAction && ! $attributes->has('wire:loading.attr')) wire:loading.attr="disabled" @endif
-    {{ $attributes->merge(['class' => $classes]) }}
+    @if($as === 'button' && $hasLivewireAction && ! $isLoading && ! $attributes->has('wire:loading.attr')) wire:loading.attr="disabled" @endif
+    @if($isDisabled) disabled @endif
+    @if($isLoading) aria-busy="true" data-loading="true" @endif
+    {{ $mergedAttributes }}
 >
-    @if($hasLivewireAction && $loadingText)
+    @if($isLoading)
+        <span class="inline-flex items-center gap-2" data-slot="button-loading">
+            @include('slate::components.partials.button-spinner')
+            <span>{{ $loadingText ?? $slot }}</span>
+        </span>
+    @elseif($hasLivewireAction && filled($loadingText))
         <span
             wire:loading.remove
             @if($wireTarget) wire:target="{{ $wireTarget }}" @endif
@@ -88,10 +103,7 @@
             wire:loading.inline-flex
             @if($wireTarget) wire:target="{{ $wireTarget }}" @endif
         >
-            <svg class="size-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-90" fill="currentColor" d="M12 2a10 10 0 0 1 10 10h-4a6 6 0 0 0-6-6V2z"></path>
-            </svg>
+            @include('slate::components.partials.button-spinner')
             <span>{{ $loadingText }}</span>
         </span>
     @else
@@ -101,10 +113,7 @@
                 wire:loading.inline-flex
                 @if($wireTarget) wire:target="{{ $wireTarget }}" @endif
             >
-                <svg class="size-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-90" fill="currentColor" d="M12 2a10 10 0 0 1 10 10h-4a6 6 0 0 0-6-6V2z"></path>
-                </svg>
+                @include('slate::components.partials.button-spinner')
             </span>
         @endif
         {{ $slot }}

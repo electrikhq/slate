@@ -3,6 +3,11 @@
     'errorKey' => null,
     'rows' => 4,
     'rounded' => null,
+    'label' => null,
+    'description' => null,
+    'help' => null,
+    'errorMessage' => null,
+    'showError' => null,
 ])
 
 @php
@@ -30,29 +35,62 @@
     $sharedErrors = $errors ?? (function_exists('view') && view()->shared('errors') ? view()->shared('errors') : null);
     $hasError = $validationKey && $sharedErrors?->has($validationKey);
 
-    // Use validation key for error id wiring so FieldError can auto-match.
     $identifierSource = $resolvedName ?? $validationKey;
     $identifier = $identifierSource ? str_replace(['.', '[', ']'], ['-', '-', ''], $identifierSource) : null;
 
-    $describedBy = trim((string) $attributes->get('aria-describedby'));
-    $errorDescribedBy = $hasError && $identifier ? "{$identifier}-error" : null;
+    $resolvedId = $attributes->get('id') ?? ($identifier ? "textarea-{$identifier}" : 'textarea-'.uniqid());
+    $resolvedDescription = $description ?? $help;
 
-    if ($errorDescribedBy && ! str_contains(" {$describedBy} ", " {$errorDescribedBy} ")) {
-        $describedBy = trim($describedBy . ' ' . $errorDescribedBy);
+    $composed = filled($label) || filled($resolvedDescription) || filled($errorMessage);
+    $shouldShowError = $showError ?? $composed;
+
+    $describedBy = trim((string) $attributes->get('aria-describedby'));
+    $descriptionId = filled($resolvedDescription) ? "{$resolvedId}-description" : null;
+    $errorDescribedBy = ($hasError || filled($errorMessage)) && $identifier ? "{$identifier}-error" : null;
+
+    foreach ([$descriptionId, $errorDescribedBy] as $idRef) {
+        if ($idRef && ! str_contains(" {$describedBy} ", " {$idRef} ")) {
+            $describedBy = trim($describedBy.' '.$idRef);
+        }
     }
 
     $resolvedAriaInvalid = $attributes->get('aria-invalid');
 
-    if ($resolvedAriaInvalid === null && $hasError) {
+    if ($resolvedAriaInvalid === null && ($hasError || filled($errorMessage))) {
         $resolvedAriaInvalid = 'true';
     }
+
+    $isInvalid = filter_var($resolvedAriaInvalid, FILTER_VALIDATE_BOOL);
+    $isDisabled = filter_var($attributes->get('disabled'), FILTER_VALIDATE_BOOL);
+
+    $fieldClass = $composed ? $attributes->get('class') : null;
+    $controlAttributes = $composed
+        ? $attributes->except(['name', 'id', 'aria-describedby', 'aria-invalid', 'class'])
+        : $attributes->except(['name', 'id', 'aria-describedby', 'aria-invalid']);
 @endphp
 
-<textarea
-    rows="{{ $rows }}"
-    data-slot="textarea"
-    @if($resolvedName) name="{{ $resolvedName }}" @endif
-    @if($resolvedAriaInvalid !== null) aria-invalid="{{ $resolvedAriaInvalid }}" @endif
-    @if($describedBy) aria-describedby="{{ $describedBy }}" @endif
-    {{ $attributes->except(['name', 'aria-describedby', 'aria-invalid'])->merge(['class' => $classes]) }}
->{{ $slot }}</textarea>
+@if($composed)
+    <x-slate::field
+        :name="$validationKey"
+        :invalid="$isInvalid"
+        :disabled="$isDisabled"
+        data-slot="textarea-field"
+        @class([$fieldClass])
+    >
+        @if(filled($label))
+            <x-slate::field-label :for="$resolvedId">{{ $label }}</x-slate::field-label>
+        @endif
+
+        @include('slate::components.partials.textarea-control')
+
+        @if(filled($resolvedDescription))
+            <x-slate::field-description :id="$descriptionId">{{ $resolvedDescription }}</x-slate::field-description>
+        @endif
+
+        @if($shouldShowError)
+            <x-slate::field-error :name="$validationKey" :message="$errorMessage" />
+        @endif
+    </x-slate::field>
+@else
+    @include('slate::components.partials.textarea-control')
+@endif

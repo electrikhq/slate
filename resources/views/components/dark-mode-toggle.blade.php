@@ -18,8 +18,23 @@
     :animation="$animation"
     :as="$as"
     :type="$type"
-    x-data="{ dark: document.documentElement.classList.contains('dark') }"
-    x-on:click="dark = !dark; document.documentElement.classList.toggle('dark')"
+    x-data="{
+        dark: document.documentElement.classList.contains('dark'),
+        init() {
+            window.addEventListener('slate-theme-change', (event) => {
+                this.dark = !! event.detail?.dark
+            })
+        },
+        toggle() {
+            this.dark = ! this.dark
+            document.documentElement.classList.toggle('dark', this.dark)
+            try {
+                localStorage.setItem('slate-theme', this.dark ? 'dark' : 'light')
+            } catch (e) {}
+            window.dispatchEvent(new CustomEvent('slate-theme-change', { detail: { dark: this.dark } }))
+        }
+    }"
+    x-on:click="toggle()"
     x-bind:aria-label="dark ? 'Switch to light mode' : 'Switch to dark mode'"
     {{ $attributes }}
 >
