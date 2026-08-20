@@ -29,7 +29,7 @@ In Cloudflare Dashboard → **Workers & Pages** → set up your account’s `*.w
 {
   "mcpServers": {
     "slate": {
-      "url": "https://electrik-slate-mcp.<your-subdomain>.workers.dev"
+      "url": "https://electrik-slate-mcp.quick-brown-fox.workers.dev"
     }
   }
 }

@@ -14,7 +14,7 @@ Deploy `mcp/worker` then point Cursor at the Worker URL (Streamable HTTP):
 {
   "mcpServers": {
     "slate": {
-      "url": "https://electrik-slate-mcp.<your-subdomain>.workers.dev"
+      "url": "https://electrik-slate-mcp.quick-brown-fox.workers.dev"
     }
   }
 }
