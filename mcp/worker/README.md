@@ -23,13 +23,11 @@ Custom domain is declared in `wrangler.jsonc` and applied on deploy — no dashb
 {
   "mcpServers": {
     "slate": {
-      "url": "https://electrik-slate-mcp.quick-brown-fox.workers.dev"
+      "url": "https://mcp.slate.electrik.dev"
     }
   }
 }
 ```
-
-Prefer `https://mcp.slate.electrik.dev` once the custom-domain deploy has succeeded.
 
 ## Local fallback
 
