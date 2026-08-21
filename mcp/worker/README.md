@@ -5,23 +5,17 @@ Dedicated **Workers** deploy (not Pages). Same tools as `@electrik/slate-mcp`.
 ## CI/CD
 
 Workflow: `slate.electrik.dev` → **Deploy Slate MCP Worker**  
-Uses secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`.
+Secrets: `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`.
 
-### API token permissions (required)
-
-On the Cloudflare API token used in GitHub:
+### API token permissions
 
 | Scope | Permission |
 | --- | --- |
 | Account | **Workers Scripts — Edit** |
 | Account | **Account Settings — Read** |
-| User | **User Details — Read** (recommended) |
+| Zone (`electrik.dev`) | **DNS — Edit** (for `mcp.slate.electrik.dev` via Wrangler `custom_domain`) |
 
-After changing the token in the Cloudflare dashboard, **re-paste the token value** into GitHub → `electrikhq/slate.electrik.dev` → Settings → Secrets → `CLOUDFLARE_API_TOKEN` (dashboard edits do not update GitHub).
-
-### First-time: enable `workers.dev`
-
-In Cloudflare Dashboard → **Workers & Pages** → set up your account’s `*.workers.dev` subdomain once (required for the public Worker URL).
+Custom domain is declared in `wrangler.jsonc` and applied on deploy — no dashboard step.
 
 ## Cursor
 
@@ -35,7 +29,7 @@ In Cloudflare Dashboard → **Workers & Pages** → set up your account’s `*.w
 }
 ```
 
-Optional later: attach custom domain `mcp.slate.electrik.dev` in the Worker settings (needs Zone DNS / Workers Routes on that zone).
+Prefer `https://mcp.slate.electrik.dev` once the custom-domain deploy has succeeded.
 
 ## Local fallback
 

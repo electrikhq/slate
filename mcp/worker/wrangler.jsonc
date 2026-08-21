@@ -7,8 +7,15 @@
   "observability": {
     "enabled": true
   },
+  "routes": [
+    {
+      "pattern": "mcp.slate.electrik.dev",
+      "custom_domain": true
+    }
+  ],
   "vars": {
     "SLATE_DOCS_URL": "https://slate.electrik.dev",
     "SLATE_SOURCE_URL": "https://raw.githubusercontent.com/electrikhq/slate/3.x"
   }
+}
 }
