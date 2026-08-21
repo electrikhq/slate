@@ -185,17 +185,32 @@ function createServer(env = {}) {
 export default {
   fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const path = url.pathname === '' ? '/' : url.pathname;
 
-    if (request.method === 'GET' && (url.pathname === '/' || url.pathname === '')) {
+    // Human-friendly discovery for browsers; MCP clients use POST (Streamable HTTP).
+    if (request.method === 'GET' && path === '/') {
       return Response.json({
         name: 'electrik-slate',
         version: VERSION,
         transport: 'streamable-http',
+        endpoint: '/',
         docs: 'https://slate.electrik.dev/docs/ai',
         local: 'npx -y @electrik/slate-mcp',
       });
     }
 
-    return createMcpHandler(() => createServer(env))(request, env, ctx);
+    // agents/mcp defaults to `/mcp`; Cursor + our docs use the Worker origin (`/`).
+    const handleMcp = createMcpHandler(() => createServer(env), {
+      route: '/',
+    });
+
+    // Alias Cloudflare Agents' default path so /mcp keeps working.
+    if (path === '/mcp') {
+      const aliased = new URL(request.url);
+      aliased.pathname = '/';
+      return handleMcp(new Request(aliased, request), env, ctx);
+    }
+
+    return handleMcp(request, env, ctx);
   },
 };
