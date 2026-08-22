@@ -2,6 +2,16 @@
 
 All notable changes to the `3.x` line are documented in this file.
 
+## [3.0.0-alpha.5] - 2026-08-22
+
+### Added
+
+- `app-shell` optional `primary` slot for an always-visible rail beside the collapsible secondary `sidebar`.
+
+### Changed
+
+- `app-shell` locks to viewport height (`h-svh`); only the main pane scrolls on long pages.
+
 ## Unreleased
 
 ### Added
