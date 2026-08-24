@@ -57,6 +57,8 @@ If you want **shadcn-style UI in Laravel** without React, without a copy-paste C
 
 **Not for you if** you need React/Vue components, a shadcn-style `add` CLI that copies files into your app, or a full admin panel framework. Slate is a **UI kit**, not a SaaS starter.
 
+**Building a SaaS?** [Electrik](https://electrik.dev) wraps Slate with auth, teams, and Stripe billing — [install](https://electrik.dev/install) · [demo](https://demo.electrik.dev).
+
 ## Screenshots
 
 ![Slate documentation homepage](./art/gallery-home.png)
