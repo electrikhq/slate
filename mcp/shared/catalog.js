@@ -21,15 +21,30 @@ export const COMPONENTS = [
 ];
 
 export const BLOCKS = [
+  { id: 'hero', title: 'Hero', category: 'Marketing' },
+  { id: 'pricing', title: 'Pricing', category: 'Marketing' },
+  { id: 'feature-grid', title: 'Feature grid', category: 'Marketing' },
+  { id: 'logos', title: 'Logos', category: 'Marketing' },
+  { id: 'faq', title: 'FAQ', category: 'Marketing' },
+  { id: 'cta', title: 'CTA', category: 'Marketing' },
+  { id: 'testimonials', title: 'Testimonials', category: 'Marketing' },
+  { id: 'newsletter', title: 'Newsletter', category: 'Marketing' },
+  { id: 'footer', title: 'Footer', category: 'Marketing' },
   { id: 'login', title: 'Login', category: 'Auth' },
   { id: 'register', title: 'Register', category: 'Auth' },
-  { id: 'settings', title: 'Settings', category: 'Application' },
+  { id: 'forgot-password', title: 'Forgot password', category: 'Auth' },
   { id: 'app-shell', title: 'App shell', category: 'Application' },
+  { id: 'settings', title: 'Settings', category: 'Application' },
   { id: 'empty-state', title: 'Empty state', category: 'Application' },
-  { id: 'pricing', title: 'Pricing', category: 'Marketing' },
+  { id: 'page-header', title: 'Page header', category: 'Application' },
+  { id: 'stats-row', title: 'Stats row', category: 'Application' },
+  { id: 'billing-cards', title: 'Billing cards', category: 'Application' },
+  { id: 'invite-banner', title: 'Invite banner', category: 'Application' },
+  { id: 'danger-zone', title: 'Danger zone', category: 'Application' },
   { id: 'form-validation', title: 'Form validation', category: 'Forms' },
   { id: 'toast-action', title: 'Toast action', category: 'Feedback' },
-  { id: 'hero', title: 'Hero', category: 'Marketing' },
+  { id: 'confirm-dialog', title: 'Confirm dialog', category: 'Feedback' },
+  { id: 'alert-banner', title: 'Alert banner', category: 'Feedback' },
 ];
 
 export function resolveDocsUrl(override) {

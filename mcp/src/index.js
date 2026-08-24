@@ -49,7 +49,7 @@ server.tool(
 
 server.tool(
   'list_blocks',
-  'List Slate docs-site blocks (copy-ready Blade sections).',
+  'List electrik/slate-blocks (curated Blade sections on the docs gallery).',
   async () => {
     const lines = BLOCKS.map(
       (block) => `- ${block.id} (${block.category}): ${DOCS_URL}/blocks/${block.id}`
@@ -57,11 +57,12 @@ server.tool(
 
     return textResult(
       [
-        'Slate blocks:',
+        'electrik/slate-blocks (install via Composer):',
         '',
         ...lines,
         '',
         `Gallery: ${DOCS_URL}/blocks`,
+        `Docs: ${DOCS_URL}/docs/blocks`,
       ].join('\n')
     );
   }

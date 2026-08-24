@@ -52,7 +52,7 @@ function createServer(env = {}) {
   server.registerTool(
     'list_blocks',
     {
-      description: 'List Slate docs-site blocks (copy-ready Blade sections).',
+      description: 'List electrik/slate-blocks (curated Blade sections on the docs gallery).',
       inputSchema: z.object({}),
     },
     async () => {
@@ -62,11 +62,12 @@ function createServer(env = {}) {
 
       return textResult(
         [
-          'Slate blocks:',
+          'electrik/slate-blocks (install via Composer):',
           '',
           ...lines,
           '',
           `Gallery: ${DOCS_URL}/blocks`,
+          `Docs: ${DOCS_URL}/docs/blocks`,
         ].join('\n')
       );
     }
