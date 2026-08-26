@@ -2,6 +2,19 @@
 
 All notable changes to the `3.x` line are documented in this file.
 
+## [3.0.0] - 2026-08-26
+
+### Added
+
+- First stable `3.0.0` release of Electrik Slate (anonymous Blade UI kit for Laravel + Tailwind CSS v4).
+- Cloudflare Worker remote MCP (`mcp/worker`) with the same tools as `@electrik/slate-mcp`
+- Shared MCP catalog (`mcp/shared/catalog.js`) for stdio + Worker
+- GitHub Action to deploy the MCP Worker (`deploy-mcp-worker.yml`)
+
+### Notes
+
+- Semver `^3.0` installs this stable line. Alpha tags (`3.0.0-alpha.*`) remain available for historical pins.
+
 ## [3.0.0-alpha.5] - 2026-08-22
 
 ### Added
@@ -11,14 +24,6 @@ All notable changes to the `3.x` line are documented in this file.
 ### Changed
 
 - `app-shell` locks to viewport height (`h-svh`); only the main pane scrolls on long pages.
-
-## Unreleased
-
-### Added
-
-- Cloudflare Worker remote MCP (`mcp/worker`) with the same tools as `@electrik/slate-mcp`
-- Shared MCP catalog (`mcp/shared/catalog.js`) for stdio + Worker
-- GitHub Action to deploy the MCP Worker (`deploy-mcp-worker.yml`)
 
 ## 3.0.0-alpha.4 - 2026-08-20
 

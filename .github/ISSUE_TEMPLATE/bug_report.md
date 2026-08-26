@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 ## Environment
 - **PHP Version**: [e.g. 8.2.0]
 - **Laravel Version**: [e.g. 12.0.0]
-- **Slate Version**: [e.g. 3.0.0-alpha.2]
+- **Slate Version**: [e.g. 3.0.0]
 - **Browser**: [e.g. Chrome 120, Safari 17]
 - **OS**: [e.g. macOS 14, Ubuntu 22.04]
 

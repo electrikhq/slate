@@ -2,7 +2,7 @@
  * Shared Slate MCP catalog + fetch helpers (stdio npm package + Cloudflare Worker).
  */
 
-export const VERSION = '3.0.0-alpha.4';
+export const VERSION = '3.0.0';
 
 export const DEFAULT_DOCS_URL = 'https://slate.electrik.dev';
 export const DEFAULT_SOURCE_URL =

@@ -11,7 +11,7 @@ description: >-
 
 ## Quick facts
 
-- Package: `electrik/slate` (Composer), line `3.x` / `3.0.0-alpha.*`
+- Package: `electrik/slate` (Composer), line `3.x` / `^3.0`
 - Blocks: `electrik/slate-blocks` — curated `<x-slate-block::*>` sections (~24)
 - Docs: https://slate.electrik.dev
 - AI index: https://slate.electrik.dev/llms.txt

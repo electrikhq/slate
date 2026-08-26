@@ -3,7 +3,7 @@
   "name": "io.github.neerajsohal/slate",
   "title": "Electrik Slate",
   "description": "Read-only MCP for Electrik Slate: Blade component docs, blocks gallery, source, and llms.txt.",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.0",
   "websiteUrl": "https://slate.electrik.dev/docs/ai",
   "repository": {
     "url": "https://github.com/electrikhq/slate",

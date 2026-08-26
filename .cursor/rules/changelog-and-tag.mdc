@@ -12,7 +12,7 @@ Whenever you **ship**, **release**, **publish**, or the user asks to **commit a 
    - Use Keep a Changelog groups: `Added`, `Changed`, `Fixed`, `Deprecated`, `Removed`, `Security`
    - Match the version in `composer.json` (`version` field)
 2. **Commit** the changelog (and version bump) with the release
-3. **Tag** with an annotated tag equal to that version string (no `v` prefix — match existing tags like `3.0.0-alpha.3`):
+3. **Tag** with an annotated tag equal to that version string (prefer `v` prefix for stable (`v3.0.0`); historical alphas may omit it):
 
 ```bash
 git tag -a "X.Y.Z-suffix" -m "Release X.Y.Z-suffix"
@@ -24,6 +24,6 @@ git push origin HEAD --tags
 
 ## Examples
 
-- Shipping alpha.4 → `CHANGELOG.md` has `## 3.0.0-alpha.4 - 2026-…`, `composer.json` says `3.0.0-alpha.4`, tag `3.0.0-alpha.4`
+- Shipping 3.0.0 → `CHANGELOG.md` has `## [3.0.0] - 2026-…`, `composer.json` says `3.0.0`, tag `v3.0.0`
 - Bad: push a release commit with no changelog entry
 - Bad: create a tag that does not match `composer.json` / changelog heading

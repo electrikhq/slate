@@ -27,7 +27,7 @@
 
 If you want **shadcn-style UI in Laravel** without React, without a copy-paste CLI, and without leaving Blade — use Slate.
 
-> **Status:** `3.x` is in active alpha (`3.0.0-alpha.4`). The component surface is complete; we are hardening depth, a11y, and polish before stable.
+> **Status:** `3.0.0` stable. Anonymous Blade primitives, Tailwind v4 tokens, dark mode, and Livewire-ready forms.
 
 ## Table of contents
 
@@ -91,7 +91,7 @@ If you want **shadcn-style UI in Laravel** without React, without a copy-paste C
 ### 1. Install
 
 ```bash
-composer require electrik/slate:^3.0@alpha
+composer require electrik/slate:^3.0
 ```
 
 ### 2. Import CSS
@@ -182,7 +182,7 @@ More patterns live in the docs: [Components](https://slate.electrik.dev/componen
 
 ## Components
 
-The `3.x` alpha ships a full surface of primitives and compositions (50+ named roots, 200+ Blade templates including parts). Grouped overview:
+The `3.x` line ships a full surface of primitives and compositions (50+ named roots, 200+ Blade templates including parts). Grouped overview:
 
 | Area | Examples |
 | --- | --- |
