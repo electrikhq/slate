@@ -2,6 +2,21 @@
 
 All notable changes to the `3.x` line are documented in this file.
 
+## [3.0.1] - 2026-08-26
+
+### Added
+
+- Calendar keyboard grid navigation (arrows, Home/End, PageUp/Down), ARIA grid roles, and `wire:model` / `name` binding
+- Combobox listbox keyboard (arrows, Enter, Escape), `aria-activedescendant`, and hidden value for forms / Livewire
+- Chart `label` prop plus screen-reader data table for bar charts
+- Shared focus-trap partial for dialog / sheet / drawer / alert-dialog
+- MCP `resolveComponentSourceSlug` alias (`resizable` → `resizable-panel-group`)
+
+### Changed
+
+- Stable scrollbar gutter on `html` to reduce layout shift when overlays lock scroll
+- `@electrik/slate-mcp` version `3.0.1`
+
 ## [3.0.0] - 2026-08-26
 
 ### Added

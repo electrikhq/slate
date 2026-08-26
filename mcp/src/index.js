@@ -14,6 +14,7 @@ import {
   fetchText,
   normalizeComponentSlug,
   normalizeDocsPath,
+  resolveComponentSourceSlug,
   resolveDocsUrl,
   resolveSourceUrl,
   textResult,
@@ -125,15 +126,16 @@ server.tool(
   },
   async ({ name }) => {
     const slug = normalizeComponentSlug(name);
-    const url = `${SOURCE_URL}/resources/views/components/${slug}.blade.php`;
+    const fileSlug = resolveComponentSourceSlug(slug);
+    const url = `${SOURCE_URL}/resources/views/components/${fileSlug}.blade.php`;
 
     try {
       const source = await fetchText(url);
       return textResult(
         [
-          `Blade source for x-slate::${slug}`,
+          `Blade source for x-slate::${slug}${fileSlug !== slug ? ` (file: ${fileSlug}.blade.php)` : ''}`,
           `URL: ${url}`,
-          'Related parts may live in sibling files (e.g. dialog-trigger.blade.php).',
+          'Related parts may live in sibling files (e.g. dialog-trigger.blade.php). Use toast for the toast part; toaster mounts the stack.',
           '',
           source,
         ].join('\n')

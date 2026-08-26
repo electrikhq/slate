@@ -2,11 +2,16 @@
  * Shared Slate MCP catalog + fetch helpers (stdio npm package + Cloudflare Worker).
  */
 
-export const VERSION = '3.0.0';
+export const VERSION = '3.0.1';
 
 export const DEFAULT_DOCS_URL = 'https://slate.electrik.dev';
 export const DEFAULT_SOURCE_URL =
   'https://raw.githubusercontent.com/electrikhq/slate/3.x';
+
+/** Catalog slug → primary Blade filename (without .blade.php). */
+export const COMPONENT_SOURCE_ALIASES = {
+  resizable: 'resizable-panel-group',
+};
 
 export const COMPONENTS = [
   'button', 'badge', 'card', 'alert', 'separator', 'avatar', 'skeleton', 'dialog',
@@ -79,6 +84,11 @@ export function normalizeComponentSlug(name) {
     .trim()
     .toLowerCase()
     .replace(/^x-slate::/, '');
+}
+
+export function resolveComponentSourceSlug(slug) {
+  const normalized = normalizeComponentSlug(slug);
+  return COMPONENT_SOURCE_ALIASES[normalized] || normalized;
 }
 
 export function normalizeDocsPath(path) {
