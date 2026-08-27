@@ -25,7 +25,7 @@
     data-slot="chart"
     role="img"
     aria-label="{{ $ariaLabel }}"
-    {{ $attributes->except(['aria-label'])->merge(['class' => 'flex h-48 w-full items-end gap-2 rounded-md border bg-background p-4']) }}
+    {{ $attributes->except(['aria-label'])->merge(['class' => 'flex h-48 w-full items-stretch gap-2 rounded-md border bg-background p-4']) }}
 >
     @if(! empty($chartData))
         @foreach($chartData as $index => $item)
@@ -34,14 +34,16 @@
                 $value = is_array($item) ? ($item['value'] ?? 0) : (int) $item;
                 $height = round(($value / $resolvedMax) * 100);
             @endphp
-            <div data-slot="chart-bar" class="flex flex-1 flex-col items-center gap-2">
-                <div
-                    class="w-full rounded-t-sm bg-primary transition-all"
-                    style="height: {{ max(4, $height) }}%"
-                    title="{{ $itemLabel }}: {{ $value }}"
-                ></div>
+            <div data-slot="chart-bar" class="flex h-full min-h-0 flex-1 flex-col gap-2">
+                <div class="relative min-h-0 w-full flex-1">
+                    <div
+                        class="absolute inset-x-0 bottom-0 rounded-t-sm bg-primary transition-[height]"
+                        style="height: {{ max(4, $height) }}%"
+                        title="{{ $itemLabel }}: {{ $value }}"
+                    ></div>
+                </div>
                 @if(filled($itemLabel))
-                    <span class="text-xs text-muted-foreground" aria-hidden="true">{{ $itemLabel }}</span>
+                    <span class="shrink-0 text-center text-xs text-muted-foreground" aria-hidden="true">{{ $itemLabel }}</span>
                 @endif
             </div>
         @endforeach

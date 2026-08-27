@@ -12,6 +12,7 @@
     $wireAttributes = $attributes->whereStartsWith('wire:model');
     $rootAttributes = $attributes->except(['name'])->whereDoesntStartWith('wire:');
     $ariaLabel = $label ?? $attributes->get('aria-label') ?? 'Choose a date';
+    $labelId = ($attributes->get('id') ?? 'slate-calendar').'-label';
 @endphp
 
 <{{ $as }}
@@ -89,17 +90,17 @@
             }
         }
     }"
-    {{ $rootAttributes->merge(['class' => 'w-fit rounded-md border bg-background p-3']) }}
+    {{ $rootAttributes->merge(['class' => 'w-[18rem] shrink-0 rounded-md border bg-background p-3']) }}
 >
-    <div class="flex items-center justify-between pb-4">
-        <button type="button" @click="prevMonth()" class="inline-flex size-7 items-center justify-center rounded-md border bg-transparent hover:bg-accent">
+    <div class="flex items-center justify-between gap-2 pb-4">
+        <button type="button" @click="prevMonth()" class="inline-flex size-7 shrink-0 items-center justify-center rounded-md border bg-transparent hover:bg-accent">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 rtl:rotate-180" aria-hidden="true">
                 <path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span class="sr-only">Previous month</span>
         </button>
-        <div class="text-sm font-medium" id="{{ $attributes->get('id') ?? 'slate-calendar' }}-label" x-text="monthLabel"></div>
-        <button type="button" @click="nextMonth()" class="inline-flex size-7 items-center justify-center rounded-md border bg-transparent hover:bg-accent">
+        <div class="min-w-0 flex-1 truncate text-center text-sm font-medium" id="{{ $labelId }}" x-text="monthLabel"></div>
+        <button type="button" @click="nextMonth()" class="inline-flex size-7 shrink-0 items-center justify-center rounded-md border bg-transparent hover:bg-accent">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 rtl:rotate-180" aria-hidden="true">
                 <path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -109,35 +110,33 @@
 
     <div
         role="grid"
-        aria-labelledby="{{ $attributes->get('id') ?? 'slate-calendar' }}-label"
+        aria-labelledby="{{ $labelId }}"
         aria-label="{{ $ariaLabel }}"
         tabindex="0"
-        class="outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        class="w-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
         @keydown="onGridKeydown($event)"
     >
-        <div role="row" class="grid grid-cols-7 gap-1 text-center text-xs text-muted-foreground">
-            <span role="columnheader" aria-label="Sunday">Su</span>
-            <span role="columnheader" aria-label="Monday">Mo</span>
-            <span role="columnheader" aria-label="Tuesday">Tu</span>
-            <span role="columnheader" aria-label="Wednesday">We</span>
-            <span role="columnheader" aria-label="Thursday">Th</span>
-            <span role="columnheader" aria-label="Friday">Fr</span>
-            <span role="columnheader" aria-label="Saturday">Sa</span>
+        <div role="row" class="grid w-full grid-cols-7 gap-1 text-center text-xs text-muted-foreground">
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Sunday">Su</span>
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Monday">Mo</span>
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Tuesday">Tu</span>
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Wednesday">We</span>
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Thursday">Th</span>
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Friday">Fr</span>
+            <span role="columnheader" class="flex size-8 items-center justify-center" aria-label="Saturday">Sa</span>
         </div>
 
-        <div class="mt-2 grid grid-cols-7 gap-1" role="rowgroup">
-            <template x-for="blank in firstDayOffset()" :key="'b-' + blank + '-' + month">
-                <span role="presentation"></span>
-            </template>
+        <div class="mt-2 grid w-full grid-cols-7 gap-1" role="rowgroup">
             <template x-for="day in daysInMonth()" :key="year + '-' + month + '-' + day">
                 <button
                     type="button"
                     role="gridcell"
                     @click="selectDay(day)"
+                    x-bind:style="day === 1 ? { gridColumnStart: firstDayOffset() + 1 } : null"
                     x-bind:tabindex="focusDay === day ? 0 : -1"
                     x-bind:aria-selected="isSelected(day) ? 'true' : 'false'"
                     x-bind:aria-current="isToday(day) ? 'date' : null"
-                    class="inline-flex size-8 items-center justify-center rounded-md text-sm transition-colors hover:bg-accent focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                    class="inline-flex size-8 shrink-0 items-center justify-center justify-self-center rounded-md text-sm transition-colors hover:bg-accent focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
                     x-bind:class="{
                         'bg-primary text-primary-foreground hover:bg-primary': isSelected(day),
                         'font-semibold text-primary': isToday(day) && !isSelected(day),

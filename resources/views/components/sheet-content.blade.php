@@ -29,11 +29,14 @@
 @endphp
 
 <template x-teleport="body">
-    <div data-slot="sheet-portal" class="relative z-50">
+    <div
+        data-slot="sheet-portal"
+        x-show="open"
+        x-cloak
+        class="relative z-50"
+    >
         <div
             data-slot="sheet-overlay"
-            x-show="open"
-            x-cloak
             x-transition:enter="slate-motion-fade"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -49,8 +52,6 @@
             role="dialog"
             aria-modal="true"
             tabindex="-1"
-            x-show="open"
-            x-cloak
             x-bind:data-state="open ? 'open' : 'closed'"
             @include('slate::components.partials.focus-trap-attrs')
             x-transition:enter="slate-motion-slide"

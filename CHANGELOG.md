@@ -2,6 +2,15 @@
 
 All notable changes to the `3.x` line are documented in this file.
 
+## [3.0.2] - 2026-08-27
+
+### Fixed
+
+- Calendar month grid collapsing inside popovers (`w-fit` + Alpine `x-for` empty cells); use fixed width and `grid-column-start` for the first day
+- Chart bars rendering empty — percentage height now resolves against a sized flex column
+- Resizable drag snapping / not tracking — pointer capture, `flex-shrink: 0`, and continuous `pointermove` on `window`
+- Sheet/drawer leaving the page unscrollable after close — portal `x-show` + reliable scroll-lock release
+
 ## [3.0.1] - 2026-08-26
 
 ### Added
