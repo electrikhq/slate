@@ -2,6 +2,43 @@
 
 All notable changes to the `3.x` line are documented in this file.
 
+## [3.0.2] - 2026-08-27
+
+### Fixed
+
+- Calendar month grid collapsing inside popovers (`w-fit` + Alpine `x-for` empty cells); use fixed width and `grid-column-start` for the first day
+- Chart bars rendering empty — percentage height now resolves against a sized flex column
+- Resizable drag snapping / not tracking — pointer capture, `flex-shrink: 0`, and continuous `pointermove` on `window`
+- Sheet/drawer leaving the page unscrollable after close — portal `x-show` + reliable scroll-lock release
+
+## [3.0.1] - 2026-08-26
+
+### Added
+
+- Calendar keyboard grid navigation (arrows, Home/End, PageUp/Down), ARIA grid roles, and `wire:model` / `name` binding
+- Combobox listbox keyboard (arrows, Enter, Escape), `aria-activedescendant`, and hidden value for forms / Livewire
+- Chart `label` prop plus screen-reader data table for bar charts
+- Shared focus-trap partial for dialog / sheet / drawer / alert-dialog
+- MCP `resolveComponentSourceSlug` alias (`resizable` → `resizable-panel-group`)
+
+### Changed
+
+- Stable scrollbar gutter on `html` to reduce layout shift when overlays lock scroll
+- `@electrik/slate-mcp` version `3.0.1`
+
+## [3.0.0] - 2026-08-26
+
+### Added
+
+- First stable `3.0.0` release of Electrik Slate (anonymous Blade UI kit for Laravel + Tailwind CSS v4).
+- Cloudflare Worker remote MCP (`mcp/worker`) with the same tools as `@electrik/slate-mcp`
+- Shared MCP catalog (`mcp/shared/catalog.js`) for stdio + Worker
+- GitHub Action to deploy the MCP Worker (`deploy-mcp-worker.yml`)
+
+### Notes
+
+- Semver `^3.0` installs this stable line. Alpha tags (`3.0.0-alpha.*`) remain available for historical pins.
+
 ## [3.0.0-alpha.5] - 2026-08-22
 
 ### Added
@@ -11,14 +48,6 @@ All notable changes to the `3.x` line are documented in this file.
 ### Changed
 
 - `app-shell` locks to viewport height (`h-svh`); only the main pane scrolls on long pages.
-
-## Unreleased
-
-### Added
-
-- Cloudflare Worker remote MCP (`mcp/worker`) with the same tools as `@electrik/slate-mcp`
-- Shared MCP catalog (`mcp/shared/catalog.js`) for stdio + Worker
-- GitHub Action to deploy the MCP Worker (`deploy-mcp-worker.yml`)
 
 ## 3.0.0-alpha.4 - 2026-08-20
 

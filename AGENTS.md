@@ -12,7 +12,7 @@ Use these rules when generating Laravel Blade UI with **Electrik Slate** (`elect
 ## Install reminder
 
 ```bash
-composer require electrik/slate:^3.0@alpha
+composer require electrik/slate:^3.0
 ```
 
 Import after Tailwind:

@@ -32,24 +32,7 @@
             role="alertdialog"
             aria-modal="true"
             tabindex="-1"
-            x-effect="
-                if (open) {
-                    if (!$el._slatePrevFocus) $el._slatePrevFocus = document.activeElement;
-                    $nextTick(() => $el.focus({ preventScroll: true }));
-                } else if ($el._slatePrevFocus) {
-                    const prev = $el._slatePrevFocus;
-                    $el._slatePrevFocus = null;
-                    $nextTick(() => prev?.focus?.({ preventScroll: true }));
-                }
-            "
-            @keydown.tab="
-                const nodes = [...$el.querySelectorAll('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex=\'-1\'])')].filter((el) => el.getClientRects().length > 0);
-                if (!nodes.length) { $event.preventDefault(); return; }
-                const first = nodes[0];
-                const last = nodes[nodes.length - 1];
-                if ($event.shiftKey && document.activeElement === first) { $event.preventDefault(); last.focus(); }
-                else if (!$event.shiftKey && document.activeElement === last) { $event.preventDefault(); first.focus(); }
-            "
+            @include('slate::components.partials.focus-trap-attrs')
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100"

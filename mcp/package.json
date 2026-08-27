@@ -1,6 +1,6 @@
 {
   "name": "@electrik/slate-mcp",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.1",
   "description": "Read-only MCP server for Electrik Slate docs, blocks, and Blade source",
   "type": "module",
   "bin": {
