@@ -21,7 +21,7 @@ Please do not report security vulnerabilities through public GitHub issues.
 
 ### 2. Email us directly
 
-Send an email to **hello@neerajkumar.name** with:
+Send an email to **hello@electrik.dev** with:
 
 - Type of issue
 - Affected files or components

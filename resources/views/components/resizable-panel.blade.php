@@ -15,7 +15,7 @@
     data-panel-index="{{ $panelIndex }}"
     data-min-size="{{ $resolvedMin }}"
     @if($defaultSize !== null) data-default-size="{{ $defaultSize }}" @endif
-    x-bind:style="sizes.length ? `flex: ${sizes[{{ $panelIndex }}]} 1 0%` : 'flex: 1 1 0%'"
+    x-bind:style="sizes.length ? `flex: ${sizes[{{ $panelIndex }}]} 0 0%` : 'flex: 1 0 0%'"
     {{ $attributes->merge(['class' => 'min-h-0 min-w-0 overflow-hidden']) }}
 >
     {{ $slot }}

@@ -5,6 +5,7 @@
 <{{ $as }}
     data-slot="combobox-content"
     role="listbox"
+    x-bind:id="listboxId"
     x-show="open"
     x-cloak
     x-transition.opacity.duration.100ms
