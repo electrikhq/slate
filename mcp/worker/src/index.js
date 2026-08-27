@@ -12,6 +12,7 @@ import {
   fetchText,
   normalizeComponentSlug,
   normalizeDocsPath,
+  resolveComponentSourceSlug,
   resolveDocsUrl,
   resolveSourceUrl,
   textResult,
@@ -52,7 +53,7 @@ function createServer(env = {}) {
   server.registerTool(
     'list_blocks',
     {
-      description: 'List Slate docs-site blocks (copy-ready Blade sections).',
+      description: 'List electrik/slate-blocks (curated Blade sections on the docs gallery).',
       inputSchema: z.object({}),
     },
     async () => {
@@ -62,11 +63,12 @@ function createServer(env = {}) {
 
       return textResult(
         [
-          'Slate blocks:',
+          'electrik/slate-blocks (install via Composer):',
           '',
           ...lines,
           '',
           `Gallery: ${DOCS_URL}/blocks`,
+          `Docs: ${DOCS_URL}/docs/blocks`,
         ].join('\n')
       );
     }
@@ -140,15 +142,16 @@ function createServer(env = {}) {
     },
     async ({ name }) => {
       const slug = normalizeComponentSlug(name);
-      const url = `${SOURCE_URL}/resources/views/components/${slug}.blade.php`;
+      const fileSlug = resolveComponentSourceSlug(slug);
+      const url = `${SOURCE_URL}/resources/views/components/${fileSlug}.blade.php`;
 
       try {
         const source = await fetchText(url);
         return textResult(
           [
-            `Blade source for x-slate::${slug}`,
+            `Blade source for x-slate::${slug}${fileSlug !== slug ? ` (file: ${fileSlug}.blade.php)` : ''}`,
             `URL: ${url}`,
-            'Related parts may live in sibling files (e.g. dialog-trigger.blade.php).',
+            'Related parts may live in sibling files (e.g. dialog-trigger.blade.php). Use toast for the toast part; toaster mounts the stack.',
             '',
             source,
           ].join('\n')

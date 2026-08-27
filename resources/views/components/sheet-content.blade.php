@@ -29,11 +29,14 @@
 @endphp
 
 <template x-teleport="body">
-    <div data-slot="sheet-portal" class="relative z-50">
+    <div
+        data-slot="sheet-portal"
+        x-show="open"
+        x-cloak
+        class="relative z-50"
+    >
         <div
             data-slot="sheet-overlay"
-            x-show="open"
-            x-cloak
             x-transition:enter="slate-motion-fade"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -49,27 +52,8 @@
             role="dialog"
             aria-modal="true"
             tabindex="-1"
-            x-show="open"
-            x-cloak
             x-bind:data-state="open ? 'open' : 'closed'"
-            x-effect="
-                if (open) {
-                    if (!$el._slatePrevFocus) $el._slatePrevFocus = document.activeElement;
-                    $nextTick(() => $el.focus({ preventScroll: true }));
-                } else if ($el._slatePrevFocus) {
-                    const prev = $el._slatePrevFocus;
-                    $el._slatePrevFocus = null;
-                    $nextTick(() => prev?.focus?.({ preventScroll: true }));
-                }
-            "
-            @keydown.tab="
-                const nodes = [...$el.querySelectorAll('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex=\'-1\'])')].filter((el) => el.getClientRects().length > 0);
-                if (!nodes.length) { $event.preventDefault(); return; }
-                const first = nodes[0];
-                const last = nodes[nodes.length - 1];
-                if ($event.shiftKey && document.activeElement === first) { $event.preventDefault(); last.focus(); }
-                else if (!$event.shiftKey && document.activeElement === last) { $event.preventDefault(); first.focus(); }
-            "
+            @include('slate::components.partials.focus-trap-attrs')
             x-transition:enter="slate-motion-slide"
             x-transition:enter-start="{{ $fromClass }}"
             x-transition:enter-end="slate-slide-to"

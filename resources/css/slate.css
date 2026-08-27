@@ -160,6 +160,7 @@
 
     html {
         font-family: var(--font-sans);
+        scrollbar-gutter: stable;
     }
 
     html.slate-scroll-lock {
