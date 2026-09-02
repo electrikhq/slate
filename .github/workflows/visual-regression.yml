@@ -1,10 +1,19 @@
 name: Visual regression
 
+# Pull requests only — cuts push-failure email noise. Update Playwright baselines
+# when this fails on a UI PR (`npx playwright test --update-snapshots` in tests/visual).
 on:
-  push:
-    branches: [3.x, main]
   pull_request:
     branches: [3.x, main]
+    paths:
+      - 'resources/**'
+      - 'src/**'
+      - 'tests/visual/**'
+      - 'scripts/setup-consumer-sandbox.sh'
+      - '.github/workflows/visual-regression.yml'
+      - 'composer.json'
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   screenshots:

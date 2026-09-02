@@ -1,12 +1,9 @@
 name: Deploy Slate MCP Worker
 
+# Manual only — avoids failure-mail spam when Cloudflare token lacks Workers Routes
+# permission (custom domain). Re-enable path filters after the token can manage
+# mcp.slate.electrik.dev routes.
 on:
-  push:
-    branches: [3.x]
-    paths:
-      - 'mcp/worker/**'
-      - 'mcp/shared/**'
-      - '.github/workflows/deploy-mcp-worker.yml'
   workflow_dispatch:
 
 jobs:
