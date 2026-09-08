@@ -2,6 +2,12 @@
 
 All notable changes to the `3.x` line are documented in this file.
 
+## [3.0.3] - 2026-09-08
+
+### Fixed
+
+- Alert action overlapping title/description when the button label is wider than the fixed `pe-24` reserve — action is now a real grid column instead of absolute positioning
+
 ## [3.0.2] - 2026-08-27
 
 ### Fixed

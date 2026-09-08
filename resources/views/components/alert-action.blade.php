@@ -4,7 +4,7 @@
 
 <{{ $as }}
     data-slot="alert-action"
-    {{ $attributes->merge(['class' => 'absolute end-3 top-3']) }}
+    {{ $attributes->merge(['class' => 'col-start-3 row-start-1 self-start justify-self-end shrink-0']) }}
 >
     {{ $slot }}
 </{{ $as }}>
