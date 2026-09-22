@@ -1,3 +1,5 @@
+[![MCP Queen operational grade](https://mcpqueen.com/badge/io.github.neerajsohal/slate.svg)](https://mcpqueen.com/s/io.github.neerajsohal/slate)
+
 ![Slate — A shadcn-inspired Blade UI kit for Laravel](./art/banner.png)
 
 <p align="center">
