@@ -12,7 +12,7 @@ description: >-
 ## Quick facts
 
 - Package: `electrik/slate` (Composer), line `3.x` / `^3.0`
-- Blocks: `electrik/slate-blocks` — curated `<x-slate-block::*>` sections (~24)
+- Blocks: `electrik/slate-blocks` — curated `<x-slate-block::*>` sections (~30), including animated illustrations (`illustration-deploy`, `illustration-billing`, `illustration-invites`, `illustration-kanban`, `illustration-activity`, `illustration-chat`)
 - Docs: https://slate.electrik.dev
 - AI index: https://slate.electrik.dev/llms.txt
 - MCP: `@electrik/slate-mcp` in repo `mcp/` (read-only docs + Blade source)
@@ -52,5 +52,19 @@ description: >-
     description="Auth, teams, and billing on Laravel."
     primary-href="/install"
     primary-label="Install"
+/>
+```
+
+## Illustration snippet
+
+Pass arrays — do not hardcode a fork of the Blade file. Docs: https://slate.electrik.dev/docs/illustrations
+
+```blade
+<x-slate-block::illustration-deploy
+    headline="main · ship-42"
+    :jobs="[
+        ['title' => 'Install dependencies', 'hint' => 'composer + npm'],
+        ['title' => 'Deploy to production', 'hint' => 'Forge · acme.com'],
+    ]"
 />
 ```
