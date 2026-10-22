@@ -43,5 +43,5 @@ Import after Tailwind:
 
 - “Build a settings form with Slate progressive field props and a destructive alert.”
 - “Use the login block pattern from slate.electrik.dev/blocks/login.”
-- “Drop illustration-deploy / illustration-chat from slate-blocks and pass jobs/messages props — see slate.electrik.dev/docs/illustrations.”
+- “Drop `<x-slate-illustration::deploy />` into a landing page and pass jobs/messages. Decorative, not a live screen — see slate.electrik.dev/docs/illustrations.”
 - “Fetch dialog docs via MCP and wire Alpine open state.”

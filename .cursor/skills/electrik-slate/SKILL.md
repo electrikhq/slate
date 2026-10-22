@@ -1,10 +1,11 @@
 ---
 name: electrik-slate
 description: >-
-  Build Laravel Blade UI with Electrik Slate 3.x and optional slate-blocks.
-  Use when writing x-slate or x-slate-block components, Livewire forms, tokens,
-  toasts, blocks, or when the user mentions Slate, electrik/slate,
-  electrik/slate-blocks, or slate.electrik.dev.
+  Build Laravel Blade UI with Electrik Slate 3.x and optional slate-blocks /
+  slate-illustrations. Use when writing x-slate, x-slate-block, or
+  x-slate-illustration components, Livewire forms, tokens, toasts, blocks,
+  illustrations, or when the user mentions Slate, electrik/slate,
+  electrik/slate-blocks, electrik/slate-illustrations, or slate.electrik.dev.
 ---
 
 # Electrik Slate
@@ -12,7 +13,8 @@ description: >-
 ## Quick facts
 
 - Package: `electrik/slate` (Composer), line `3.x` / `^3.0`
-- Blocks: `electrik/slate-blocks` — curated `<x-slate-block::*>` sections (~30), including animated illustrations (`illustration-deploy`, `illustration-billing`, `illustration-invites`, `illustration-kanban`, `illustration-activity`, `illustration-chat`)
+- Blocks: `electrik/slate-blocks` — curated `<x-slate-block::*>` sections (~24)
+- Illustrations: `electrik/slate-illustrations` — animated UI scenes for landing pages (`<x-slate-illustration::deploy />`). Decorative. Use blocks for live login/settings/pricing.
 - Docs: https://slate.electrik.dev
 - AI index: https://slate.electrik.dev/llms.txt
 - MCP: `@electrik/slate-mcp` in repo `mcp/` (read-only docs + Blade source)
@@ -57,10 +59,10 @@ description: >-
 
 ## Illustration snippet
 
-Pass arrays — do not hardcode a fork of the Blade file. Docs: https://slate.electrik.dev/docs/illustrations
+Decorative scenes for landing pages, not live UI. Pass your own copy. Docs: https://slate.electrik.dev/docs/illustrations
 
 ```blade
-<x-slate-block::illustration-deploy
+<x-slate-illustration::deploy
     headline="main · ship-42"
     :jobs="[
         ['title' => 'Install dependencies', 'hint' => 'composer + npm'],

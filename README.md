@@ -23,9 +23,9 @@
 
 ---
 
-**Slate** (`electrik/slate`) is a **shadcn-inspired Laravel Blade UI kit** for building product interfaces with anonymous components, Tailwind CSS v4, Slate-owned design tokens, first-class dark mode, and Livewire-aware forms.
+**Slate** (`electrik/slate`) is a set of beautifully designed Blade components that you can customize, extend, and build on. Start here, then make it your own. Open Source. Open Code.
 
-If you want **shadcn-style UI in Laravel** without React, without a copy-paste CLI, and without leaving Blade — use Slate.
+This is not a component library. It is how you build your component library.
 
 > **Status:** `3.0.0` stable. Anonymous Blade primitives, Tailwind v4 tokens, dark mode, and Livewire-ready forms.
 
